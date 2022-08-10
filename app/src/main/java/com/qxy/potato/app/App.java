@@ -12,9 +12,8 @@ import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
 import com.tamsiree.rxkit.RxTool;
-
+import com.tencent.mmkv.MMKV;
 import org.greenrobot.eventbus.EventBus;
-import org.litepal.LitePal;
 
 /**
  * @author ：Dyj
@@ -49,14 +48,14 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         context=getApplicationContext();
+        MMKV.initialize(this);
         //载入Dokit监测
         new DoKit.Builder(this)
                 .productId("8b4b6b21efed31323e2dc4bf07268d7f")
                 .build();
         //使用订阅索引，加快编译速度
         EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
-        //载入数据库映射工具
-        LitePal.initialize(this);
+
         //初始化
         MyUtil.initialize(this);
         //设置UI工具

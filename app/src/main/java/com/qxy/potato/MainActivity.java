@@ -1,13 +1,11 @@
 package com.qxy.potato;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import com.qxy.potato.base.BaseActivity;
 import com.qxy.potato.base.BaseEvent;
 import com.qxy.potato.base.BasePresenter;
 import com.qxy.potato.base.BaseView;
 import com.qxy.potato.bean.PictureGirl;
-import com.qxy.potato.util.BindEventBus;
+import com.qxy.potato.annotation.BindEventBus;
 import com.qxy.potato.util.EventBusUtil;
 
 import org.greenrobot.eventbus.Subscribe;

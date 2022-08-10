@@ -11,7 +11,7 @@ import androidx.viewbinding.ViewBinding;
 
 
 import com.dylanc.viewbinding.base.ViewBindingUtil;
-import com.qxy.potato.util.BindEventBus;
+import com.qxy.potato.annotation.BindEventBus;
 import com.qxy.potato.util.MyUtil;
 import com.qxy.potato.util.ToastUtil;
 

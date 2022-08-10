@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'com.didi.dokit'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -77,13 +78,21 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
+    //MMKV替代SP https://github.com/Tencent/MMKV/wiki/android_tutorial_cn
+    implementation 'com.tencent:mmkv:1.2.14'
+
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     //引入Rv管理
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
-    //引入数据库映射库
-    implementation 'org.litepal.guolindev:core:3.2.3'
+    //引入Room数据库
+    def room_version = "2.4.3"
+    //base
+    implementation "androidx.room:room-runtime:$room_version"
+    // To use Kotlin annotation processing tool (kapt)
+    kapt "androidx.room:room-compiler:$room_version"
+
     /*retrofit raJava*/
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'

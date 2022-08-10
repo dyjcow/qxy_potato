@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
  * @Date 2020/4/27 11:38
  * email：913710642@qq.com
  */
+@Deprecated
 public class SpUtil {
     private static final String FILE_NAME = "config";
     private static SharedPreferences sp = MyUtil.getApplication().getSharedPreferences("config", 0);
