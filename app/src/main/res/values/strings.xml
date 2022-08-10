@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">potato</string>
+    <string name="load_success">Loading success</string>
+    <string name="load_error">Loading error</string>
+    <string name="time_out">Time out Try again</string>
+    <string name="PARSE_ERROR_MSG">Failed to parse data</string>
+    <string name="BAD_NETWORK_MSG">Network problem</string>
+    <string name="CONNECT_ERROR_MSG">Connection error</string>
+    <string name="CONNECT_TIMEOUT_MSG">Connection timed out</string>
+    <string name="OTHER_MSG">Unknown error</string>
+    <string name="code" translatable="false">error_code</string>
+    <string name="error_msg" translatable="false">description</string>
+    <string name="url" translatable="false">https://open.douyin.com/</string>
+</resources>

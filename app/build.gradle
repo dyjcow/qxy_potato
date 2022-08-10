@@ -1,0 +1,131 @@
+plugins {
+    id 'com.android.application'
+    id 'com.didi.dokit'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk 30
+
+    defaultConfig {
+        applicationId "com.qxy.potato"
+        minSdk 21
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ eventBusIndex : 'com.qxy.potato.MyEventBusIndex' ]
+            }
+        }
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    //    支持使用viewBinding
+    buildFeatures {
+        viewBinding = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dokitExt {
+    //通用设置
+    comm {
+        //地图经纬度开关
+        gpsSwitch true
+        //网络开关
+        networkSwitch true
+        //大图开关
+        bigImgSwitch true
+        //webView js 抓包
+        webViewSwitch true
+    }
+
+    slowMethod {
+        //调用栈模式配置 对应gradle.properties中DOKIT_METHOD_STRATEGY=0
+        stackMethod {
+            //默认值为 5ms 小于该值的函数在调用栈中不显示
+            thresholdTime 10
+        }
+        //普通模式配置 对应gradle.properties中DOKIT_METHOD_STRATEGY=1
+        normalMethod {
+            //默认值为 500ms 小于该值的函数在运行时不会在控制台中被打印
+            thresholdTime 500
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    //viewpager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    //引入Rv管理
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
+    //引入数据库映射库
+    implementation 'org.litepal.guolindev:core:3.2.3'
+    /*retrofit raJava*/
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
+
+    implementation  'io.github.scwang90:refresh-layout-kernel:2.0.5'      //核心必须依赖
+    implementation  'io.github.scwang90:refresh-header-material:2.0.5'    //谷歌刷新头
+
+    //    引入的崩溃管理和跳转UI哭
+    implementation 'com.github.tamsiree.RxTool:RxKit:2.6.3'
+    implementation 'com.github.tamsiree.RxTool:RxUI:2.6.3'
+
+    //权限管理框架
+    implementation 'com.guolindev.permissionx:permissionx:1.6.4'
+
+    //ViewBinding
+    implementation 'com.github.DylanCaiCoding.ViewBindingKTX:viewbinding-base:2.0.6'
+    implementation 'com.github.DylanCaiCoding.ViewBindingKTX:viewbinding-brvah:2.0.6'
+
+    //沉浸式
+    implementation 'com.gitee.zackratos:UltimateBarX:0.8.0'
+
+    //Dokit
+    //核心模块
+    debugImplementation "io.github.didi.dokit:dokitx:${lastversion}"
+    //文件同步模块
+    debugImplementation "io.github.didi.dokit:dokitx-ft:${lastversion}"
+    //一机多控模块
+    debugImplementation "io.github.didi.dokit:dokitx-mc:${lastversion}"
+    //weex模块
+    debugImplementation "io.github.didi.dokit:dokitx-weex:${lastversion}"
+    //no-op 模块
+    releaseImplementation "io.github.didi.dokit:dokitx-no-op:${lastversion}"
+
+    //eventBus
+    def eventbus_version = '3.2.0'
+    implementation "org.greenrobot:eventbus:$eventbus_version"
+    annotationProcessor "org.greenrobot:eventbus-annotation-processor:$eventbus_version"
+}
