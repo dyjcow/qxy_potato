@@ -32,7 +32,7 @@ public class API {
     static HashMap<String,String> getKeyUrl(){
         HashMap<String,String> keyUrl = new HashMap<>();
 //        String GEO_URL = MyUtil.getString(R.string.geourl);
-//        String M_URL = MyUtil.getString(R.string.mxzp);
+//        String M_URL = MyUtil.getString(R.string.mxzp);MyItemDecoration
 //        keyUrl.put("geo",GEO_URL);
 //        keyUrl.put("m",M_URL);
         return keyUrl;

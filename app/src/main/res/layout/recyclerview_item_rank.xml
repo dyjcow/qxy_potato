@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/imageView_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:text="独行月球"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/imageView_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="豆瓣评分 6.8"
+        android:textSize="@dimen/dk_dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView_type"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.419" />
+
+    <TextView
+        android:id="@+id/textView_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp"
+        android:text="戏剧/科幻"
+        android:textSize="@dimen/dk_dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView_ReleaseTime" />
+
+    <TextView
+        android:id="@+id/textView_ReleaseTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="2022-08-05 上映"
+        android:textSize="@dimen/dk_dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView_PopularDegree" />
+
+    <TextView
+        android:id="@+id/textView_PopularDegree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:text="1163.2万"
+        android:textSize="@dimen/dk_dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView_icon" />
+
+    <Button
+        android:id="@+id/button_getTicket"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dk_dp_40"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/white"
+        android:text="购票"
+        android:background="@drawable/ge_ticket_button_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
