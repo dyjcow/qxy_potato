@@ -1,7 +1,10 @@
 package com.qxy.potato.base;
 
+import com.qxy.potato.annotation.BindEventBus;
 import com.qxy.potato.http.API;
 import com.qxy.potato.http.RetrofitService;
+
+import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,6 +30,9 @@ public class BasePresenter<V extends BaseView> {
 
     public BasePresenter(V baseView) {
         this.baseView = baseView;
+        if(this.getClass().isAnnotationPresent(BindEventBus.class)){
+            EventBus.getDefault().register(this);
+        }
     }
 
     /**
@@ -35,6 +41,9 @@ public class BasePresenter<V extends BaseView> {
     public void detachView() {
         baseView = null;
         removeDisposable();
+        if(this.getClass().isAnnotationPresent(BindEventBus.class)){
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     /**

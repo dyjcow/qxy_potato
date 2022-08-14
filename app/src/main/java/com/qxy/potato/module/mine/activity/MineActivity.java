@@ -34,6 +34,7 @@ import com.tencent.mmkv.MMKV;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @BindEventBus
@@ -149,7 +150,7 @@ public class MineActivity extends BaseActivity<MinePresenter, ActivityMainBindin
     /**
      * 初始化连接型token
      */
-    private void initClient(){
+    private void initClient() {
         kv.encode(GlobalConstant.IS_CLIENT,false);
         presenter.getClientToken();
     }
