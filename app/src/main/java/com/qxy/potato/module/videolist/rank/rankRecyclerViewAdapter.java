@@ -1,4 +1,4 @@
-package com.qxy.potato.module.rank;
+package com.qxy.potato.module.videolist.rank;
 
 import android.view.LayoutInflater;
 import android.view.View;

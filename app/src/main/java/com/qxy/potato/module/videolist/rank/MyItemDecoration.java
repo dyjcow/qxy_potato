@@ -1,4 +1,4 @@
-package com.qxy.potato.module.rank;
+package com.qxy.potato.module.videolist.rank;
 
 import android.content.Context;
 import android.graphics.Bitmap;

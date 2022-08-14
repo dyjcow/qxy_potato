@@ -3,12 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Work/potato/app/src/main/res/drawable/tab_indicator.xml" value="0.1735" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_login.xml" value="0.21195652173913043" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_main.xml" value="0.13072916666666667" />
-        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/ge_ticket_button_bg.xml" value="0.1" />
-        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/getTicketButtonBG.xml" value="0.1" />
-        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_main.xml" value="0.109375" />
-        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.264" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.19067028985507245" />
       </map>
     </option>
   </component>
