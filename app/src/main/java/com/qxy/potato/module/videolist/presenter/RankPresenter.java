@@ -1,8 +1,10 @@
 package com.qxy.potato.module.videolist.presenter;
 
 import com.qxy.potato.R;
+import com.qxy.potato.base.BaseBean;
 import com.qxy.potato.base.BaseObserver;
 import com.qxy.potato.base.BasePresenter;
+
 import com.qxy.potato.bean.AccessToken;
 import com.qxy.potato.bean.ClientToken;
 import com.qxy.potato.bean.VideoList;
@@ -71,6 +73,7 @@ public class RankPresenter extends BasePresenter<IVideoListView> {
 		map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.client_key_k));
 		addDisposable(apiServer.PostClientToken(map), new BaseObserver<ClientToken>(baseView,false) {
 
+
 			@Override
 			public void onSuccess(ClientToken o) {
 				mmkv.encode(GlobalConstant.CLIENT_TOKEN,o.getAccess_token());
@@ -83,7 +86,7 @@ public class RankPresenter extends BasePresenter<IVideoListView> {
 
 			@Override
 			public void onError(String msg) {
-				baseView.getRankFailed("token获取失败");
+				baseView.getRankFailed("token获取失败"+msg);
 
 			}
 		});

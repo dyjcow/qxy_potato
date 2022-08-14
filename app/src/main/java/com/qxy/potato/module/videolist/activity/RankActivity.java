@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
@@ -31,6 +32,8 @@ public class RankActivity extends AppCompatActivity  {
 	@Override protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_rank);
+		//强制使用竖屏
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		initUI();
 	}
@@ -41,6 +44,7 @@ public class RankActivity extends AppCompatActivity  {
 	public void initUI(){
 
 		mViewPager = findViewById(R.id.vp_rank_switch);
+		mViewPager.setOffscreenPageLimit(2);//左右看不见的预加载，不用在滑动后多次请求网络
 
 		List<Fragment> fragmentList = new ArrayList<>();
 		fragmentList.add(new FilmRankFragment());

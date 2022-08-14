@@ -12,6 +12,7 @@ import com.qxy.potato.module.videolist.presenter.RankPresenter;
 import com.qxy.potato.module.videolist.rank.rankRecyclerViewAdapter;
 import com.qxy.potato.module.videolist.view.IVideoListView;
 import com.qxy.potato.util.ActivityUtil;
+import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.ToastUtil;
 
 /**
@@ -63,13 +64,19 @@ public class TeleplayRankFragment extends BaseFragment<RankPresenter, RankBindin
 	}
 
 	@Override protected void initData() {
-		//获取本周的榜单
+
+		showLoading();
+		//第一次获取本周的榜单
 		presenter.getNowRank(TYPE);
+
 
 	}
 
 
 	@Override public void showRank(VideoList videoList) {
+
+		SuccessHideLoading();
+
 		//更新时间
 		mTime.setText("本周榜|更新于 "+videoList.getActive_time());
 
@@ -81,7 +88,11 @@ public class TeleplayRankFragment extends BaseFragment<RankPresenter, RankBindin
 	}
 
 	@Override public void getRankFailed(String msg) {
+
+		FailedHideLoading();
+
 		ToastUtil.showToast(msg);
+		LogUtil.i("错误原因："+msg);
 
 	}
 
