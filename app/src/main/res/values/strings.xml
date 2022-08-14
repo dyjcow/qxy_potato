@@ -8,7 +8,7 @@
     <string name="CONNECT_ERROR_MSG">Connection error</string>
     <string name="CONNECT_TIMEOUT_MSG">Connection timed out</string>
     <string name="OTHER_MSG">Unknown error</string>
-    
+
     <string name="error_code" translatable="false">error_code</string>
     <string name="error_msg" translatable="false">description</string>
     <string name="code" translatable="false">code</string>

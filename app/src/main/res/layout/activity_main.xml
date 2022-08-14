@@ -7,6 +7,18 @@
     tools:context=".module.mine.activity.MineActivity">
 
     <ImageView
+            android:id="@+id/img_rank"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/rank"
+
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+
+    <ImageView
         android:id="@+id/img_backgroud"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

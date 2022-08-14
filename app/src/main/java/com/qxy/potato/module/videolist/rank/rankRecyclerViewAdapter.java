@@ -1,5 +1,6 @@
 package com.qxy.potato.module.videolist.rank;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.qxy.potato.R;
+import com.qxy.potato.bean.VideoList;
 import com.qxy.potato.databinding.RecyclerviewItemRankBinding;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +25,24 @@ import java.util.List;
  */
 public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerViewAdapter.MyViewHolder> {
     //此处的范型改为需要的bean类
-    private List<String> list;
+    private List<VideoList.Video> list = new ArrayList<>();
 
-    public rankRecyclerViewAdapter(List<String> list) {
+    private Context mContext;
+
+    public rankRecyclerViewAdapter(Context context) {
+        mContext = context;
+    }
+
+    /**.
+     * 更换数据源
+     */
+    public void setList(List<VideoList.Video> list){
         this.list = list;
     }
+
+//    public rankRecyclerViewAdapter(List<VideoList.Video> list) {
+//        this.list = list;
+//    }
 
     @NonNull
     @Override
@@ -37,19 +55,23 @@ public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+        VideoList.Video video = list.get(position);
+
         // TODO: 2022/8/11 更具传进来的数据动态更改
-        holder.binding.imageViewIcon.setImageResource(R.drawable.ic_launcher_background);
-        holder.binding.textViewName.setText("月球独行");
-        holder.binding.textViewPopularDegree.setText("1256.5万");
-        holder.binding.textViewReleaseTime.setText("2020-02-20");
-        holder.binding.textViewType.setText("科幻");
-        holder.binding.textViewScore.setText("6.8");
+        holder.binding.imageViewIcon.setImageResource(R.mipmap.nophoto);//默认图片
+        Glide.with(mContext).load(video.getPoster()).into(holder.binding.imageViewIcon);
+
+        holder.binding.textViewName.setText(video.getName());
+        holder.binding.textViewPopularDegree.setText(video.getHot());
+        holder.binding.textViewReleaseTime.setText(video.getRelease_date()+" 上映");
+        holder.binding.textViewType.setText(video.getTags().get(0));
+        holder.binding.textViewScore.setText("暂无评分");
         //button点击事件
         holder.binding.buttonGetTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(v.getContext(), "点击到了", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "等我下次再给你看详细的", Toast.LENGTH_SHORT).show();
             }
         });
     }
