@@ -9,11 +9,15 @@ import com.qxy.potato.base.BaseFragment;
 import com.qxy.potato.bean.VideoList;
 import com.qxy.potato.databinding.RankBinding;
 import com.qxy.potato.module.videolist.presenter.RankPresenter;
+import com.qxy.potato.module.videolist.rank.MyItemDecoration;
 import com.qxy.potato.module.videolist.rank.rankRecyclerViewAdapter;
 import com.qxy.potato.module.videolist.view.IVideoListView;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.ToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Soul Mate
@@ -25,6 +29,8 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, RankBinding> i
 
 	//我的榜单类型 * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
 	private static final int TYPE = 1;
+
+
 
 	private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getContext());
 
@@ -42,11 +48,13 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, RankBinding> i
 
 	@Override protected void initView() {
 
-		mTime = getBinding().textviewRankRule;
+		mTime = getBinding().textviewRankTime;
+
 
 		mRecyclerView = getBinding().recyclerview;
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 		mRecyclerView.setLayoutManager(linearLayoutManager);
+		mRecyclerView.addItemDecoration(new MyItemDecoration(getContext()));
 		mRecyclerView.setAdapter(mAdapter);
 
 		//设置点击事件
@@ -79,8 +87,7 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, RankBinding> i
 		mTime.setText("本周榜|更新于 "+videoList.getActive_time());
 
 		//更新数据
-		mAdapter.setList(videoList.getList());
-		mAdapter.notifyAll();
+		mAdapter.setData(videoList.getList());
 
 
 

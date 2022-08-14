@@ -10,6 +10,7 @@ import com.qxy.potato.base.BaseFragment;
 import com.qxy.potato.bean.VideoList;
 import com.qxy.potato.databinding.RankBinding;
 import com.qxy.potato.module.videolist.presenter.RankPresenter;
+import com.qxy.potato.module.videolist.rank.MyItemDecoration;
 import com.qxy.potato.module.videolist.rank.rankRecyclerViewAdapter;
 import com.qxy.potato.module.videolist.view.IVideoListView;
 import com.qxy.potato.util.ActivityUtil;
@@ -44,11 +45,13 @@ public class TeleplayRankFragment extends BaseFragment<RankPresenter, RankBindin
 
 	@Override protected void initView() {
 
-		mTime = getBinding().textviewRankRule;
+		mTime = getBinding().textviewRankTime;
+
 
 		mRecyclerView = getBinding().recyclerview;
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 		mRecyclerView.setLayoutManager(linearLayoutManager);
+		mRecyclerView.addItemDecoration(new MyItemDecoration(getContext()));
 		mRecyclerView.setAdapter(mAdapter);
 
 		//设置点击事件
@@ -60,9 +63,6 @@ public class TeleplayRankFragment extends BaseFragment<RankPresenter, RankBindin
 		getBinding().imagebuttonShare.setOnClickListener(v->{});
 		//榜单规则
 		getBinding().textviewRankRule.setOnClickListener(v->{});
-
-		//改背景图
-		getBinding().imageviewBackground.setImageResource(R.mipmap.episode_rank);
 
 	}
 
@@ -84,8 +84,9 @@ public class TeleplayRankFragment extends BaseFragment<RankPresenter, RankBindin
 		mTime.setText("本周榜|更新于 "+videoList.getActive_time());
 
 		//更新数据
-		mAdapter.setList(videoList.getList());
-//		mRecyclerView.notify();
+		mAdapter.setData(videoList.getList());
+
+
 
 
 	}

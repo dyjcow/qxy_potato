@@ -14,7 +14,9 @@ import com.qxy.potato.R;
 import com.qxy.potato.bean.VideoList;
 import com.qxy.potato.databinding.RecyclerviewItemRankBinding;
 
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,13 +59,19 @@ public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerVi
 
         VideoList.Video video = list.get(position);
 
-        // TODO: 2022/8/11 更具传进来的数据动态更改
+        // TODO: 2022/8/11 获取图片，数据获取工具类：List数据转一条String
         holder.binding.imageViewIcon.setImageResource(R.mipmap.nophoto);//默认图片
 
-        if(mContext!=null)
-        Glide.with(mContext).load(video.getPoster()).into(holder.binding.imageViewIcon);
+        if(mContext!=null) {
+            try {
+                Glide.with(mContext).load(new URL(video.getPoster())).into(holder.binding.imageViewIcon);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
 
         holder.binding.textViewName.setText(video.getName());
+        //这行报错
 //        holder.binding.textViewPopularDegree.setText(video.getHot());
         holder.binding.textViewReleaseTime.setText(video.getRelease_date()+" 上映");
         holder.binding.textViewType.setText(video.getTags()+"");
@@ -90,6 +98,23 @@ public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerVi
             this.binding=binding;
         }
     }
+
+    /**
+     * 用于数据更新
+     * 先将初始化的时候存储的数据清除，然后将传来的从数据库中读取的数据追加到这个已经清空的列表中
+     * 这样适配器实际使用的列表和初始化中的列表都是一样的了，
+     * @param datas
+     */
+    public void setData(List<VideoList.Video> datas) {
+        if (!list.isEmpty()) {
+            list.clear();
+            this.notifyDataSetChanged();
+        }
+        list.addAll(datas);
+        this.notifyDataSetChanged();
+    }
+
+
 }
 /*
 *
