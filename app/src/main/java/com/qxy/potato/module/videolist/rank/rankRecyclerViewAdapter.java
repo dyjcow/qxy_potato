@@ -59,12 +59,14 @@ public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerVi
 
         // TODO: 2022/8/11 更具传进来的数据动态更改
         holder.binding.imageViewIcon.setImageResource(R.mipmap.nophoto);//默认图片
+
+        if(mContext!=null)
         Glide.with(mContext).load(video.getPoster()).into(holder.binding.imageViewIcon);
 
         holder.binding.textViewName.setText(video.getName());
-        holder.binding.textViewPopularDegree.setText(video.getHot());
+//        holder.binding.textViewPopularDegree.setText(video.getHot());
         holder.binding.textViewReleaseTime.setText(video.getRelease_date()+" 上映");
-        holder.binding.textViewType.setText(video.getTags().get(0));
+        holder.binding.textViewType.setText(video.getTags()+"");
         holder.binding.textViewScore.setText("暂无评分");
         //button点击事件
         holder.binding.buttonGetTicket.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +80,7 @@ public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerVi
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

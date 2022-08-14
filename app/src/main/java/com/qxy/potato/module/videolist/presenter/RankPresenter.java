@@ -37,11 +37,12 @@ public class RankPresenter extends BasePresenter<IVideoListView> {
 		//获取到token
 		if (MMKV.defaultMMKV().decodeBool(GlobalConstant.IS_CLIENT,false)){
 			String token = MMKV.defaultMMKV().decodeString(GlobalConstant.CLIENT_TOKEN);
-			addDisposable(apiServer.GetVideoListNow(type, token), new BaseObserver<VideoList>(baseView,true) {
-				@Override public void onSuccess(VideoList o) {
+			LogUtil.i(token);
+			addDisposable(apiServer.GetVideoListNow(type, token), new BaseObserver<BaseBean<VideoList>>(baseView,false) {
+				@Override public void onSuccess(BaseBean<VideoList> o) {
 
 
-					baseView.showRank(o);
+					baseView.showRank(o.data);
 				}
 
 				@Override public void onError(String msg) {

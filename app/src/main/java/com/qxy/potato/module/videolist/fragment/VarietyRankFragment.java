@@ -2,6 +2,7 @@ package com.qxy.potato.module.videolist.fragment;
 
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qxy.potato.R;
@@ -26,7 +27,7 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, RankBinding
 	//我的榜单类型 * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
 	private static final int TYPE = 1;
 
-	private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getActivity());
+	private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getContext());
 
 	//榜单更新时间
 	private TextView mTime;
@@ -45,6 +46,8 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, RankBinding
 		mTime = getBinding().textviewRankRule;
 
 		mRecyclerView = getBinding().recyclerview;
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+		mRecyclerView.setLayoutManager(linearLayoutManager);
 		mRecyclerView.setAdapter(mAdapter);
 
 		//设置点击事件
@@ -81,7 +84,7 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, RankBinding
 
 		//更新数据
 		mAdapter.setList(videoList.getList());
-		mRecyclerView.notifyAll();
+//		mRecyclerView.notify();
 
 
 	}
