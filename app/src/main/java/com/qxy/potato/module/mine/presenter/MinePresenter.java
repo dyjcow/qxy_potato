@@ -67,7 +67,9 @@ public class MinePresenter extends BasePresenter<IMineView> {
 
             @Override
             public void onSuccess(BaseBean<List<PictureGirl>> o) {
-                baseView.loadImg(o.data.get(0).getImageUrl());
+//图片挡住了
+//                baseView.loadImg(o.data.get(0).getImageUrl());
+
             }
 
             @Override
