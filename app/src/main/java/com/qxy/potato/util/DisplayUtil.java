@@ -1,19 +1,27 @@
 package com.qxy.potato.util;
 
 import android.app.Activity;
+import android.app.Application;
+import android.content.ComponentCallbacks;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+
+import androidx.annotation.NonNull;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
 
 /**
  * @author ：Dyj
@@ -23,6 +31,9 @@ import java.lang.reflect.Method;
  * @version: 1.0
  */
 public class DisplayUtil {
+    private static float sNonCompatDensity;
+    private static float sNonCompatScaleDensity;
+
     /**
      * dp转px
      *
@@ -296,5 +307,42 @@ public class DisplayUtil {
 
         }
         return hasNavigationBar;
+    }
+
+    public static void setCustomDensity( Activity activity ){
+        final Application application = MyUtil.getApplication();
+
+        final DisplayMetrics appDisplayMetrics = application.getResources().getDisplayMetrics();
+
+        if (sNonCompatDensity == 0){
+            sNonCompatDensity = appDisplayMetrics.density;
+            sNonCompatScaleDensity = appDisplayMetrics.scaledDensity;
+            application.registerComponentCallbacks(new ComponentCallbacks() {
+                @Override
+                public void onConfigurationChanged(@NonNull Configuration newConfig) {
+                    if (newConfig.fontScale > 0){
+                        sNonCompatScaleDensity = application.getResources().getDisplayMetrics().scaledDensity;
+                    }
+                }
+
+                @Override
+                public void onLowMemory() {
+
+                }
+            });
+        }
+
+        final float targetDensity =  ((float) appDisplayMetrics.widthPixels) / 360;
+        final float targetScaleDensity = targetDensity * (sNonCompatScaleDensity/sNonCompatDensity);
+        final int targetDensityDpi = (int) (160*targetDensity);
+
+        appDisplayMetrics.density = targetDensity;
+        appDisplayMetrics.scaledDensity = targetScaleDensity;
+        appDisplayMetrics.densityDpi = targetDensityDpi;
+
+        final DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();
+        activityDisplayMetrics.density = targetDensity;
+        activityDisplayMetrics.scaledDensity = targetScaleDensity;
+        activityDisplayMetrics.densityDpi = targetDensityDpi;
     }
 }

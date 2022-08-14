@@ -16,7 +16,7 @@ import android.app.Application;
 import android.util.Log;
 
 public class LogUtil {
-    private static String TAG = "LogUtil";
+    private static String TAG = "LogUtilOfPotato";
     private static boolean IS_LOG = false;
     private static int MAX_LENGTH = 4000;
     private static Application mApplicationContext;

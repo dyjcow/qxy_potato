@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'com.didi.dokit'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+//    id 'kotlin-kapt'
 }
 
 android {
@@ -16,15 +16,29 @@ android {
         versionName "1.0"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ eventBusIndex : 'com.qxy.potato.MyEventBusIndex' ]
+                arguments += [
+//                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        eventBusIndex : 'com.qxy.potato.MyEventBusIndex' ]
             }
         }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -87,11 +101,11 @@ dependencies {
     //引入Rv管理
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
     //引入Room数据库
-    def room_version = "2.4.3"
-    //base
-    implementation "androidx.room:room-runtime:$room_version"
-    // To use Kotlin annotation processing tool (kapt)
-    kapt "androidx.room:room-compiler:$room_version"
+//    def room_version = "2.4.0-alpha01"
+//    //base
+//    implementation "androidx.room:room-runtime:$room_version"
+//    // To use Kotlin annotation processing tool (kapt)
+//    kapt "androidx.room:room-compiler:$room_version"
 
     /*retrofit raJava*/
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -134,7 +148,14 @@ dependencies {
     releaseImplementation "io.github.didi.dokit:dokitx-no-op:${lastversion}"
 
     //eventBus
-    def eventbus_version = '3.2.0'
+    def eventbus_version = '3.3.1'
     implementation "org.greenrobot:eventbus:$eventbus_version"
     annotationProcessor "org.greenrobot:eventbus-annotation-processor:$eventbus_version"
+
+    //抖音
+    implementation 'com.bytedance.ies.ugc.aweme:opensdk-china-external:0.1.9.0'
+    implementation 'com.bytedance.ies.ugc.aweme:opensdk-common:0.1.9.0'
+
+    //WorkManager
+    implementation 'androidx.work:work-runtime:2.5.0'
 }

@@ -1,8 +1,7 @@
 package com.qxy.potato.http;
 
-import com.qxy.potato.http.cookie.CookiesManager;
 import com.qxy.potato.http.gson.BaseConverterFactory;
-import com.qxy.potato.util.MyUtil;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -67,7 +66,7 @@ public class RetrofitService {
                 //设置超时时间
                 .connectTimeout(15, TimeUnit.SECONDS)
                 //设置Cookie持久化
-                .cookieJar(new CookiesManager(MyUtil.getApplication()))
+//                .cookieJar(new CookiesManager(MyUtil.getApplication()))
                 .build();
 
         //关联okHttp并加上rxJava和Gson的配置和baseUrl

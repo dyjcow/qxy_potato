@@ -12,8 +12,10 @@ import androidx.viewbinding.ViewBinding;
 
 import com.dylanc.viewbinding.base.ViewBindingUtil;
 import com.qxy.potato.annotation.BindEventBus;
+import com.qxy.potato.util.DisplayUtil;
 import com.qxy.potato.util.MyUtil;
 import com.qxy.potato.util.ToastUtil;
+import com.zackratos.ultimatebarx.ultimatebarx.java.UltimateBarX;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -75,6 +77,11 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>,V
         if(this.getClass().isAnnotationPresent(BindEventBus.class)){
             EventBus.getDefault().register(this);
         }
+        DisplayUtil.setCustomDensity(this);
+        UltimateBarX.statusBarOnly(this)
+                .light(true)
+                .transparent()
+                .apply();
         //强制使用竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         binding = ViewBindingUtil.inflateWithGeneric(this, getLayoutInflater());

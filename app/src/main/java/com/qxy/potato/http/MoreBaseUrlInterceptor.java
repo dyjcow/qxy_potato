@@ -2,8 +2,6 @@ package com.qxy.potato.http;
 
 
 
-import com.qxy.potato.R;
-import com.qxy.potato.util.MyUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,12 +39,12 @@ public class MoreBaseUrlInterceptor implements Interceptor {
         Request.Builder builder = originalRequest.newBuilder();
         //获取头信息的集合如：base,geo
         List<String> urlNameList = originalRequest.headers("urlName");
-        if (urlNameList != null && urlNameList.size() > 0) {
+        if (urlNameList.size() > 0) {
             //删除原有配置中的值,就是namesAndValues集合里的值
             builder.removeHeader("urlName");
             //获取头信息中配置的value,如：m或者geo
             String urlName = urlNameList.get(0);
-            HttpUrl baseURL=null;
+            HttpUrl baseURL;
             //根据头信息中配置的value,来匹配新的base_url地址
             baseURL = HttpUrl.parse(Objects.requireNonNull(keyUrl.get(urlName)));
             //重建新的HttpUrl，需要重新设置的url部分
@@ -55,23 +53,11 @@ public class MoreBaseUrlInterceptor implements Interceptor {
                     .host(baseURL.host())//主机地址
                     .port(baseURL.port())//端口
                     .build();
-//            if (Objects.equals(keyUrl.get(urlName), MyUtil.getString(R.string.geourl))) {
-                // TODO: 2022/8/9 适配该处
-                newHttpUrl = newHttpUrl.newBuilder()
-                        .addQueryParameter("lang", MyUtil.getNowLanguage())
-//                        .addQueryParameter("key",MyUtil.getString(R.string.key))
-                        .build();
-//            }
             //获取处理后的新newRequest
             Request newRequest = builder.url(newHttpUrl).build();
             return  chain.proceed(newRequest);
         }else{
-            //适配英文接口
-            HttpUrl reOldUrl = oldUrl.newBuilder()
-                    .addQueryParameter("lang", MyUtil.getNowLanguage())
-//                    .addQueryParameter("key",MyUtil.getString(R.string.key))
-                    .build();
-            Request reOriginalRequest = builder.url(reOldUrl).build();
+            Request reOriginalRequest = builder.url(oldUrl).build();
             return chain.proceed(reOriginalRequest);
         }
 

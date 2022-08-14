@@ -8,7 +8,16 @@ package com.qxy.potato.common;
  * @version: 1.0
  */
 public class GlobalConstant {
-    public static final String IS_LOAD = "isload";
+    public static final String IS_LOAD = "isLoad";
+
+    public static final String ACCESS_TOKEN = "accessToken";
+
+    public static final String IS_LOGIN = "isLogin";
+
+    public static final String CLIENT_TOKEN = "client_token";
+
+    public static final String IS_CLIENT = "is_client";
+
 
 
 }

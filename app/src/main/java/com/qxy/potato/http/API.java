@@ -2,15 +2,23 @@ package com.qxy.potato.http;
 
 import com.qxy.potato.R;
 import com.qxy.potato.base.BaseBean;
+import com.qxy.potato.bean.AccessToken;
+import com.qxy.potato.bean.ClientToken;
 import com.qxy.potato.bean.PictureGirl;
+import com.qxy.potato.bean.VideoList;
 import com.qxy.potato.util.MyUtil;
 
 import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -31,12 +39,11 @@ public class API {
      */
     static HashMap<String,String> getKeyUrl(){
         HashMap<String,String> keyUrl = new HashMap<>();
-//        String GEO_URL = MyUtil.getString(R.string.geourl);
-//        String M_URL = MyUtil.getString(R.string.mxzp);
-//        keyUrl.put("geo",GEO_URL);
-//        keyUrl.put("m",M_URL);
+        String M_URL = MyUtil.getString(R.string.mxzp);
+        keyUrl.put("m",M_URL);
         return keyUrl;
     }
+
 
 
     /**
@@ -53,5 +60,63 @@ public class API {
         @GET("api/image/girl/list/random")
         Observable<BaseBean<List<PictureGirl>>> getPic();
 
+
+        /**
+         * 请求授权登录
+         *
+         * @param map 传入Body中的 HashMap
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/x-www-form-urlencoded"})
+        @FormUrlEncoded
+        @POST("oauth/access_token/")
+        Observable<BaseBean<AccessToken>> PostAccessToken(@FieldMap HashMap<String,String> map);
+
+
+        @Headers({"Content-Type:multipart/form-data"})
+        @FormUrlEncoded
+        @POST("oauth/client_token/")
+        Observable<BaseBean<ClientToken>> PostClientToken(@FieldMap HashMap<String,String> map);
+
+        /**
+         * 获取本周榜单
+         *
+         * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
+         * @param token PostClientToken 中获取到的token
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/json"})
+        @GET("discovery/ent/rank/item/")
+        Observable<BaseBean<VideoList>> GetVideoListNow(@Query("type") int type,
+                                                        @Header("access-token") String token);
+
+
+        /**
+         * 获取本周榜单
+         *
+         * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
+         * @param version 从其他地方获取到传入的的榜单版本
+         * @param token PostClientToken 中获取到的token
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/json"})
+        @GET("discovery/ent/rank/item/")
+        Observable<BaseBean<VideoList>> GetVideoListLast(@Query("type") int type,
+                                                         @Query("version") int version,
+                                                         @Header("access-token") String token);
+
+        /**
+         * 获取本周榜单
+         *
+         * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
+         * @param count 每页数量
+         * @param token PostClientToken 中获取到的token
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/json"})
+        @GET("discovery/ent/rank/version/")
+        Observable<BaseBean<VideoList>> GetVideoVersion(@Query("type") int type,
+                                                        @Query("count") int count,
+                                                        @Header("access-token") String token);
     }
 }

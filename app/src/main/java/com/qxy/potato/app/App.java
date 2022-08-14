@@ -5,6 +5,8 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.os.Build;
 
+import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
+import com.bytedance.sdk.open.douyin.DouYinOpenConfig;
 import com.didichuxing.doraemonkit.DoKit;
 
 import com.qxy.potato.MyEventBusIndex;
@@ -55,7 +57,9 @@ public class App extends Application {
                 .build();
         //使用订阅索引，加快编译速度
         EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
-
+        // 抖音授权
+        String clientkey = "aw8i3d4fhpduf8eg";
+        DouYinOpenApiFactory.init(new DouYinOpenConfig(clientkey));
         //初始化
         MyUtil.initialize(this);
         //设置UI工具
