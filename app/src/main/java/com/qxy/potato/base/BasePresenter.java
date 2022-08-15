@@ -30,9 +30,6 @@ public class BasePresenter<V extends BaseView> {
 
     public BasePresenter(V baseView) {
         this.baseView = baseView;
-        if(this.getClass().isAnnotationPresent(BindEventBus.class)){
-            EventBus.getDefault().register(this);
-        }
     }
 
     /**
@@ -41,9 +38,6 @@ public class BasePresenter<V extends BaseView> {
     public void detachView() {
         baseView = null;
         removeDisposable();
-        if(this.getClass().isAnnotationPresent(BindEventBus.class)){
-            EventBus.getDefault().unregister(this);
-        }
     }
 
     /**

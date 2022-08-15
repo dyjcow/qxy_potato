@@ -42,7 +42,7 @@ public class MoreBaseUrlInterceptor implements Interceptor {
         if (urlNameList.size() > 0) {
             //删除原有配置中的值,就是namesAndValues集合里的值
             builder.removeHeader("urlName");
-            //获取头信息中配置的value,如：m或者geo
+            //获取头信息中配置的value,如：m或者mock
             String urlName = urlNameList.get(0);
             HttpUrl baseURL;
             //根据头信息中配置的value,来匹配新的base_url地址
@@ -51,6 +51,8 @@ public class MoreBaseUrlInterceptor implements Interceptor {
             HttpUrl newHttpUrl = oldUrl.newBuilder()
                     .scheme(baseURL.scheme())//http协议如：http或者https
                     .host(baseURL.host())//主机地址
+                    .encodedPath(baseURL.encodedPath() +
+                            oldUrl.encodedPath().substring(1,oldUrl.encodedPath().length()))
                     .port(baseURL.port())//端口
                     .build();
             //获取处理后的新newRequest
