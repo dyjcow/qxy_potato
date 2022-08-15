@@ -1,5 +1,8 @@
 package com.qxy.potato.bean;
 
+import com.contrarywind.interfaces.IPickerViewData;
+import com.qxy.potato.common.EventCode;
+
 import java.util.List;
 
 /**
@@ -75,12 +78,14 @@ public class VideoVersion {
         this.list = list;
     }
 
-    public static class Version {
+    public static class Version implements IPickerViewData {
         private String active_time;
         private String end_time;
         private String start_time;
         private int type;
         private int version;
+
+        private int tag = 0;
 
         public String getActive_time() {
             return active_time;
@@ -120,6 +125,20 @@ public class VideoVersion {
 
         public void setVersion(int version) {
             this.version = version;
+        }
+
+        @Override
+        public String getPickerViewText() {
+            if (tag == EventCode.IS_FIRST_LIST){
+                return "本周榜单" + "  " + start_time + "-" + end_time;
+            }else {
+                return version + "  " + start_time + "-" + end_time;
+            }
+
+        }
+
+        public void setTag(int tag) {
+            this.tag = tag;
         }
     }
 }

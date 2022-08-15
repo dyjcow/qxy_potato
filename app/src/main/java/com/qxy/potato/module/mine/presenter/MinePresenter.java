@@ -10,6 +10,8 @@ import com.qxy.potato.bean.AccessToken;
 import com.qxy.potato.bean.BodyClient;
 import com.qxy.potato.bean.ClientToken;
 import com.qxy.potato.bean.PictureGirl;
+import com.qxy.potato.bean.VideoVersion;
+import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.module.mine.view.IMineView;
 import com.qxy.potato.util.LogUtil;
@@ -102,7 +104,7 @@ public class MinePresenter extends BasePresenter<IMineView> {
             public void onSuccess(BaseBean<ClientToken> o) {
                 mmkv.encode(GlobalConstant.CLIENT_TOKEN,o.data.getAccess_token());
                 mmkv.encode(GlobalConstant.IS_CLIENT,true);
-//                LogUtil.d(o.getAccess_token());
+                LogUtil.d(o.data.getAccess_token());
                 baseView.cancelClientValue();
             }
 
@@ -113,5 +115,22 @@ public class MinePresenter extends BasePresenter<IMineView> {
             }
         });
 
+    }
+
+    public void getClientVersionDemo(){
+        addDisposable(apiServer.GetVideoVersion(1,10,mmkv.decodeString(GlobalConstant.CLIENT_TOKEN)),
+                new BaseObserver<BaseBean<VideoVersion>>(baseView, false) {
+                    @Override
+                    public void onSuccess(BaseBean<VideoVersion> o) {
+                        List<VideoVersion.Version> list = o.data.getList();
+                        list.get(0).setTag(EventCode.IS_FIRST_LIST);
+                        MyUtil.showOneOptionPicker(list,"HistoryList");
+                    }
+
+                    @Override
+                    public void onError(String msg) {
+
+                    }
+                });
     }
 }
