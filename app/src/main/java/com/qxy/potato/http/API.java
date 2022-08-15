@@ -6,6 +6,7 @@ import com.qxy.potato.bean.AccessToken;
 import com.qxy.potato.bean.ClientToken;
 import com.qxy.potato.bean.PictureGirl;
 import com.qxy.potato.bean.VideoList;
+import com.qxy.potato.bean.VideoVersion;
 import com.qxy.potato.util.MyUtil;
 
 import java.util.HashMap;
@@ -43,8 +44,8 @@ public class API {
      */
     static HashMap<String,String> getKeyUrl(){
         HashMap<String,String> keyUrl = new HashMap<>();
-        String M_URL = MyUtil.getString(R.string.mxzp);
-        keyUrl.put("m",M_URL);
+        keyUrl.put("m",MyUtil.getString(R.string.mxzp));
+        keyUrl.put("mock",MyUtil.getString(R.string.mock));
         return keyUrl;
     }
 
@@ -89,7 +90,7 @@ public class API {
          * @param token PostClientToken 中获取到的token
          * @return 对应的observable
          */
-        @Headers({"Content-Type:application/json"})
+        @Headers({"Content-Type:application/json","urlName:mock"})
         @GET("discovery/ent/rank/item/")
         Observable<BaseBean<VideoList>> GetVideoListNow(@Query("type") int type,
                                                         @Header("access-token") String token);
@@ -103,24 +104,24 @@ public class API {
          * @param token PostClientToken 中获取到的token
          * @return 对应的observable
          */
-        @Headers({"Content-Type:application/json"})
+        @Headers({"Content-Type:application/json","urlName:mock"})
         @GET("discovery/ent/rank/item/")
         Observable<BaseBean<VideoList>> GetVideoListLast(@Query("type") int type,
                                                          @Query("version") int version,
                                                          @Header("access-token") String token);
 
         /**
-         * 获取本周榜单
+         * 获取榜单版本
          *
          * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
          * @param count 每页数量
          * @param token PostClientToken 中获取到的token
          * @return 对应的observable
          */
-        @Headers({"Content-Type:application/json"})
+        @Headers({"Content-Type:application/json","urlName:mock"})
         @GET("discovery/ent/rank/version/")
-        Observable<BaseBean<VideoList>> GetVideoVersion(@Query("type") int type,
-                                                        @Query("count") int count,
-                                                        @Header("access-token") String token);
+        Observable<BaseBean<VideoVersion>> GetVideoVersion(@Query("type") int type,
+                                                           @Query("count") int count,
+                                                           @Header("access-token") String token);
     }
 }

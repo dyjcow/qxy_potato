@@ -3,12 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/include_pickerview_topbar.xml" value="0.19067028985507245" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/layout_basepickerview.xml" value="0.19067028985507245" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/pickerview_options.xml" value="0.19067028985507245" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/pickerview_time.xml" value="0.19067028985507245" />
+        <entry key="..\:/Work/potato/app/src/main/res/drawable/tab_indicator.xml" value="0.1735" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/activity_login.xml" value="0.21195652173913043" />
         <entry key="..\:/Android Project/qxy_douyin_potato/app/src/main/res/layout/activity_login.xml" value="0.17844202898550723" />
         <entry key="..\:/Android Project/qxy_douyin_potato/app/src/main/res/layout/activity_main.xml" value="0.17844202898550723" />
         <entry key="..\:/Android Project/qxy_douyin_potato/app/src/main/res/layout/activity_rank.xml" value="0.165625" />
         <entry key="..\:/Android Project/qxy_douyin_potato/app/src/main/res/layout/rank.xml" value="0.2" />
         <entry key="..\:/Android Project/qxy_douyin_potato/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.4" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_main.xml" value="0.13072916666666667" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.19067028985507245" />
       </map>
     </option>
   </component>

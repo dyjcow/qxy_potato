@@ -2,6 +2,7 @@ package com.qxy.potato.module.mine.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -19,6 +20,8 @@ import com.qxy.potato.base.BaseActivity;
 import com.qxy.potato.base.BaseEvent;
 import com.qxy.potato.bean.PictureGirl;
 import com.qxy.potato.annotation.BindEventBus;
+import com.qxy.potato.bean.VideoVersion;
+import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.databinding.ActivityMainBinding;
 import com.qxy.potato.module.mine.presenter.MinePresenter;
@@ -62,13 +65,15 @@ public class MineActivity extends BaseActivity<MinePresenter, ActivityMainBindin
         }
 
         presenter.loadImg();
-        PictureGirl girl = new PictureGirl();
-        BaseEvent<PictureGirl> ev = new BaseEvent<>(1,girl);
-        EventBusUtil.sendEvent(ev);
+//        PictureGirl girl = new PictureGirl();
+//        BaseEvent<PictureGirl> ev = new BaseEvent<>(1,girl);
+//        EventBusUtil.sendEvent(ev);
         getBinding().btnRegister.setOnClickListener(v -> ActivityUtil.startActivity(LoginActivity.class));
 
         //跳转到榜单
         getBinding().imgRank.setOnClickListener(v->ActivityUtil.startActivity(RankActivity.class));
+
+        presenter.getClientVersionDemo();
 
     }
 
@@ -83,8 +88,10 @@ public class MineActivity extends BaseActivity<MinePresenter, ActivityMainBindin
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMainActivityEvent(BaseEvent event){
-
+    public void onMainActivityEvent(BaseEvent<VideoVersion.Version> event){
+        if (event.getEventCode() == EventCode.SELECT_VERSION){
+            ToastUtil.showToast(String.valueOf(event.getData().getVersion()));
+        }
     }
 
     @Override
