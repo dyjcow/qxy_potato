@@ -1,5 +1,6 @@
 package com.qxy.potato.module.videolist.rank;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.qxy.potato.R;
+import com.qxy.potato.bean.VideoList;
 import com.qxy.potato.databinding.RecyclerviewItemRankBinding;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +27,24 @@ import java.util.List;
  */
 public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerViewAdapter.MyViewHolder> {
     //此处的范型改为需要的bean类
-    private List<String> list;
+    private List<VideoList.Video> list = new ArrayList<>();
 
-    public rankRecyclerViewAdapter(List<String> list) {
+    private Context mContext;
+
+    public rankRecyclerViewAdapter(Context context) {
+        mContext = context;
+    }
+
+    /**.
+     * 更换数据源
+     */
+    public void setList(List<VideoList.Video> list){
         this.list = list;
     }
+
+//    public rankRecyclerViewAdapter(List<VideoList.Video> list) {
+//        this.list = list;
+//    }
 
     @NonNull
     @Override
@@ -37,26 +57,38 @@ public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        // TODO: 2022/8/11 更具传进来的数据动态更改
-        holder.binding.imageViewIcon.setImageResource(R.drawable.ic_launcher_background);
-        holder.binding.textViewName.setText("月球独行");
-        holder.binding.textViewPopularDegree.setText("1256.5万");
-        holder.binding.textViewReleaseTime.setText("2020-02-20");
-        holder.binding.textViewType.setText("科幻");
-        holder.binding.textViewScore.setText("6.8");
+        VideoList.Video video = list.get(position);
+
+        // TODO: 2022/8/11 获取图片，数据获取工具类：List数据转一条String
+        holder.binding.imageViewIcon.setImageResource(R.mipmap.nophoto);//默认图片
+
+        if(mContext!=null) {
+            try {
+                Glide.with(mContext).load(new URL(video.getPoster())).into(holder.binding.imageViewIcon);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        holder.binding.textViewName.setText(video.getName());
+        //这行报错
+//        holder.binding.textViewPopularDegree.setText(video.getHot());
+        holder.binding.textViewReleaseTime.setText(video.getRelease_date()+" 上映");
+        holder.binding.textViewType.setText(video.getTags()+"");
+        holder.binding.textViewScore.setText("暂无评分");
         //button点击事件
         holder.binding.buttonGetTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(v.getContext(), "点击到了", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "等我下次再给你看详细的", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -66,6 +98,23 @@ public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerVi
             this.binding=binding;
         }
     }
+
+    /**
+     * 用于数据更新
+     * 先将初始化的时候存储的数据清除，然后将传来的从数据库中读取的数据追加到这个已经清空的列表中
+     * 这样适配器实际使用的列表和初始化中的列表都是一样的了，
+     * @param datas
+     */
+    public void setData(List<VideoList.Video> datas) {
+        if (!list.isEmpty()) {
+            list.clear();
+            this.notifyDataSetChanged();
+        }
+        list.addAll(datas);
+        this.notifyDataSetChanged();
+    }
+
+
 }
 /*
 *

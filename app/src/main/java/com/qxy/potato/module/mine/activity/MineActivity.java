@@ -2,7 +2,6 @@ package com.qxy.potato.module.mine.activity;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -25,6 +24,7 @@ import com.qxy.potato.databinding.ActivityMainBinding;
 import com.qxy.potato.module.mine.presenter.MinePresenter;
 import com.qxy.potato.module.mine.view.IMineView;
 import com.qxy.potato.module.mine.workmanager.ClientCancelWork;
+import com.qxy.potato.module.videolist.activity.RankActivity;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.EventBusUtil;
 import com.qxy.potato.util.LogUtil;
@@ -66,6 +66,9 @@ public class MineActivity extends BaseActivity<MinePresenter, ActivityMainBindin
         BaseEvent<PictureGirl> ev = new BaseEvent<>(1,girl);
         EventBusUtil.sendEvent(ev);
         getBinding().btnRegister.setOnClickListener(v -> ActivityUtil.startActivity(LoginActivity.class));
+
+        //跳转到榜单
+        getBinding().imgRank.setOnClickListener(v->ActivityUtil.startActivity(RankActivity.class));
 
     }
 
