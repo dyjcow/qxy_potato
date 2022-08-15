@@ -7,11 +7,11 @@
         tools:context = ".module.videolist.activity.RankActivity">
 
     <ImageView
-            android:id="@+id/imageview_background"
-            android:layout_width="match_parent"
-            android:layout_height="154dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/movie_rank" />
+        android:id="@+id/imageview_background"
+        android:layout_width="match_parent"
+        android:layout_height="154dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/movie_rank" />
 
     <ImageButton
             android:id="@+id/imagebutton_back"
@@ -99,11 +99,11 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-             android:id="@+id/recyclerview"
-            android:layout_below="@+id/layout_rule"
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_rule"
 
-            />
+        />
 
 </RelativeLayout>

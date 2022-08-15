@@ -26,7 +26,7 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
     private final Paint TextPaint =new Paint();
     private final Paint paint =new Paint();
 
-    Bitmap bitmap;
+
     public MyItemDecoration(Context context){
         TextPaint.setColor(Color.parseColor("#a33656"));
        // paint.setStyle(Paint.Style.STROKE);

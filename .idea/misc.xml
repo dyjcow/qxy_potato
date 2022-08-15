@@ -3,16 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android Project/qxy_douyin_potato/app/src/main/res/layout/activity_login.xml" value="0.17844202898550723" />
-        <entry key="..\:/Android Project/qxy_douyin_potato/app/src/main/res/layout/activity_main.xml" value="0.17844202898550723" />
-        <entry key="..\:/Android Project/qxy_douyin_potato/app/src/main/res/layout/activity_rank.xml" value="0.165625" />
-        <entry key="..\:/Android Project/qxy_douyin_potato/app/src/main/res/layout/rank.xml" value="0.2" />
-        <entry key="..\:/Android Project/qxy_douyin_potato/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.4" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_main.xml" value="0.13072916666666667" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/ge_ticket_button_bg.xml" value="0.1" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/getTicketButtonBG.xml" value="0.1" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/tab_indicator.xml" value="0.1" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_login.xml" value="0.24947916666666667" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_main.xml" value="0.109375" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_rank.xml" value="0.24947916666666667" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/rank.xml" value="0.24947916666666667" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.264" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
