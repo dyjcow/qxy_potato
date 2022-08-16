@@ -28,7 +28,7 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, RankBinding
 	//我的榜单类型 * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
 	private static final int TYPE = 3;
 
-	private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getContext());
+	private rankRecyclerViewAdapter mAdapter ;
 
 	//榜单更新时间
 	private TextView mTime;
@@ -47,6 +47,7 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, RankBinding
 		mTime = getBinding().textviewRankTime;
 
 
+		mAdapter = new rankRecyclerViewAdapter(getContext(),TYPE);
 		mRecyclerView = getBinding().recyclerview;
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 		mRecyclerView.setLayoutManager(linearLayoutManager);

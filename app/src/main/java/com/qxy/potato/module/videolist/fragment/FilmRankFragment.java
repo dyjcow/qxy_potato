@@ -32,7 +32,7 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, RankBinding> i
 
 
 
-	private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getContext());
+	private rankRecyclerViewAdapter mAdapter ;
 
 	//榜单更新时间
 	private TextView mTime;
@@ -52,6 +52,7 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, RankBinding> i
 
 
 		mRecyclerView = getBinding().recyclerview;
+		mAdapter=new rankRecyclerViewAdapter(getContext(),TYPE);
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 		mRecyclerView.setLayoutManager(linearLayoutManager);
 		mRecyclerView.addItemDecoration(new MyItemDecoration(getContext()));
@@ -71,9 +72,11 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, RankBinding> i
 
 	@Override protected void initData() {
 
+
 		showLoading();
 		//第一次获取本周的榜单
 		presenter.getNowRank(TYPE);
+
 
 
 	}
@@ -85,6 +88,7 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, RankBinding> i
 
 		//更新时间
 		mTime.setText("本周榜|更新于 "+videoList.getActive_time());
+
 
 		//更新数据
 		mAdapter.setData(videoList.getList());

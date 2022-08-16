@@ -58,10 +58,10 @@
         android:text="2022-08-05 上映"
         android:textSize="@dimen/dk_dp_10"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView_PopularDegree" />
+        app:layout_constraintStart_toStartOf="@+id/textView_PopDegree" />
 
     <TextView
-        android:id="@+id/textView_PopularDegree"
+        android:id="@+id/textView_PopDegree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
@@ -72,8 +72,8 @@
 
     <Button
         android:id="@+id/button_getTicket"
-        android:layout_width="@dimen/dp_70"
-        android:layout_height="@dimen/dk_dp_40"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_30"
         android:layout_marginEnd="16dp"
         android:textColor="@color/white"
         android:text="购票"

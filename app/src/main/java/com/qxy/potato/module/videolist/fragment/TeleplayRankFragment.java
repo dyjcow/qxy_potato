@@ -29,7 +29,7 @@ public class TeleplayRankFragment extends BaseFragment<RankPresenter, RankBindin
 	//我的榜单类型 * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
 	private static final int TYPE = 2;
 
-	private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getContext());
+	private rankRecyclerViewAdapter mAdapter ;
 
 	//榜单更新时间
 	private TextView mTime;
@@ -49,6 +49,7 @@ public class TeleplayRankFragment extends BaseFragment<RankPresenter, RankBindin
 
 
 		mRecyclerView = getBinding().recyclerview;
+		mAdapter = new rankRecyclerViewAdapter(getContext(),TYPE);
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 		mRecyclerView.setLayoutManager(linearLayoutManager);
 		mRecyclerView.addItemDecoration(new MyItemDecoration(getContext()));
