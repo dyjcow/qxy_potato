@@ -8,6 +8,7 @@
     <string name="CONNECT_ERROR_MSG">Connection error</string>
     <string name="CONNECT_TIMEOUT_MSG">Connection timed out</string>
     <string name="OTHER_MSG">Unknown error</string>
+    <string name="rank_rule">Rank rule</string>
 
     <string name="error_code" translatable="false">error_code</string>
     <string name="error_msg" translatable="false">description</string>
@@ -23,6 +24,8 @@
     <string name="client_secret" translatable="false">client_secret</string>
     <string name="authorization_code" translatable="false">authorization_code</string>
     <string name="client_credential" translatable="false">client_credential</string>
-    <string name="rank_rule">Rank rule</string>
+    <string name="app_id" translatable="false">app_id</string>
+    <string name="app_secret" translatable="false">app_secret</string>
+
 
 </resources>

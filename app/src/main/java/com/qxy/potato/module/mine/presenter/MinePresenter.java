@@ -7,7 +7,6 @@ import com.qxy.potato.base.BaseBean;
 import com.qxy.potato.base.BaseObserver;
 import com.qxy.potato.base.BasePresenter;
 import com.qxy.potato.bean.AccessToken;
-import com.qxy.potato.bean.BodyClient;
 import com.qxy.potato.bean.ClientToken;
 import com.qxy.potato.bean.PictureGirl;
 import com.qxy.potato.bean.VideoVersion;
@@ -18,16 +17,8 @@ import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
 import com.tencent.mmkv.MMKV;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 
 /**
@@ -50,10 +41,10 @@ public class MinePresenter extends BasePresenter<IMineView> {
      */
     public void getAccessToken(String authCode){
         HashMap<String,String> map = new HashMap<>();
-        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.client_secret_k));
+        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
         map.put(MyUtil.getString(R.string.code),authCode);
         map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.authorization_code));
-        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.client_key_k));
+        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
         addDisposable(apiServer.PostAccessToken(map),
                 new BaseObserver<BaseBean<AccessToken>>(baseView, true) {
             @Override
@@ -75,7 +66,10 @@ public class MinePresenter extends BasePresenter<IMineView> {
      * 载入测试图片
      */
     public void loadImg(){
-        addDisposable(apiServer.getPic(), new BaseObserver<BaseBean<List<PictureGirl>>>(baseView, false) {
+        HashMap<String,String> map = new HashMap<>();
+        map.put(MyUtil.getString(R.string.app_id),MyUtil.getString(R.string.value_app_id));
+        map.put(MyUtil.getString(R.string.app_secret),MyUtil.getString(R.string.value_app_secret));
+        addDisposable(apiServer.getPic(map), new BaseObserver<BaseBean<List<PictureGirl>>>(baseView, false) {
 
             @Override
             public void onSuccess(BaseBean<List<PictureGirl>> o) {
@@ -96,9 +90,9 @@ public class MinePresenter extends BasePresenter<IMineView> {
      */
     public void getClientToken(){
         HashMap<String,String> map = new HashMap<>();
-        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.client_secret_k));
+        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
         map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
-        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.client_key_k));
+        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
         addDisposable(apiServer.PostClientToken(map), new BaseObserver<BaseBean<ClientToken>>(baseView,false) {
 
 

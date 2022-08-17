@@ -20,6 +20,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -61,9 +62,9 @@ public class API {
          * 背景图片
          * @return 对应 observable
          */
-        @Headers({"app_id:kvq0nvszkwmqqqbh","app_secret:N0V3S20vM0lCd1dzZkZJWFpaalRkdz09","urlName:m"})
+        @Headers({"urlName:m"})
         @GET("api/image/girl/list/random")
-        Observable<BaseBean<List<PictureGirl>>> getPic();
+        Observable<BaseBean<List<PictureGirl>>> getPic(@HeaderMap HashMap<String,String> map);
 
 
         /**
