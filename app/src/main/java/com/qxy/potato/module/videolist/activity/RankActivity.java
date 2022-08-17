@@ -51,15 +51,8 @@ public class RankActivity extends AppCompatActivity  {
 		fragmentList.add(new TeleplayRankFragment());
 		fragmentList.add(new VarietyRankFragment());
 
-		//设置Title
-		List<String> titleList = new ArrayList<>();
-		titleList.add("电影榜");
-		titleList.add("剧集榜");
-		titleList.add("综艺榜");
-
 		//ViewPager设置适配器
-		mViewPager.setAdapter(new RankPageAdapter(getSupportFragmentManager(), fragmentList,titleList));
-
+		mViewPager.setAdapter(new RankPageAdapter(getSupportFragmentManager(), fragmentList));
 
 	}
 

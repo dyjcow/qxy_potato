@@ -1,14 +1,20 @@
 package com.qxy.potato.module.videolist.fragment;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.qxy.potato.R;
 import com.qxy.potato.base.BaseFragment;
 import com.qxy.potato.bean.VideoList;
-import com.qxy.potato.databinding.RankBinding;
+import com.qxy.potato.databinding.CoordinatorRankBackgroundBinding;
 import com.qxy.potato.module.videolist.presenter.RankPresenter;
 import com.qxy.potato.module.videolist.rank.MyItemDecoration;
 import com.qxy.potato.module.videolist.rank.rankRecyclerViewAdapter;
@@ -23,20 +29,22 @@ import com.qxy.potato.util.ToastUtil;
  * @date 2022-08-14 14:10
  */
 
-public class VarietyRankFragment extends BaseFragment<RankPresenter, RankBinding> implements IVideoListView {
+public class VarietyRankFragment extends BaseFragment<RankPresenter, CoordinatorRankBackgroundBinding> implements IVideoListView {
 
 	//我的榜单类型 * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
 	private static final int TYPE = 3;
 
 	private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getContext());
 
+	//折叠式标题
+	private CollapsingToolbarLayout toolbarLayout;
+	private Toolbar toolbar;
+	private ImageView background;
+
 	//榜单更新时间
 	private TextView mTime;
 
-
 	private RecyclerView mRecyclerView;
-
-
 
 	@Override protected RankPresenter createPresenter() {
 		return new RankPresenter(this);
@@ -44,8 +52,18 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, RankBinding
 
 	@Override protected void initView() {
 
-		mTime = getBinding().textviewRankTime;
+		toolbarLayout = getBinding().collapsingtoolbar;
+		toolbar = getBinding().toolbar;
+		background = getBinding().rankBackground;
+		AppCompatActivity activity=(AppCompatActivity) ActivityUtil.getCurrentActivity();
+		activity.setSupportActionBar(toolbar);
+		ActionBar actionBar = activity.getSupportActionBar();
+		if (actionBar != null)
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		toolbarLayout.setTitle("综艺榜");
+		Glide.with(this).load(R.mipmap.variety_rank).into(background);
 
+		mTime = getBinding().textviewRankTime;
 
 		mRecyclerView = getBinding().recyclerview;
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -54,12 +72,6 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, RankBinding
 		mRecyclerView.setAdapter(mAdapter);
 
 		//设置点击事件
-		//返回
-		getBinding().imagebuttonBack.setOnClickListener(v -> {
-			ActivityUtil.finishActivity(ActivityUtil.getCurrentActivity());
-		});
-		//分享
-		getBinding().imagebuttonShare.setOnClickListener(v->{});
 		//榜单规则
 		getBinding().textviewRankRule.setOnClickListener(v->{});
 

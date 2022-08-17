@@ -23,5 +23,6 @@
     <string name="client_secret" translatable="false">client_secret</string>
     <string name="authorization_code" translatable="false">authorization_code</string>
     <string name="client_credential" translatable="false">client_credential</string>
+    <string name="rank_rule">Rank rule</string>
 
 </resources>
