@@ -122,12 +122,6 @@ public class MyUtil {
                 .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(16)
-                .setLayoutRes(R.layout.rank, new CustomListener() {
-                    @Override
-                    public void customLayout(View v) {
-
-                    }
-                })
                 .build();
 
         pvOptions.setPicker(list);//一级选择器

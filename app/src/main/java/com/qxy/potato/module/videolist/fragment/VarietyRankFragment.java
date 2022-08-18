@@ -21,6 +21,7 @@ import com.qxy.potato.module.videolist.rank.rankRecyclerViewAdapter;
 import com.qxy.potato.module.videolist.view.IVideoListView;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
+import com.qxy.potato.util.MyUtil;
 import com.qxy.potato.util.ToastUtil;
 
 /**
@@ -61,7 +62,7 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, Coordinator
 		if (actionBar != null)
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		toolbarLayout.setTitle("综艺榜");
-		Glide.with(this).load(R.mipmap.variety_rank).into(background);
+		Glide.with(this).load(MyUtil.getString(R.string.pic)).into(background);
 
 		mTime = getBinding().textviewRankTime;
 
@@ -90,7 +91,6 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, Coordinator
 
 	@Override public void showRank(VideoList videoList) {
 
-		SuccessHideLoading();
 
 		//更新时间
 		mTime.setText("本周榜|更新于 "+videoList.getActive_time());
@@ -105,7 +105,6 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, Coordinator
 
 	@Override public void getRankFailed(String msg) {
 
-		FailedHideLoading();
 
 		ToastUtil.showToast(msg);
 		LogUtil.i("错误原因："+msg);
