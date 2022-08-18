@@ -1,6 +1,7 @@
 package com.qxy.potato.module.videolist.rank;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +31,11 @@ public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerVi
     private List<VideoList.Video> list = new ArrayList<>();
 
     private Context mContext;
+    private int ranKType;
 
-    public rankRecyclerViewAdapter(Context context) {
+    public rankRecyclerViewAdapter(Context context,int rankType) {
         mContext = context;
+        this.ranKType=rankType;
     }
 
     /**.
@@ -49,7 +52,7 @@ public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerVi
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RecyclerviewItemRankBinding binding=RecyclerviewItemRankBinding.inflate(LayoutInflater.from(parent.getContext()));
+        RecyclerviewItemRankBinding binding=RecyclerviewItemRankBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
 
         return new MyViewHolder(binding);
     }
@@ -72,18 +75,22 @@ public class rankRecyclerViewAdapter extends RecyclerView.Adapter<rankRecyclerVi
 
         holder.binding.textViewName.setText(video.getName());
         //这行报错
-//        holder.binding.textViewPopularDegree.setText(video.getHot());
+        holder.binding.textViewPopDegree.setText(video.getHot()+"");
         holder.binding.textViewReleaseTime.setText(video.getRelease_date()+" 上映");
         holder.binding.textViewType.setText(video.getTags()+"");
         holder.binding.textViewScore.setText("暂无评分");
         //button点击事件
-        holder.binding.buttonGetTicket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (ranKType==1) {
+            holder.binding.buttonGetTicket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                Toast.makeText(v.getContext(), "等我下次再给你看详细的", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    Toast.makeText(v.getContext(), "等我下次再给你看详细的", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else {
+            holder.binding.buttonGetTicket.setVisibility(View.GONE);
+        }
     }
 
     @Override

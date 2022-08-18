@@ -23,6 +23,9 @@ import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.ToastUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Soul Mate
  * @brief 电影榜碎片
@@ -34,7 +37,9 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, CoordinatorRan
     //我的榜单类型 * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
     private static final int TYPE = 1;
 
-    private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getContext());
+
+
+	private rankRecyclerViewAdapter mAdapter ;
 
     //折叠式标题
     private CollapsingToolbarLayout toolbarLayout;
@@ -67,6 +72,13 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, CoordinatorRan
 
         mTime = getBinding().textviewRankTime;
 
+
+		mRecyclerView = getBinding().recyclerview;
+		mAdapter=new rankRecyclerViewAdapter(getContext(),TYPE);
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+		mRecyclerView.setLayoutManager(linearLayoutManager);
+		mRecyclerView.addItemDecoration(new MyItemDecoration(getContext()));
+		mRecyclerView.setAdapter(mAdapter);
         mRecyclerView = getBinding().recyclerview;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -83,9 +95,10 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, CoordinatorRan
     @Override
     protected void initData() {
 
-        showLoading();
-        //第一次获取本周的榜单
-        presenter.getNowRank(TYPE);
+
+		showLoading();
+		//第一次获取本周的榜单
+		presenter.getNowRank(TYPE);
 
 
     }

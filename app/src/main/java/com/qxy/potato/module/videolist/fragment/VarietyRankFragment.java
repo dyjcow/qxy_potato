@@ -34,7 +34,7 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, Coordinator
 	//我的榜单类型 * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
 	private static final int TYPE = 3;
 
-	private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getContext());
+	private rankRecyclerViewAdapter mAdapter ;
 
 	//折叠式标题
 	private CollapsingToolbarLayout toolbarLayout;
@@ -65,6 +65,7 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, Coordinator
 
 		mTime = getBinding().textviewRankTime;
 
+		mAdapter = new rankRecyclerViewAdapter(getContext(),TYPE);
 		mRecyclerView = getBinding().recyclerview;
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 		mRecyclerView.setLayoutManager(linearLayoutManager);
