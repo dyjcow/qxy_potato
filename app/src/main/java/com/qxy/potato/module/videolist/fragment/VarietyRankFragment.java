@@ -21,6 +21,7 @@ import com.qxy.potato.module.videolist.rank.rankRecyclerViewAdapter;
 import com.qxy.potato.module.videolist.view.IVideoListView;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
+import com.qxy.potato.util.MyUtil;
 import com.qxy.potato.util.ToastUtil;
 
 /**
@@ -34,7 +35,7 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, Coordinator
 	//我的榜单类型 * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
 	private static final int TYPE = 3;
 
-	private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getContext());
+	private rankRecyclerViewAdapter mAdapter ;
 
 	//折叠式标题
 	private CollapsingToolbarLayout toolbarLayout;
@@ -61,10 +62,11 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, Coordinator
 		if (actionBar != null)
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		toolbarLayout.setTitle("综艺榜");
-		Glide.with(this).load(R.mipmap.variety_rank).into(background);
+		Glide.with(this).load(MyUtil.getString(R.string.pic)).into(background);
 
 		mTime = getBinding().textviewRankTime;
 
+		mAdapter = new rankRecyclerViewAdapter(getContext(),TYPE);
 		mRecyclerView = getBinding().recyclerview;
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 		mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -89,7 +91,6 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, Coordinator
 
 	@Override public void showRank(VideoList videoList) {
 
-		SuccessHideLoading();
 
 		//更新时间
 		mTime.setText("本周榜|更新于 "+videoList.getActive_time());
@@ -104,7 +105,6 @@ public class VarietyRankFragment extends BaseFragment<RankPresenter, Coordinator
 
 	@Override public void getRankFailed(String msg) {
 
-		FailedHideLoading();
 
 		ToastUtil.showToast(msg);
 		LogUtil.i("错误原因："+msg);
