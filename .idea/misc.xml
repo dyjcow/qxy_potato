@@ -6,12 +6,22 @@
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_main.xml" value="0.13072916666666667" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/ge_ticket_button_bg.xml" value="0.1" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/getTicketButtonBG.xml" value="0.1" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/home_textview.xml" value="0.1" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/home_textview_top.xml" value="0.125" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/tab_indicator.xml" value="0.1" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_home.xml" value="0.264" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_login.xml" value="0.24947916666666667" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_main.xml" value="0.109375" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_rank.xml" value="0.24947916666666667" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_test.xml" value="0.1" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/home_dialog_show.xml" value="0.19895833333333332" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/home_reycylerview_header.xml" value="0.264" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/rank.xml" value="0.24947916666666667" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/recyclerview_home_header.xml" value="0.24947916666666667" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.264" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/reycylerview_item_home.xml" value="0.4" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/menu/home_nav_menu.xml" value="0.1" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/menu/home_toolbar.xml" value="0.16" />
       </map>
     </option>
   </component>
