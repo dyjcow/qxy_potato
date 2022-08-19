@@ -10,4 +10,5 @@
     <string name="CONNECT_TIMEOUT_MSG">连接超时</string>
     <string name="OTHER_MSG">未知错误</string>
     <string name="rank_rule">榜单规则</string>
+    <string name="login">抖音号快捷登录</string>
 </resources>
