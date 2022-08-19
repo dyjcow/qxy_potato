@@ -21,7 +21,6 @@ import java.util.List;
 public class RankPageAdapter extends FragmentPagerAdapter {
 
 	private List<Fragment> mFragmentList;
-	private List<String> mTitleList ;
 
 	public RankPageAdapter(@NonNull FragmentManager fm) {
 		super(fm);
@@ -31,11 +30,9 @@ public class RankPageAdapter extends FragmentPagerAdapter {
 	 *
 	 * @param fm
 	 * @param fragmentList
-	 * @param titleList 标题名
 	 */
-	public RankPageAdapter(@NonNull FragmentManager fm,List<Fragment> fragmentList,List<String> titleList){
+	public RankPageAdapter(@NonNull FragmentManager fm,List<Fragment> fragmentList){
 		super(fm);
-		mTitleList = titleList;
 		mFragmentList = fragmentList;
 	}
 
@@ -46,17 +43,6 @@ public class RankPageAdapter extends FragmentPagerAdapter {
 
 	@Override public int getCount() {
 		return mFragmentList.size();
-	}
-
-	/**
-	 * 显示标题
-	 * @param position
-	 * @return
-	 */
-	@Nullable
-	@Override
-	public CharSequence getPageTitle(int position) {
-		return mTitleList.get(position);
 	}
 
 }

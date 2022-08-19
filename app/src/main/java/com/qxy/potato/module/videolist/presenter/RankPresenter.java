@@ -69,9 +69,9 @@ public class RankPresenter extends BasePresenter<IVideoListView> {
 	 */
 	public void getClientToken(int tmp){
 		HashMap<String,String> map = new HashMap<>();
-		map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.client_secret_k));
+		map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
 		map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
-		map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.client_key_k));
+		map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
 		addDisposable(apiServer.PostClientToken(map), new BaseObserver<ClientToken>(baseView,false) {
 
 

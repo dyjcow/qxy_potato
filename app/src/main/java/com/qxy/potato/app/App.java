@@ -10,6 +10,7 @@ import com.bytedance.sdk.open.douyin.DouYinOpenConfig;
 import com.didichuxing.doraemonkit.DoKit;
 
 import com.qxy.potato.MyEventBusIndex;
+import com.qxy.potato.R;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
@@ -53,12 +54,12 @@ public class App extends Application {
         MMKV.initialize(this);
         //载入Dokit监测
         new DoKit.Builder(this)
-                .productId("8b4b6b21efed31323e2dc4bf07268d7f")
+                .productId(context.getString(R.string.value_dokit_pid))
                 .build();
         //使用订阅索引，加快编译速度
         EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
         // 抖音授权
-        String clientkey = "aw8i3d4fhpduf8eg";
+        String clientkey = context.getString(R.string.value_client_key);
         DouYinOpenApiFactory.init(new DouYinOpenConfig(clientkey));
         //初始化
         MyUtil.initialize(this);

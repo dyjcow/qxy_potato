@@ -7,9 +7,12 @@ import com.qxy.potato.base.BaseBean;
 import com.qxy.potato.base.BaseObserver;
 import com.qxy.potato.base.BasePresenter;
 import com.qxy.potato.bean.AccessToken;
-import com.qxy.potato.bean.BodyClient;
 import com.qxy.potato.bean.ClientToken;
+import com.qxy.potato.bean.Fans;
+import com.qxy.potato.bean.Followings;
+import com.qxy.potato.bean.MyVideo;
 import com.qxy.potato.bean.PictureGirl;
+import com.qxy.potato.bean.UserInfo;
 import com.qxy.potato.bean.VideoVersion;
 import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
@@ -18,16 +21,8 @@ import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
 import com.tencent.mmkv.MMKV;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 
 /**
@@ -50,16 +45,17 @@ public class MinePresenter extends BasePresenter<IMineView> {
      */
     public void getAccessToken(String authCode){
         HashMap<String,String> map = new HashMap<>();
-        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.client_secret_k));
+        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
         map.put(MyUtil.getString(R.string.code),authCode);
         map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.authorization_code));
-        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.client_key_k));
+        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
         addDisposable(apiServer.PostAccessToken(map),
                 new BaseObserver<BaseBean<AccessToken>>(baseView, true) {
             @Override
             public void onSuccess(BaseBean<AccessToken> o) {
 
                 mmkv.encode(GlobalConstant.ACCESS_TOKEN,o.data.getAccess_token());
+                mmkv.encode(GlobalConstant.OPEN_ID,o.data.getOpen_id());
                 mmkv.encode(GlobalConstant.IS_LOGIN,true);
                 baseView.loginSuccess();
             }
@@ -75,12 +71,18 @@ public class MinePresenter extends BasePresenter<IMineView> {
      * 载入测试图片
      */
     public void loadImg(){
-        addDisposable(apiServer.getPic(), new BaseObserver<BaseBean<List<PictureGirl>>>(baseView, false) {
+        HashMap<String,String> map = new HashMap<>();
+        map.put(MyUtil.getString(R.string.app_id),MyUtil.getString(R.string.value_app_id));
+        map.put(MyUtil.getString(R.string.app_secret),MyUtil.getString(R.string.value_app_secret));
+
+
+
+
+        addDisposable(apiServer.getPic(map), new BaseObserver<BaseBean<List<PictureGirl>>>(baseView, false) {
 
             @Override
             public void onSuccess(BaseBean<List<PictureGirl>> o) {
-//图片挡住了
-//                baseView.loadImg(o.data.get(0).getImageUrl());
+                baseView.loadImg(o.data.get(0).getImageUrl());
 
             }
 
@@ -96,9 +98,9 @@ public class MinePresenter extends BasePresenter<IMineView> {
      */
     public void getClientToken(){
         HashMap<String,String> map = new HashMap<>();
-        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.client_secret_k));
+        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
         map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
-        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.client_key_k));
+        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
         addDisposable(apiServer.PostClientToken(map), new BaseObserver<BaseBean<ClientToken>>(baseView,false) {
 
 
@@ -106,7 +108,7 @@ public class MinePresenter extends BasePresenter<IMineView> {
             public void onSuccess(BaseBean<ClientToken> o) {
                 mmkv.encode(GlobalConstant.CLIENT_TOKEN,o.data.getAccess_token());
                 mmkv.encode(GlobalConstant.IS_CLIENT,true);
-                LogUtil.d(o.data.getAccess_token());
+                LogUtil.d(mmkv.decodeString(GlobalConstant.CLIENT_TOKEN));
                 baseView.cancelClientValue();
             }
 
@@ -134,5 +136,72 @@ public class MinePresenter extends BasePresenter<IMineView> {
 
                     }
                 });
+    }
+
+    public void test(){
+
+        // TODO: 2022/8/19 接口测试全部通过，可保留此方法供使用者参考
+        //接口测试代码
+        HashMap<String,Integer> queryMap = new HashMap<>();
+        HashMap<String,String> fieldMap = new HashMap<>();
+        String token = mmkv.decodeString(GlobalConstant.ACCESS_TOKEN);
+        String openId = mmkv.decodeString(GlobalConstant.OPEN_ID);
+        queryMap.put(MyUtil.getString(R.string.cursor),0);
+        queryMap.put(MyUtil.getString(R.string.count),10);
+        fieldMap.put(MyUtil.getString(R.string.open_id),mmkv.decodeString(GlobalConstant.OPEN_ID));
+        fieldMap.put(MyUtil.getString(R.string.access_token),token);
+
+        addDisposable(apiServer.GetMyFans(token,openId,queryMap),
+                new BaseObserver<BaseBean<Fans>>(baseView, false) {
+            @Override
+            public void onSuccess(BaseBean<Fans> o) {
+
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+
+        addDisposable(apiServer.GetMyInfo(fieldMap), new BaseObserver<BaseBean<UserInfo>>(baseView, false) {
+            @Override
+            public void onSuccess(BaseBean<UserInfo> o) {
+
+            }
+
+            @Override
+            public void onError(String msg) {
+                LogUtil.d(msg);
+            }
+        });
+
+        addDisposable(apiServer.GetMyVideos(token,openId,queryMap), new BaseObserver<BaseBean<MyVideo>>(baseView, false) {
+            @Override
+            public void onSuccess(BaseBean<MyVideo> o) {
+
+            }
+
+            @Override
+            public void onError(String msg) {
+                LogUtil.d(msg);
+            }
+        });
+
+        addDisposable(apiServer.GetMyFollowings(token,openId,queryMap), new BaseObserver<BaseBean<Followings>>(baseView, false) {
+            @Override
+            public void onSuccess(BaseBean<Followings> o) {
+
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+
+
+
+
     }
 }

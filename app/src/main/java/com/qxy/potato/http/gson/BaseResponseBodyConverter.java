@@ -15,7 +15,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
 /**
- * @author yechao
+ * @author yechao,dyj
  * @date 2019/11/18/018
  * Describe : 重写ResponseBodyConverter对json预处理
  */
