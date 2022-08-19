@@ -41,7 +41,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
     public boolean sendAuth() {
         Authorization.Request request = new Authorization.Request();
         request.scope = "user_info,trial.whitelist";                          // 用户授权时必选权限
-//        request.optionalScope1 = "mobile";     // 用户授权时可选权限（默认选择）
+        // 用户授权时可选权限（默认选择）
+        request.optionalScope1 = "fans.list," +
+                                "following.list," +
+                                "video.list," +
+                                "video.data";
 //        request.optionalScope0 = mOptionalScope1;    // 用户授权时可选权限（默认不选）
         request.state = "ww";                                   // 用于保持请求和回调的状态，授权请求后原样带回给第三方。
         request.callerLocalEntry = "com.qxy.potato.module.mine.activity.MineActivity";
