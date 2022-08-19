@@ -1,6 +1,7 @@
 package com.qxy.potato.module.mine.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -62,12 +63,10 @@ public class MineActivity extends BaseActivity<MinePresenter, ActivityMainBindin
     protected void initView() {
         if (kv.decodeBool(GlobalConstant.IS_LOGIN,false)){
             getBinding().btnRegister.setVisibility(View.GONE);
+            LogUtil.d(kv.decodeString(GlobalConstant.ACCESS_TOKEN));
         }
 
         presenter.loadImg();
-//        PictureGirl girl = new PictureGirl();
-//        BaseEvent<PictureGirl> ev = new BaseEvent<>(1,girl);
-//        EventBusUtil.sendEvent(ev);
         getBinding().btnRegister.setOnClickListener(v -> ActivityUtil.startActivity(LoginActivity.class));
 
         //跳转到榜单

@@ -24,6 +24,7 @@ import okhttp3.HttpUrl;
  * Created by yechao on 2019/11/19/019.
  * Describe :
  */
+//https://blog.csdn.net/zhujiangtaotaise/article/details/88129355
 public class PersistentCookieStore {
     private static final String LOG_TAG = "PersistentCookieStore";
     public static final String COOKIE_PREFS = "Cookies_Prefs";
@@ -63,11 +64,14 @@ public class PersistentCookieStore {
         String name = getCookieToken(cookie);
 
         //将cookies缓存到内存中 如果缓存过期 就重置此cookie
-        if (!cookie.persistent()) {
+        if (cookie.persistent()) {
             if (!cookies.containsKey(url.host())) {
                 cookies.put(url.host(), new ConcurrentHashMap<String, Cookie>());
             }
-            cookies.get(url.host()).put(name, cookie);
+            //不存储为空的cookie
+            if (!cookie.value().equals("")) {
+                cookies.get(url.host()).put(name, cookie);
+            }
         } else {
             if (cookies.containsKey(url.host())) {
                 if (cookies.get(url.host()) != null) {
@@ -77,7 +81,6 @@ public class PersistentCookieStore {
         }
 
         if (cookies.get(url.host()) != null) {
-
             // 将 cookies 持久化到本地
             SharedPreferences.Editor prefsWriter = cookiePrefs.edit();
             prefsWriter.putString(url.host(), TextUtils.join(",", cookies.get(url.host()).keySet()));

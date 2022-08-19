@@ -10,15 +10,18 @@
     <string name="OTHER_MSG">Unknown error</string>
     <string name="rank_rule">Rank rule</string>
 
+<!--    报文代码-->
     <string name="error_code" translatable="false">error_code</string>
     <string name="error_msg" translatable="false">description</string>
     <string name="code" translatable="false">code</string>
     <string name="msg" translatable="false">msg</string>
 
+<!--    BaseUrl-->
     <string name="url" translatable="false">https://open.douyin.com/</string>
     <string name="mxzp" translatable="false">https://www.mxnzp.com/</string>
     <string name="mock" translatable="false">https://mock.apifox.cn/m1/1441895-0-default/</string>
 
+<!--    请求参数-->
     <string name="grant_type" translatable="false">grant_type</string>
     <string name="client_key" translatable="false">client_key</string>
     <string name="client_secret" translatable="false">client_secret</string>
@@ -26,6 +29,10 @@
     <string name="client_credential" translatable="false">client_credential</string>
     <string name="app_id" translatable="false">app_id</string>
     <string name="app_secret" translatable="false">app_secret</string>
+    <string name="cursor" translatable="false">cursor</string>
+    <string name="count" translatable="false">count</string>
+    <string name="open_id" translatable="false">open_id</string>
+    <string name="access_token" translatable="false">access_token</string>
 
 
 </resources>

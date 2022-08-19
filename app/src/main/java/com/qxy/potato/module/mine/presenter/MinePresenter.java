@@ -8,7 +8,11 @@ import com.qxy.potato.base.BaseObserver;
 import com.qxy.potato.base.BasePresenter;
 import com.qxy.potato.bean.AccessToken;
 import com.qxy.potato.bean.ClientToken;
+import com.qxy.potato.bean.Fans;
+import com.qxy.potato.bean.Followings;
+import com.qxy.potato.bean.MyVideo;
 import com.qxy.potato.bean.PictureGirl;
+import com.qxy.potato.bean.UserInfo;
 import com.qxy.potato.bean.VideoVersion;
 import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
@@ -51,6 +55,7 @@ public class MinePresenter extends BasePresenter<IMineView> {
             public void onSuccess(BaseBean<AccessToken> o) {
 
                 mmkv.encode(GlobalConstant.ACCESS_TOKEN,o.data.getAccess_token());
+                mmkv.encode(GlobalConstant.OPEN_ID,o.data.getOpen_id());
                 mmkv.encode(GlobalConstant.IS_LOGIN,true);
                 baseView.loginSuccess();
             }
@@ -69,12 +74,15 @@ public class MinePresenter extends BasePresenter<IMineView> {
         HashMap<String,String> map = new HashMap<>();
         map.put(MyUtil.getString(R.string.app_id),MyUtil.getString(R.string.value_app_id));
         map.put(MyUtil.getString(R.string.app_secret),MyUtil.getString(R.string.value_app_secret));
+
+
+
+
         addDisposable(apiServer.getPic(map), new BaseObserver<BaseBean<List<PictureGirl>>>(baseView, false) {
 
             @Override
             public void onSuccess(BaseBean<List<PictureGirl>> o) {
-//图片挡住了
-//                baseView.loadImg(o.data.get(0).getImageUrl());
+                baseView.loadImg(o.data.get(0).getImageUrl());
 
             }
 
@@ -100,7 +108,7 @@ public class MinePresenter extends BasePresenter<IMineView> {
             public void onSuccess(BaseBean<ClientToken> o) {
                 mmkv.encode(GlobalConstant.CLIENT_TOKEN,o.data.getAccess_token());
                 mmkv.encode(GlobalConstant.IS_CLIENT,true);
-                LogUtil.d(o.data.getAccess_token());
+                LogUtil.d(mmkv.decodeString(GlobalConstant.CLIENT_TOKEN));
                 baseView.cancelClientValue();
             }
 
@@ -128,5 +136,72 @@ public class MinePresenter extends BasePresenter<IMineView> {
 
                     }
                 });
+    }
+
+    public void test(){
+
+        // TODO: 2022/8/19 接口测试全部通过，可保留此方法供使用者参考
+        //接口测试代码
+        HashMap<String,Integer> queryMap = new HashMap<>();
+        HashMap<String,String> fieldMap = new HashMap<>();
+        String token = mmkv.decodeString(GlobalConstant.ACCESS_TOKEN);
+        String openId = mmkv.decodeString(GlobalConstant.OPEN_ID);
+        queryMap.put(MyUtil.getString(R.string.cursor),0);
+        queryMap.put(MyUtil.getString(R.string.count),10);
+        fieldMap.put(MyUtil.getString(R.string.open_id),mmkv.decodeString(GlobalConstant.OPEN_ID));
+        fieldMap.put(MyUtil.getString(R.string.access_token),token);
+
+        addDisposable(apiServer.GetMyFans(token,openId,queryMap),
+                new BaseObserver<BaseBean<Fans>>(baseView, false) {
+            @Override
+            public void onSuccess(BaseBean<Fans> o) {
+
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+
+        addDisposable(apiServer.GetMyInfo(fieldMap), new BaseObserver<BaseBean<UserInfo>>(baseView, false) {
+            @Override
+            public void onSuccess(BaseBean<UserInfo> o) {
+
+            }
+
+            @Override
+            public void onError(String msg) {
+                LogUtil.d(msg);
+            }
+        });
+
+        addDisposable(apiServer.GetMyVideos(token,openId,queryMap), new BaseObserver<BaseBean<MyVideo>>(baseView, false) {
+            @Override
+            public void onSuccess(BaseBean<MyVideo> o) {
+
+            }
+
+            @Override
+            public void onError(String msg) {
+                LogUtil.d(msg);
+            }
+        });
+
+        addDisposable(apiServer.GetMyFollowings(token,openId,queryMap), new BaseObserver<BaseBean<Followings>>(baseView, false) {
+            @Override
+            public void onSuccess(BaseBean<Followings> o) {
+
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+
+
+
+
     }
 }
