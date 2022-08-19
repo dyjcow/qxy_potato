@@ -34,7 +34,11 @@
     <string name="count" translatable="false">count</string>
     <string name="open_id" translatable="false">open_id</string>
     <string name="access_token" translatable="false">access_token</string>
+
+<!--    Login页面-->
     <string name="login">Login With Tiktok</string>
+    <string name="has_read">I have read and agree</string>
+    <string name="user_agreement">\'User Agreement\'</string>
 
 
 </resources>

@@ -11,4 +11,6 @@
     <string name="OTHER_MSG">未知错误</string>
     <string name="rank_rule">榜单规则</string>
     <string name="login">抖音号快捷登录</string>
+    <string name="has_read">我已阅读并同意</string>
+    <string name="user_agreement">“用户协议”</string>
 </resources>
