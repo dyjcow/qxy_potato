@@ -27,7 +27,7 @@
         app:tabIndicatorAnimationDuration="1000"
         app:tabIndicatorColor="#1A1A1A"
         app:tabIndicatorHeight="0dp"
-        app:tabRippleColor="#F2F2F2"
+        app:tabRippleColor="@android:color/transparent"
         app:tabSelectedTextColor="#1A1A1A"
         app:tabTextAppearance="@style/unselected_tab_text">
 

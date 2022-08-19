@@ -17,6 +17,7 @@ import com.bytedance.sdk.open.aweme.common.model.BaseReq;
 import com.bytedance.sdk.open.aweme.common.model.BaseResp;
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
+import com.qxy.potato.R;
 import com.qxy.potato.base.BaseActivity;
 import com.qxy.potato.base.BaseEvent;
 import com.qxy.potato.bean.PictureGirl;
@@ -25,6 +26,7 @@ import com.qxy.potato.bean.VideoVersion;
 import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.databinding.ActivityMainBinding;
+import com.qxy.potato.module.mine.fragment.FollowFragment;
 import com.qxy.potato.module.mine.presenter.MinePresenter;
 import com.qxy.potato.module.mine.view.IMineView;
 import com.qxy.potato.module.mine.workmanager.ClientCancelWork;
@@ -70,7 +72,20 @@ public class MineActivity extends BaseActivity<MinePresenter, ActivityMainBindin
         getBinding().btnRegister.setOnClickListener(v -> ActivityUtil.startActivity(LoginActivity.class));
 
         //跳转到榜单
-        getBinding().imgRank.setOnClickListener(v->ActivityUtil.startActivity(RankActivity.class));
+//        getBinding().imgRank.setOnClickListener(v->ActivityUtil.startActivity(RankActivity.class));
+
+        //test
+        getBinding().imgRank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.constraintLayout,new FollowFragment()).addToBackStack(null).commit();
+
+            }
+        });
+
+
+
 
         presenter.getClientVersionDemo();
 

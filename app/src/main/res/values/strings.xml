@@ -9,6 +9,8 @@
     <string name="CONNECT_TIMEOUT_MSG">Connection timed out</string>
     <string name="OTHER_MSG">Unknown error</string>
     <string name="rank_rule">Rank rule</string>
+    <string name="follow">follow</string>
+    <string name="followers">followers</string>
 
 <!--    报文代码-->
     <string name="error_code" translatable="false">error_code</string>
@@ -35,6 +37,7 @@
     <string name="open_id" translatable="false">open_id</string>
     <string name="access_token" translatable="false">access_token</string>
     <string name="login">Login With Tiktok</string>
+
 
 
 </resources>
