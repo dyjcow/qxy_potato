@@ -14,10 +14,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.bytedance.sdk.open.aweme.CommonConstants;
+import com.bytedance.sdk.open.aweme.authorize.model.Authorization;
+import com.bytedance.sdk.open.aweme.common.handler.IApiEventHandler;
+import com.bytedance.sdk.open.aweme.common.model.BaseReq;
+import com.bytedance.sdk.open.aweme.common.model.BaseResp;
+import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
+import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.android.material.appbar.AppBarLayout;
@@ -33,11 +43,15 @@ import com.qxy.potato.module.home.adapter.HomeItemDecoration;
 import com.qxy.potato.module.home.presenter.HomePresenter;
 import com.qxy.potato.module.home.view.IHomeView;
 import com.qxy.potato.module.mine.activity.LoginActivity;
+import com.qxy.potato.module.mine.workmanager.ClientCancelWork;
 import com.qxy.potato.module.videolist.activity.RankActivity;
+import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.DisplayUtil;
 
 
-
+import com.qxy.potato.util.LogUtil;
+import com.qxy.potato.util.MyUtil;
+import com.qxy.potato.util.ToastUtil;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
@@ -48,13 +62,15 @@ import com.tencent.mmkv.MMKV;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
-public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBinding>implements IHomeView {
+public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBinding>implements IHomeView, IApiEventHandler {
 
     private MMKV mmkv=MMKV.defaultMMKV();
     private HomeAdapter adapter;
     private Integer getLIke=0;
+    private DouYinOpenApi douYinOpenApi;
     
     @Override
     protected HomePresenter createPresenter() {
@@ -64,28 +80,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     List<MyVideo.Videos> list=new ArrayList<>();
     @Override
     protected void initView() {
-
-
-        adapter=new HomeAdapter(R.layout.reycylerview_item_home,list);
-        adapter.addChildClickViewIds(R.id.home_item_imageView);
-
-        //recyclerview初始化
-        getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120,5,5,5));
-        getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this,3));
-        getBinding().recyclerViewHome.setAdapter( adapter);
         CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.home_collapsing_toolbar);
         AppBarLayout appBarLayout=findViewById(R.id.appBar);
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                // TODO: 2022/8/20  填入webViewActivity
-                /*Intent intent=new Intent(HomeActivity.class,*//*webView*//*);
-                intent.putExtra("shareUrl",list.get(position).getShare_url());
-                startActivity(intent);*/
-            }
-        });
-
-
         //设置toolbar
         Toolbar toolbar=findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
@@ -135,11 +131,10 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         //通过DrawerLayout打开榜单页面 和登录页
         getBinding().homeNavigationView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId()==R.id.nav_rank){
-                startActivity(new Intent(HomeActivity.this, RankActivity.class));
-            }else if (item.getItemId()==R.id.nav_login)
-            {
-                if (getBinding().homeNavigationView.getMenu().getItem(1).getTitle().equals("登录")) {
-                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                ActivityUtil.startActivity(RankActivity.class);
+            }else if (item.getItemId()==R.id.nav_login) {
+                if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)) {
+                    ActivityUtil.startActivity(LoginActivity.class,true);
                 }else {
                     mmkv.encode(GlobalConstant.IS_LOGIN,false);
                     Intent intent = new Intent(HomeActivity.this,HomeActivity.class);
@@ -148,6 +143,13 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 }
             }
             return true;
+        });
+
+        //跳转去登录页
+        getBinding().homeIcon.setOnClickListener(v -> {
+            if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN))
+                getBinding().homeNavigationView.getMenu().getItem(1).setTitle("登出");
+                ActivityUtil.startActivity(LoginActivity.class,true);
         });
 
         //下拉加载更多
@@ -160,7 +162,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
                  if (isHasMore&&checkList.size()!=0) {
                      presenter.getPersonalVideoList(cursor);
-
                      refreshLayout.finishLoadMore(true);
                  }else {
                      refreshLayout.finishLoadMore(true);
@@ -170,8 +171,11 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
              }
          });
 
-
-
+         //首次进入获取clientToken
+        initClient();
+        //设置登录回调
+        douYinOpenApi = DouYinOpenApiFactory.create(this);
+        douYinOpenApi.handleIntent(getIntent(), this);
     }
 
 
@@ -210,7 +214,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         presenter.getPersonInfo();
         presenter.getPersonalVideoList(cursor);
         // TODO: 2022/8/20 此处通过修改图片URL来配置背景图片（接口无） 
-        Glide.with(this).load("https://www.keaidian.com/uploads/allimg/190424/24110307_23.jpg").into(new CustomTarget<Drawable>() {
+        Glide.with(this).load("https://www.lxtlovely.top/getpic.php").into(new CustomTarget<Drawable>() {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                 getBinding().homeBackground.setBackground(resource);
@@ -227,8 +231,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         }else {
             getBinding().homeNavigationView.getMenu().getItem(1).setTitle("登录");
         }
-
-
+        LogUtil.d("initData");
     }
 
 
@@ -254,6 +257,22 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     public void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore,long cursor) {
         this.isHasMore=isHasMore;
         this.cursor=cursor;
+        adapter=new HomeAdapter(R.layout.reycylerview_item_home,list);
+        adapter.addChildClickViewIds(R.id.home_item_imageView);
+
+        //recyclerview初始化
+        getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120,5,5,5));
+        getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this,3));
+        getBinding().recyclerViewHome.setAdapter( adapter);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                // TODO: 2022/8/20  填入webViewActivity
+                /*Intent intent=new Intent(HomeActivity.class,*//*webView*//*);
+                intent.putExtra("shareUrl",list.get(position).getShare_url());
+                startActivity(intent);*/
+            }
+        });
         if (videos!=null) {
 
             for (int i = 0; i < videos.size(); i++) {
@@ -271,12 +290,71 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     }
 
+    /**
+     * 成功登录的操作
+     */
+    @Override
+    public void loginSuccess() {
+        initData();
+        ToastUtil.showToast("授权登录成功");
+    }
+
+    /**
+     * 登录失败的操作
+     *
+     * @param msg
+     */
+    @Override
+    public void loginFailed(String msg) {
+        ToastUtil.showToast(msg);
+    }
+
+    @Override
+    public void cancelClientValue() {
+        WorkRequest request = new OneTimeWorkRequest.Builder(ClientCancelWork.class)
+                .setInitialDelay(2, TimeUnit.HOURS)
+                .build();
+        WorkManager.getInstance(this).enqueue(request);
+    }
+
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("onRestart", "onRestart: "+mmkv.decodeBool(GlobalConstant.IS_LOGIN));
-        initData();
+        LogUtil.d("onRestart: "+mmkv.decodeBool(GlobalConstant.IS_LOGIN));
+//        initData();
 
+    }
+
+    @Override
+    public void onReq(BaseReq baseReq) {
+
+    }
+
+    @Override
+    public void onResp(BaseResp baseResp) {
+        if (baseResp.getType() == CommonConstants.ModeType.SEND_AUTH_RESPONSE) {
+            Authorization.Response response = (Authorization.Response) baseResp;
+            if (baseResp.isSuccess()) {
+                LogUtil.d("onRES");
+                presenter.getAccessToken(response.authCode);
+            }else {
+                ToastUtil.showToast("授权失败");
+            }
+        }
+    }
+
+    @Override
+    public void onErrorIntent(Intent intent) {
+
+    }
+
+
+    /**
+     * 初始化连接型token
+     */
+    private void initClient() {
+        mmkv.encode(GlobalConstant.IS_CLIENT,false);
+        presenter.getClientToken();
     }
 }

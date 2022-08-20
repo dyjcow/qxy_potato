@@ -34,9 +34,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".tetsActivity"
-            android:exported="false" />
-        <activity
             android:name=".module.videolist.activity.RankActivity"
             android:exported="false" />
         <activity

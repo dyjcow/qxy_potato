@@ -16,4 +16,17 @@ public interface IHomeView extends BaseView {
     void showPersonalInfo(UserInfo userInfo);
 
     void showPersonalVideo(List<MyVideo.Videos> videos,boolean isHasMore,long cursor);
+
+
+    /**
+     * 成功登录的操作
+     */
+    void loginSuccess();
+
+    /**
+     * 登录失败的操作
+     */
+    void loginFailed(String msg);
+
+    void cancelClientValue();
 }
