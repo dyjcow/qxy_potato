@@ -4,7 +4,11 @@ import com.qxy.potato.R;
 import com.qxy.potato.base.BaseBean;
 import com.qxy.potato.bean.AccessToken;
 import com.qxy.potato.bean.ClientToken;
+import com.qxy.potato.bean.Fans;
+import com.qxy.potato.bean.Followings;
+import com.qxy.potato.bean.MyVideo;
 import com.qxy.potato.bean.PictureGirl;
+import com.qxy.potato.bean.UserInfo;
 import com.qxy.potato.bean.VideoList;
 import com.qxy.potato.bean.VideoVersion;
 import com.qxy.potato.util.MyUtil;
@@ -26,6 +30,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * @author ：Dyj
@@ -98,7 +103,7 @@ public class API {
 
 
         /**
-         * 获取本周榜单
+         * 获取以往榜单
          *
          * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
          * @param version 从其他地方获取到传入的的榜单版本
@@ -124,5 +129,48 @@ public class API {
         Observable<BaseBean<VideoVersion>> GetVideoVersion(@Query("type") int type,
                                                            @Query("count") int count,
                                                            @Header("access-token") String token);
+
+        /**
+         * @param fieldMap 传入 open_id 和 access_token
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/x-www-form-urlencoded"})
+        @FormUrlEncoded
+        @POST("oauth/userinfo/")
+        Observable<BaseBean<UserInfo>> GetMyInfo(@FieldMap HashMap<String,String> fieldMap);
+
+
+        /**
+         * @param accessToken access_token
+         * @param queryMap 传入 open_id 、cursor 和 count
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/json"})
+        @GET("fans/list/")
+        Observable<BaseBean<Fans>> GetMyFans(@Header("access-token") String accessToken,
+                                             @Query("open_id") String open_id,
+                                             @QueryMap HashMap<String,Integer> queryMap);
+
+        /**
+         * @param accessToken access_token
+         * @param queryMap 传入 open_id 、cursor 和 count
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/json"})
+        @GET("following/list/")
+        Observable<BaseBean<Followings>> GetMyFollowings(@Header("access-token") String accessToken,
+                                                         @Query("open_id") String open_id,
+                                                         @QueryMap HashMap<String,Integer> queryMap);
+
+        /**
+         * @param accessToken access_token
+         * @param queryMap 传入 open_id 、cursor 和 count
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/json"})
+        @GET("video/list/")
+        Observable<BaseBean<MyVideo>> GetMyVideos(@Header("access-token") String accessToken,
+                                                  @Query("open_id") String open_id,
+                                                  @QueryMap HashMap<String,Long> queryMap);
     }
 }

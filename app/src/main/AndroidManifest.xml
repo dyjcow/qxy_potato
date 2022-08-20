@@ -15,38 +15,44 @@
     </queries>
 
     <application
-            android:name=".app.App"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:networkSecurityConfig="@xml/network_security_config"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/Theme.Potato"
-            tools:targetApi="31">
+        android:name=".app.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Potato"
+        tools:targetApi="31">
         <activity
                 android:name=".module.mine.activity.WebViewTestActivity"
                 android:exported="false" />
 
         <activity
-                android:name=".module.videolist.activity.RankActivity"
-                android:exported="false" />
-        <activity
-                android:name=".module.mine.activity.LoginActivity"
-                android:exported="false" />
-        <activity
-                android:name=".module.mine.activity.MineActivity"
-                android:exported="true">
+            android:name=".module.home.activity.HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".module.videolist.activity.RankActivity"
+            android:exported="false" />
+        <activity
+            android:name=".module.mine.activity.LoginActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".module.mine.activity.MineActivity"
+            android:exported="true">
+        </activity>
 
         <receiver
-                android:name=".module.douyinapi.StayInDyReceiver"
-                android:exported="true">
+            android:name=".module.douyinapi.StayInDyReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.aweme.opensdk.action.stay.in.dy" />
                 <action android:name="com.aweme.opensdk.action.stay.in.dy.im" />

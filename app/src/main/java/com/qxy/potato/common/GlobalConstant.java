@@ -18,6 +18,7 @@ public class GlobalConstant {
 
     public static final String IS_CLIENT = "is_client";
 
+    public static final String OPEN_ID = "open_id";
 
 
 }

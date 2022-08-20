@@ -21,7 +21,11 @@ import com.qxy.potato.module.videolist.rank.rankRecyclerViewAdapter;
 import com.qxy.potato.module.videolist.view.IVideoListView;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
+import com.qxy.potato.util.MyUtil;
 import com.qxy.potato.util.ToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Soul Mate
@@ -34,7 +38,9 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, CoordinatorRan
     //我的榜单类型 * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
     private static final int TYPE = 1;
 
-    private rankRecyclerViewAdapter mAdapter = new rankRecyclerViewAdapter(getContext());
+
+
+	private rankRecyclerViewAdapter mAdapter ;
 
     //折叠式标题
     private CollapsingToolbarLayout toolbarLayout;
@@ -63,14 +69,17 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, CoordinatorRan
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 		toolbarLayout.setTitle("电影榜");
-        Glide.with(this).load(R.mipmap.movie_rank).into(background);
+        Glide.with(this).load(MyUtil.getString(R.string.pic)).into(background);
 
         mTime = getBinding().textviewRankTime;
 
-        mRecyclerView = getBinding().recyclerview;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.addItemDecoration(new MyItemDecoration(getContext()));
+
+		mRecyclerView = getBinding().recyclerview;
+		mAdapter=new rankRecyclerViewAdapter(getContext(),TYPE);
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+		mRecyclerView.setLayoutManager(linearLayoutManager);
+		mRecyclerView.addItemDecoration(new MyItemDecoration(getContext()));
+		mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setAdapter(mAdapter);
 
         //设置点击事件
@@ -83,9 +92,9 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, CoordinatorRan
     @Override
     protected void initData() {
 
-        showLoading();
-        //第一次获取本周的榜单
-        presenter.getNowRank(TYPE);
+
+		//第一次获取本周的榜单
+		presenter.getNowRank(TYPE);
 
 
     }
@@ -94,7 +103,6 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, CoordinatorRan
     @Override
     public void showRank(VideoList videoList) {
 
-        SuccessHideLoading();
 
         //更新时间
         mTime.setText("本周榜|更新于 " + videoList.getActive_time());
@@ -107,8 +115,6 @@ public class FilmRankFragment extends BaseFragment<RankPresenter, CoordinatorRan
 
     @Override
     public void getRankFailed(String msg) {
-
-        FailedHideLoading();
 
         ToastUtil.showToast(msg);
         LogUtil.i("错误原因：" + msg);
