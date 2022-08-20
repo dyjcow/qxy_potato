@@ -72,24 +72,21 @@ public class HomePresenter extends BasePresenter<IHomeView> {
         if (!isLogin){
             return;
         }
-        if (mmkv.decodeBool(GlobalConstant.IS_CLIENT,true)) {
-            HashMap<String,Long> map=new HashMap<>();
-            map.put("cursor",cursor);
-            map.put("count",(long)5);
-            addDisposable(apiServer.GetMyVideos(access_token, openId, map), new BaseObserver<BaseBean<MyVideo>>(baseView,false) {
-                @Override
-                public void onSuccess(BaseBean<MyVideo> o) {
-                    baseView.showPersonalVideo(o.data.getList(),o.data.isHas_more(),o.data.getCursor());
-                }
-
-                @Override
-                public void onError(String msg) {
-
-                    Toast.makeText((Context) baseView, msg, Toast.LENGTH_SHORT).show();
-                }
+        HashMap<String,Long> map=new HashMap<>();
+        map.put("cursor",cursor);
+        map.put("count",(long)5);
+        addDisposable(apiServer.GetMyVideos(access_token, openId, map), new BaseObserver<BaseBean<MyVideo>>(baseView,false) {
+            @Override
+            public void onSuccess(BaseBean<MyVideo> o) {
+                baseView.showPersonalVideo(o.data.getList(),o.data.isHas_more(),o.data.getCursor());
+            }
+            @Override
+            public void onError(String msg) {
+                Toast.makeText((Context) baseView, msg, Toast.LENGTH_SHORT).show();
+            }
             });
 
-        }
+
 
     }
 }

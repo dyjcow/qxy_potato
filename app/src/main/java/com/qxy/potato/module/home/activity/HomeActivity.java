@@ -54,7 +54,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     private MMKV mmkv=MMKV.defaultMMKV();
     private HomeAdapter adapter;
-    private Integer getLIke=0;
+
     
     @Override
     protected HomePresenter createPresenter() {
@@ -70,7 +70,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         adapter.addChildClickViewIds(R.id.home_item_imageView);
 
         //recyclerview初始化
-        getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120,5,5,5));
+        getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(1,0,0,0));
         getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this,3));
         getBinding().recyclerViewHome.setAdapter( adapter);
         CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.home_collapsing_toolbar);
@@ -104,11 +104,22 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
                 collapsingToolbarLayout.setTitle(" 作品");
                 getBinding().homeIconSmall.setVisibility(View.VISIBLE);
+
+
+                if (getBinding().homeToolbar.getMenu().findItem(R.id.open_rank)!=null) {
+                    getBinding().homeToolbar.getMenu().findItem(R.id.open_rank).setIcon(R.mipmap.home_openrank);
+                }
+
                 //Toast.makeText(getApplicationContext(),"折叠了",Toast.LENGTH_SHORT).show();
             }else {   //展开监听
                // Toast.makeText(getApplicationContext(),"展开了",Toast.LENGTH_SHORT).show();
                 getBinding().homeIconSmall.setVisibility(View.INVISIBLE);
                 collapsingToolbarLayout.setTitle(" ");
+
+                if (getBinding().homeToolbar.getMenu().findItem(R.id.open_rank)!=null) {
+                    getBinding().homeToolbar.getMenu().findItem(R.id.open_rank).setIcon(R.mipmap.home_openrank2);
+                }
+
             }
         });
         //点击小头像返回顶部
@@ -129,7 +140,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                     rxDialogSure.cancel();
                 }
             });
-            rxDialogSure.setContent("你一共获得"+getLIke+"点赞");
+            rxDialogSure.setContent("你一共获得"+getLiked+"点赞");
             rxDialogSure.show();
         });
         //通过DrawerLayout打开榜单页面 和登录页
@@ -138,7 +149,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 startActivity(new Intent(HomeActivity.this, RankActivity.class));
             }else if (item.getItemId()==R.id.nav_login)
             {
-                if (getBinding().homeNavigationView.getMenu().getItem(1).getTitle().equals("登录")) {
+                if (getBinding().homeNavigationView.getMenu().getItem(2).getTitle().equals("登录")) {
                     startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 }else {
                     mmkv.encode(GlobalConstant.IS_LOGIN,false);
@@ -160,7 +171,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
                  if (isHasMore&&checkList.size()!=0) {
                      presenter.getPersonalVideoList(cursor);
-
                      refreshLayout.finishLoadMore(true);
                  }else {
                      refreshLayout.finishLoadMore(true);
@@ -223,9 +233,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         });
         boolean isLogin=mmkv.decodeBool(GlobalConstant.IS_LOGIN);
         if (isLogin){
-            getBinding().homeNavigationView.getMenu().getItem(1).setTitle("登出");
+            getBinding().homeNavigationView.getMenu().getItem(2).setTitle("登出");
         }else {
-            getBinding().homeNavigationView.getMenu().getItem(1).setTitle("登录");
+            getBinding().homeNavigationView.getMenu().getItem(2).setTitle("登录");
         }
 
 
@@ -235,7 +245,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     @Override
     public void showPersonalInfo(UserInfo userInfo) {
-        getBinding().homeTextViewLike.setText(getLIke+"获赞");
+        //getBinding().homeTextViewLike.setText(HomeAdapter.getLiked+"获赞");
         getBinding().homeTextViewFans.setText(0+"粉丝");
         getBinding().homeTextViewFollower.setText(0+"关注");
         getBinding().textViewIntroduce.setText("无");
@@ -250,22 +260,25 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     }
 
     private List<MyVideo.Videos> checkList=new ArrayList<>();
+    private int getLiked=0;
     @Override
     public void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore,long cursor) {
         this.isHasMore=isHasMore;
         this.cursor=cursor;
         if (videos!=null) {
-
+            int position=list.size()-1;
             for (int i = 0; i < videos.size(); i++) {
                 checkList.clear();
                 if (!videos.get(i).getShare_url().equals(""))
                 {
+                    getLiked+=videos.get(i).getStatistics().getDigg_count();
                     checkList.add(videos.get(i));
                     adapter.addData(videos.get(i));
                 }
             }
+            getBinding().homeTextViewLike.setText(getLiked+"获赞");
 
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemChanged(position);
         }
 
 
@@ -275,7 +288,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("onRestart", "onRestart: "+mmkv.decodeBool(GlobalConstant.IS_LOGIN));
         initData();
 
     }

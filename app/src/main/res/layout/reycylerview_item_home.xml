@@ -12,47 +12,68 @@
 
     <ImageView
         android:id="@+id/home_item_imageView"
-        android:layout_width="@dimen/dp_110"
-        android:layout_height="@dimen/dp_140"
-        android:scaleType="fitXY"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_150"
+        android:scaleType="centerCrop"
         android:src="@mipmap/home_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:textColor="@color/white"
         android:id="@+id/likeCount"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_height="@dimen/dk_dp_15"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="6dp"
         android:text="TextView"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/playCount"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_height="15dp"
+        android:layout_marginBottom="8dp"
         android:text="TextView"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/likeCount"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/imageView" />
 
     <TextView
-        android:textSize="15sp"
-        android:background="@drawable/home_textview_top"
         android:id="@+id/home_textView_Top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="4dp"
+        android:background="@drawable/home_textview_top"
         android:text="顶置"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@+id/playCount"
         app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="16dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.807"
+        app:srcCompat="@mipmap/home_rvitem_playcount" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/likeCount"
+        app:srcCompat="@mipmap/home_vritem_like" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

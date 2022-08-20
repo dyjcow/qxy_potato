@@ -20,9 +20,13 @@
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/drawable/tab_indicator.xml" value="0.1" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_home.xml" value="0.24947916666666667" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_login.xml" value="0.24947916666666667" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/activity_rank.xml" value="0.24947916666666667" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/home_recyclerview_footer.xml" value="0.24947916666666667" />
         <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.264" />
-        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/reycylerview_item_home.xml" value="0.536" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/layout/reycylerview_item_home.xml" value="0.41312741312741313" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/menu/home_nav_menu.xml" value="0.19895833333333332" />
+        <entry key="..\:/androidCode/ByteDanceQXY/app/src/main/res/menu/home_toolbar.xml" value="0.16799999999999998" />
       </map>
     </option>
   </component>
