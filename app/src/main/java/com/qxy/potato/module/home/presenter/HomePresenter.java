@@ -44,23 +44,21 @@ public class HomePresenter extends BasePresenter<IHomeView> {
             RxToast.error("请先登录");
             return;
         }
-        if (mmkv.decodeBool(GlobalConstant.IS_CLIENT,true)){
-            HashMap<String,String> map=new HashMap();
-            map.put(MyUtil.getString(R.string.open_id),openId);
-            map.put(MyUtil.getString(R.string.access_token),access_token);
-            addDisposable(apiServer.GetMyInfo(map), new BaseObserver<BaseBean<UserInfo>>(baseView,false) {
 
-                @Override
-                public void onSuccess(BaseBean<UserInfo> o) {
-                    baseView.showPersonalInfo(o.data);
-                }
+        HashMap<String,String> map=new HashMap();
+        map.put(MyUtil.getString(R.string.open_id),openId);
+        map.put(MyUtil.getString(R.string.access_token),access_token);
+        addDisposable(apiServer.GetMyInfo(map), new BaseObserver<BaseBean<UserInfo>>(baseView,false) {
+            @Override
+            public void onSuccess(BaseBean<UserInfo> o) {
+                baseView.showPersonalInfo(o.data);
+            }
+            @Override
+            public void onError(String msg) {
+                Toast.makeText((Context) baseView, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
 
-                @Override
-                public void onError(String msg) {
-                    Toast.makeText((Context) baseView, msg, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
 
     }
 
