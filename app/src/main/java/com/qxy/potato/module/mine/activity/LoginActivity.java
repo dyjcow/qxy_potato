@@ -1,15 +1,26 @@
 package com.qxy.potato.module.mine.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.widget.CompoundButton;
+
 import com.bytedance.sdk.open.aweme.authorize.model.Authorization;
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
+import com.qxy.potato.R;
 import com.qxy.potato.base.BaseActivity;
 import com.qxy.potato.databinding.ActivityLoginBinding;
 import com.qxy.potato.module.mine.presenter.LoginPresenter;
 import com.qxy.potato.module.mine.view.ILoginView;
+import com.qxy.potato.util.MyUtil;
+import com.qxy.potato.util.ToastUtil;
+import com.tamsiree.rxkit.RxTool;
+import com.tamsiree.rxkit.view.RxToast;
 
 public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBinding> implements ILoginView {
     DouYinOpenApi douYinOpenApi;
+    private boolean is_clicked_user_agreement = false;
 
     /**
      * 初始化presenter，也是与Activity的绑定
@@ -26,7 +37,32 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
      */
     @Override
     protected void initView() {
-        getBinding().btnLogin.setOnClickListener(v -> sendAuth());
+        getBinding().btnLogin.setOnClickListener(v -> {
+            if (is_clicked_user_agreement){
+                sendAuth();
+            }else {
+                showAnimator();
+            }
+        });
+        getBinding().checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                is_clicked_user_agreement = b;
+            }
+        });
+        getBinding().tvUserAgreement.setOnClickListener(view -> ToastUtil.showToast("待添加用户协议"));
+    }
+
+    private void showAnimator() {
+        RxToast.info(MyUtil.getString(R.string.read_and_click),500);
+        ObjectAnimator animatorLeft = ObjectAnimator.ofFloat(getBinding().checkBox,
+                "translationX",-20f,0f,20f,0f);
+        ObjectAnimator animatorRight = ObjectAnimator.ofFloat(getBinding().tvUserAgreement,
+                "translationX",-20f,0f,20f,0f);
+        AnimatorSet animatorSet =  new AnimatorSet();
+        animatorSet.setDuration(300);
+        animatorSet.play(animatorLeft).with(animatorRight);
+        animatorSet.start();
     }
 
     /**
