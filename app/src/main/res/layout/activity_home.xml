@@ -129,21 +129,21 @@
                 <TextView
                     android:textColor="@color/black"
                     android:layout_margin="@dimen/dp_10"
-                    android:text="15点赞"
+                    android:text="0点赞"
                     android:id="@+id/home_textView_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:textColor="@color/black"
                     android:layout_margin="@dimen/dp_10"
-                    android:text="26关注"
+                    android:text="0关注"
                     android:id="@+id/home_textView_follower"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:textColor="@color/black"
                     android:layout_margin="@dimen/dp_10"
-                    android:text="984粉丝"
+                    android:text="0粉丝"
                     android:id="@+id/home_textView_fans"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -152,7 +152,7 @@
             </LinearLayout>
             <TextView
                 android:layout_margin="5dp"
-                android:text="这是介绍呱呱呱呱呱呱发达的vv撒旦v啊v阿萨v啊额率二百大光圈为二v发嵌入式v大"
+                android:text="这是介绍"
                 android:id="@+id/textView_introduce"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -167,6 +167,7 @@
                     android:layout_width="20dp"
                     android:layout_height="@dimen/dk_dp_20"/>
                 <TextView
+                    android:id="@+id/home_textview_age"
                     android:background="@drawable/home_textview"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
@@ -175,6 +176,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
+                    android:id="@+id/home_textview_place"
                     android:background="@drawable/home_textview"
                     android:layout_marginStart="@dimen/dk_dp_10"
                     android:layout_margin="@dimen/dk_dp_5"
@@ -189,6 +191,7 @@
                     android:layout_width="20dp"
                     android:layout_height="@dimen/dk_dp_20"/>
                 <TextView
+                    android:id="@+id/home_textview_school"
                     android:background="@drawable/home_textview"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
@@ -221,9 +224,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
                 </androidx.recyclerview.widget.RecyclerView>
+
             </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-
+            <TextView
+                android:visibility="gone"
+                android:gravity="center_horizontal"
+                android:text="暂时没有更多了"
+                android:id="@+id/home_recyclerview_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

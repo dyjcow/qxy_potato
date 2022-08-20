@@ -147,7 +147,7 @@ public class MinePresenter extends BasePresenter<IMineView> {
         String token = mmkv.decodeString(GlobalConstant.ACCESS_TOKEN);
         String openId = mmkv.decodeString(GlobalConstant.OPEN_ID);
         queryMap.put(MyUtil.getString(R.string.cursor),0);
-        queryMap.put(MyUtil.getString(R.string.count),10);
+       // queryMap.put(MyUtil.getString(R.string.count),10);
         fieldMap.put(MyUtil.getString(R.string.open_id),mmkv.decodeString(GlobalConstant.OPEN_ID));
         fieldMap.put(MyUtil.getString(R.string.access_token),token);
 
@@ -176,7 +176,7 @@ public class MinePresenter extends BasePresenter<IMineView> {
             }
         });
 
-        addDisposable(apiServer.GetMyVideos(token,openId,queryMap), new BaseObserver<BaseBean<MyVideo>>(baseView, false) {
+       /* addDisposable(apiServer.GetMyVideos(token,openId,queryMap), new BaseObserver<BaseBean<MyVideo>>(baseView, false) {
             @Override
             public void onSuccess(BaseBean<MyVideo> o) {
 
@@ -186,7 +186,7 @@ public class MinePresenter extends BasePresenter<IMineView> {
             public void onError(String msg) {
                 LogUtil.d(msg);
             }
-        });
+        });*/
 
         addDisposable(apiServer.GetMyFollowings(token,openId,queryMap), new BaseObserver<BaseBean<Followings>>(baseView, false) {
             @Override

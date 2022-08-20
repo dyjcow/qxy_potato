@@ -6,8 +6,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dp_3"
-    app:layout_constraintEnd_toEndOf="@+id/textView4"
-    app:layout_constraintStart_toEndOf="@+id/textView4">
+    app:layout_constraintEnd_toEndOf="@+id/playCount"
+    app:layout_constraintStart_toEndOf="@+id/playCount">
 
 
     <ImageView
@@ -20,7 +20,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:textColor="@color/white"
+        android:id="@+id/likeCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -30,13 +31,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/playCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginBottom="7dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/likeCount"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -47,16 +48,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="顶置"
-        app:layout_constraintEnd_toEndOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="@+id/playCount"
         app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!-- <TextView
-        android:layout_width="@dimen/dp_100"
-        android:layout_height="@dimen/dp_100"
-        android:id="@+id/HomeTextView"/>-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
