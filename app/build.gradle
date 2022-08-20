@@ -120,6 +120,7 @@ dependencies {
 
     implementation  'io.github.scwang90:refresh-layout-kernel:2.0.5'      //核心必须依赖
     implementation  'io.github.scwang90:refresh-header-material:2.0.5'    //谷歌刷新头
+    implementation  'io.github.scwang90:refresh-footer-classics:2.0.5'    //经典加载
 
     //    引入的崩溃管理和跳转UI哭
     implementation 'com.github.tamsiree.RxTool:RxKit:2.6.3'

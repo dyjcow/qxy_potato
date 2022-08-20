@@ -2,12 +2,10 @@ package com.qxy.potato.module.mine.fragment;
 
 import android.app.Activity;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -20,9 +18,8 @@ import com.qxy.potato.base.BaseView;
 import com.qxy.potato.databinding.RelativelayoutMineFollowBinding;
 import com.qxy.potato.module.mine.adapter.FollowPagerAdapter;
 import com.qxy.potato.util.ActivityUtil;
-import com.qxy.potato.util.LogUtil;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +42,7 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
     //绑定ViewPager和TabLayout
     private TabLayoutMediator mediator;
 
-    private Activity activity=ActivityUtil.getCurrentActivity();
+    private Activity activity = ActivityUtil.getCurrentActivity();
 
 
     @Override
@@ -65,11 +62,14 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         AppCompatActivity compatActivity = (AppCompatActivity) activity;
 
         //加入关注和粉丝碎片
-        List<FollowListFragment> list = Arrays.asList(new FollowListFragment(), new FollowListFragment());
+//        List<FollowListFragment> list = Arrays.asList(new FollowListFragment(), new FollowListFragment());
+        List<FollowListFragment> list = new ArrayList<>();
+        list.add(new FollowListFragment());
+        list.add(new FollowListFragment());
         viewPager.setAdapter(new FollowPagerAdapter(compatActivity.getSupportFragmentManager(), compatActivity.getLifecycle(), list));
 
         //绑定
-        mediator = new TabLayoutMediator(tabLayout, viewPager,strategy);
+        mediator = new TabLayoutMediator(tabLayout, viewPager, strategy);
         mediator.attach();
 
         //选中标签,字体加粗
@@ -77,17 +77,17 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         tabLayout.addOnTabSelectedListener(selectedListener);
     }
 
-    private TabLayoutMediator.TabConfigurationStrategy strategy= (tab, position) -> {
+    private TabLayoutMediator.TabConfigurationStrategy strategy = (tab, position) -> {
         TextView textView = new TextView(activity);
         textView.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         textView.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
         switch (position) {
             case 0:
-                textView.setText(R.string.follow);
+                textView.setText(R.string.followings);
                 break;
             case 1:
-                textView.setText(R.string.followers);
+                textView.setText(R.string.fans);
             default:
                 break;
         }

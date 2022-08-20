@@ -1,6 +1,8 @@
 package com.qxy.potato.module.mine.view;
 
 import com.qxy.potato.base.BaseView;
+import com.qxy.potato.bean.Fans;
+import com.qxy.potato.bean.Followings;
 
 /**
  * @author ：potato
@@ -11,4 +13,9 @@ import com.qxy.potato.base.BaseView;
  */
 public interface IFollowView extends BaseView {
 
+    void showFollowingsList(Followings follow);
+
+    void showFansList(Fans followers);
+
+    void loadFail(String msg);
 }
