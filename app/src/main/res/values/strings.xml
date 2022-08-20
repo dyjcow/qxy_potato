@@ -39,6 +39,7 @@
     <string name="login">Login With Tiktok</string>
     <string name="has_read">I have read and agree</string>
     <string name="user_agreement">\'User Agreement\'</string>
+    <string name="read_and_click">Please read and agree it!</string>
 
 
 </resources>

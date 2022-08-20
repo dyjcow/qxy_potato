@@ -13,4 +13,5 @@
     <string name="login">抖音号快捷登录</string>
     <string name="has_read">我已阅读并同意</string>
     <string name="user_agreement">“用户协议”</string>
+    <string name="read_and_click">请阅读和同意用户协议!</string>
 </resources>
