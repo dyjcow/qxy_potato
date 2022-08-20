@@ -16,6 +16,8 @@ import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
 import com.tamsiree.rxkit.RxTool;
 import com.tencent.mmkv.MMKV;
+import com.tencent.smtt.sdk.QbSdk;
+
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -69,6 +71,25 @@ public class App extends Application {
         LogUtil.setIsLog(true);
         //注册Activity生命周期
         registerActivityLifecycleCallbacks(ActivityUtil.getActivityLifecycleCallbacks());
+
+        QbSdk.initX5Environment(getContext(), new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+                // 内核初始化完成，可能为系统内核，也可能为系统内核
+            }
+
+            /**
+             * 预初始化结束
+             * 由于X5内核体积较大，需要依赖网络动态下发，所以当内核不存在的时候，默认会回调false，此时将会使用系统内核代替
+             * @param isX5 是否使用X5内核
+             */
+            @Override
+            public void onViewInitFinished(boolean isX5) {
+                LogUtil.i("是否使用腾讯内核："+isX5);
+
+            }
+        });
+
     }
 
     public static Context getContext() {

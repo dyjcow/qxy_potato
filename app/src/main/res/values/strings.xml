@@ -19,6 +19,8 @@
     <string name="mxzp" translatable="false">https://www.mxnzp.com/</string>
     <string name="mock" translatable="false">https://mock.apifox.cn/m1/1441895-0-default/</string>
 
+    <string name="download_douyin" translatable="false">https://www.douyin.com/downloadpage/app</string>
+
     <string name="grant_type" translatable="false">grant_type</string>
     <string name="client_key" translatable="false">client_key</string>
     <string name="client_secret" translatable="false">client_secret</string>
@@ -26,6 +28,8 @@
     <string name="client_credential" translatable="false">client_credential</string>
     <string name="app_id" translatable="false">app_id</string>
     <string name="app_secret" translatable="false">app_secret</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

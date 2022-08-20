@@ -25,8 +25,9 @@
             android:theme="@style/Theme.Potato"
             tools:targetApi="31">
         <activity
-                android:name=".tetsActivity"
+                android:name=".module.mine.activity.WebViewTestActivity"
                 android:exported="false" />
+
         <activity
                 android:name=".module.videolist.activity.RankActivity"
                 android:exported="false" />
@@ -51,6 +52,14 @@
                 <action android:name="com.aweme.opensdk.action.stay.in.dy.im" />
             </intent-filter>
         </receiver>
+
+<!--        该Service仅在TBS内核首次Dex加载时触发并执行dex2oat任务，任务完成后自动结束。-->
+        <service
+                android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+                android:label="dexopt"
+                android:process=":dexopt" >
+        </service>
+
     </application>
 
 </manifest>

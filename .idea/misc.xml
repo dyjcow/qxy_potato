@@ -3,20 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/include_pickerview_topbar.xml" value="0.19067028985507245" />
-        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/layout_basepickerview.xml" value="0.19067028985507245" />
-        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/pickerview_options.xml" value="0.19067028985507245" />
-        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/pickerview_time.xml" value="0.19067028985507245" />
-        <entry key="..\:/Work/potato/app/src/main/res/drawable/tab_indicator.xml" value="0.1735" />
-        <entry key="..\:/Work/potato/app/src/main/res/layout/activity_login.xml" value="0.21195652173913043" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/activity_login.xml" value="0.13541666666666666" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/activity_web_view_test.xml" value="0.19010416666666666" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/fragment_test.xml" value="0.18125" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_main.xml" value="0.13072916666666667" />
-        <entry key="..\:/Work/potato/app/src/main/res/layout/activity_rank.xml" value="0.18840579710144928" />
-        <entry key="..\:/Work/potato/app/src/main/res/layout/coordinator_rank_background.xml" value="0.18840579710144928" />
-        <entry key="..\:/Work/potato/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.19067028985507245" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

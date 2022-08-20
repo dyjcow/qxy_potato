@@ -88,6 +88,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation files('libs\\tbs_sdk_thirdapp_v4.3.0.316_44216_sharewithdownloadwithfile_withoutGame_obfs_20220728_101601.jar')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -160,4 +161,5 @@ dependencies {
     implementation 'androidx.work:work-runtime:2.5.0'
 
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
+
 }
