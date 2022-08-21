@@ -3,6 +3,8 @@ package com.qxy.potato.module.videorank.view;
 import com.qxy.potato.base.BaseView;
 import com.qxy.potato.bean.VideoList;
 
+import java.util.List;
+
 /**
  * @author ：Dyj
  * @date ：Created in 2022/8/21 16:23

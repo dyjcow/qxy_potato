@@ -9,6 +9,7 @@
     <string name="CONNECT_TIMEOUT_MSG">Connection timed out</string>
     <string name="OTHER_MSG">Unknown error</string>
     <string name="rank_rule">Rank rule</string>
+    <string name="double_quit">"Presse again, quit  "</string>
 
     <!--    报文代码-->
     <string name="error_code" translatable="false">error_code</string>
@@ -22,7 +23,7 @@
     <string name="pic" translatable="false">https://www.lxtlovely.top/getpic.php</string>
     <string name="mock" translatable="false">https://mock.apifox.cn/m1/1441895-0-default/</string>
     <string name="download_douyin" translatable="false">https://www.douyin.com/downloadpage/app</string>
-<!--    请求参数-->
+    <!--    请求参数-->
     <string name="grant_type" translatable="false">grant_type</string>
     <string name="client_key" translatable="false">client_key</string>
     <string name="client_secret" translatable="false">client_secret</string>
@@ -40,6 +41,8 @@
     <string name="has_read">I have read and agree</string>
     <string name="user_agreement">\'User Agreement\'</string>
     <string name="read_and_click">Please read and agree it!</string>
+    <string name="disconnected_network">Disconnected network</string>
+    <string name="note_use">Note that streaming is being used</string>
 
 
 </resources>

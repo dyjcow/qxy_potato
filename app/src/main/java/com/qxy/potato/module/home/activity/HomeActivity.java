@@ -1,6 +1,7 @@
 package com.qxy.potato.module.home.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -74,6 +75,12 @@ import java.util.concurrent.TimeUnit;
 @BindEventBus
 public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBinding>implements IHomeView, IApiEventHandler {
 
+
+    /**
+     * 保存用户按返回键的时间
+     */
+    private long mExitTime = 0;
+    private static final int OVER_TIME = 2000;
     private MMKV mmkv=MMKV.defaultMMKV();
     private HomeAdapter adapter;
     private Integer getLIke=0;
@@ -405,5 +412,24 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     private void initClient() {
         mmkv.encode(GlobalConstant.IS_CLIENT,false);
         presenter.getClientToken();
+    }
+
+    /**
+     * Called when the activity has detected the user's press of the back
+     * key. The {@link #getOnBackPressedDispatcher() OnBackPressedDispatcher} will be given a
+     * chance to handle the back button before the default behavior of
+     * {@link Activity#onBackPressed()} is invoked.
+     *
+     * @see #getOnBackPressedDispatcher()
+     */
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - mExitTime) > OVER_TIME) {
+            ToastUtil.showToast(getResources().getString(R.string.double_quit) + getResources().getString(R.string.app_name));
+            mExitTime = System.currentTimeMillis();
+        } else {
+            super.onBackPressed();
+            ActivityUtil.closeAllActivity();
+        }
     }
 }

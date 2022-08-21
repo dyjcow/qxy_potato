@@ -13,10 +13,12 @@ import com.qxy.potato.R;
 import com.qxy.potato.app.App;
 
 import com.qxy.potato.module.mine.webview.MyWebView;
+import com.qxy.potato.util.MyUtil;
 import com.qxy.potato.util.ToastUtil;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.WebView;
+import com.zackratos.ultimatebarx.ultimatebarx.java.UltimateBarX;
 
 import java.util.HashMap;
 
@@ -36,7 +38,6 @@ public class WebViewActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_web_view);
 		Intent intent = getIntent();
 		url = intent.getStringExtra("url");
-
 		initUI();
 
 //
@@ -142,14 +143,15 @@ public class WebViewActivity extends AppCompatActivity {
 				if (mWebView.canGoBack()) {//WebView的向前
 					mWebView.goBack();
 				} else {
-					if(mBackPressed + BACK_PRESSED_INTERVAL > System.currentTimeMillis()){//连续两次才返回到个人碎片（1.5s内）
-						super.onBackPressed();
-						return;
-					}else{//提示
-						ToastUtil.showToast("再点一次返回键返回个人界面");
-						mBackPressed = System.currentTimeMillis();
-
-					}
+//					if(mBackPressed + BACK_PRESSED_INTERVAL > System.currentTimeMillis()){//连续两次才返回到个人碎片（1.5s内）
+//						super.onBackPressed();
+//						return;
+//					}else{//提示
+//						ToastUtil.showToast("再点一次返回键返回个人界面");
+//						mBackPressed = System.currentTimeMillis();
+//
+//					}
+					super.onBackPressed();
 				}
 			}else{
 				super.onBackPressed();

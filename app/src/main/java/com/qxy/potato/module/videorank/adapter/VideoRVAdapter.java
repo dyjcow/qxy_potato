@@ -46,7 +46,7 @@ public class VideoRVAdapter extends BaseQuickAdapter<VideoList.Video, BaseViewHo
                 @Override
                 public void onClick(View v) {
 
-                    Toast.makeText(v.getContext(), "等我下次再给你看详细的", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "无法购票", Toast.LENGTH_SHORT).show();
                 }
             });
         }else {
