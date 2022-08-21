@@ -95,10 +95,14 @@ dependencies {
     //MMKV替代SP https://github.com/Tencent/MMKV/wiki/android_tutorial_cn
     implementation 'com.tencent:mmkv:1.2.14'
 
+    //刷新
+    implementation  'io.github.scwang90:refresh-layout-kernel:2.0.5'      //核心必须依赖
+    implementation  'io.github.scwang90:refresh-footer-classics:2.0.5'    //经典加载
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     //引入Rv管理
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
     //引入Room数据库
 //    def room_version = "2.4.0-alpha01"

@@ -1,4 +1,4 @@
-package com.qxy.potato.module.mine.presenter;
+package com.qxy.potato.module.Follow.presenter;
 
 import com.qxy.potato.R;
 import com.qxy.potato.base.BaseBean;
@@ -7,7 +7,9 @@ import com.qxy.potato.base.BasePresenter;
 import com.qxy.potato.bean.Fans;
 import com.qxy.potato.bean.Followings;
 import com.qxy.potato.common.GlobalConstant;
-import com.qxy.potato.module.mine.view.IFollowView;
+import com.qxy.potato.module.Follow.activity.FollowActivity;
+import com.qxy.potato.module.Follow.view.IFollowView;
+import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
 import com.tencent.mmkv.MMKV;
@@ -35,9 +37,8 @@ public class FollowPresenter extends BasePresenter<IFollowView> {
         HashMap<String,Integer> queryMap = new HashMap<>();
         queryMap.put(MyUtil.getString(R.string.cursor),cursor);
         queryMap.put(MyUtil.getString(R.string.count),count);
-
         addDisposable(apiServer.GetMyFollowings(token, openId, queryMap),
-                new BaseObserver<BaseBean<Followings>>(baseView,true) {
+                new BaseObserver<BaseBean<Followings>>(baseView,false) {
 
                     @Override
                     public void onSuccess(BaseBean<Followings> o) {
@@ -57,8 +58,8 @@ public class FollowPresenter extends BasePresenter<IFollowView> {
         queryMap.put(MyUtil.getString(R.string.cursor),cursor);
         queryMap.put(MyUtil.getString(R.string.count),count);
 
-        addDisposable(apiServer.GetMyFollowings(token, openId, queryMap),
-                new BaseObserver<BaseBean<Fans>>(baseView,true) {
+        addDisposable(apiServer.GetMyFans(token, openId, queryMap),
+                new BaseObserver<BaseBean<Fans>>(baseView,false) {
 
                     @Override
                     public void onSuccess(BaseBean<Fans> o) {

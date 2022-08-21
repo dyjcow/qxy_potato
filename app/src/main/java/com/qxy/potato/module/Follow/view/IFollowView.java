@@ -1,4 +1,4 @@
-package com.qxy.potato.module.mine.view;
+package com.qxy.potato.module.Follow.view;
 
 import com.qxy.potato.base.BaseView;
 import com.qxy.potato.bean.Fans;

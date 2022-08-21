@@ -1,4 +1,4 @@
-package com.qxy.potato.module.mine.adapter;
+package com.qxy.potato.module.Follow.adapter;
 
 import android.widget.ImageView;
 

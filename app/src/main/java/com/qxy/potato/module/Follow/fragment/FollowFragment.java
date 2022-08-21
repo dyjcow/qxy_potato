@@ -1,4 +1,4 @@
-package com.qxy.potato.module.mine.fragment;
+package com.qxy.potato.module.Follow.fragment;
 
 import android.app.Activity;
 import android.view.Gravity;
@@ -16,10 +16,9 @@ import com.qxy.potato.base.BaseFragment;
 import com.qxy.potato.base.BasePresenter;
 import com.qxy.potato.base.BaseView;
 import com.qxy.potato.databinding.RelativelayoutMineFollowBinding;
-import com.qxy.potato.module.mine.adapter.FollowPagerAdapter;
+import com.qxy.potato.module.Follow.adapter.FollowPagerAdapter;
 import com.qxy.potato.util.ActivityUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,6 +47,12 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
     public static final int FOLLOWINGS=0;
     public static final int Fans=1;
 
+    private int mType;
+
+    public FollowFragment(int type) {
+        super();
+        mType=type;
+    }
 
 
     @Override
@@ -59,7 +64,7 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
     protected void initView() {
         //退出碎片
         back = getBinding().imagebuttonMineBack;
-        back.setOnClickListener(v -> ActivityUtil.getCurrentActivity().onBackPressed());
+        back.setOnClickListener(v -> activity.onBackPressed());
 
         tabLayout = getBinding().tablelayoutMine;
         viewPager = getBinding().viewpagerMine;
@@ -77,6 +82,9 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         //选中标签,字体加粗
         viewPager.registerOnPageChangeCallback(changeCallback);
         tabLayout.addOnTabSelectedListener(selectedListener);
+
+        if(mType==Fans)
+            tabLayout.getTabAt(Fans).select();
     }
 
     private TabLayoutMediator.TabConfigurationStrategy strategy = (tab, position) -> {

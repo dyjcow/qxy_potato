@@ -1,14 +1,12 @@
-package com.qxy.potato.module.mine.adapter;
+package com.qxy.potato.module.Follow.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.qxy.potato.module.mine.fragment.FollowListFragment;
-import com.qxy.potato.module.mine.fragment.FollowFragment;
+import com.qxy.potato.module.Follow.fragment.FollowListFragment;
 
 import java.util.List;
 

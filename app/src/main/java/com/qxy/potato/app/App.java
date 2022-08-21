@@ -11,6 +11,7 @@ import com.didichuxing.doraemonkit.DoKit;
 
 import com.qxy.potato.MyEventBusIndex;
 import com.qxy.potato.R;
+import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
@@ -52,6 +53,7 @@ public class App extends Application {
         super.onCreate();
         context=getApplicationContext();
         MMKV.initialize(this);
+        MMKV.mmkvWithID("MyID", MMKV.SINGLE_PROCESS_MODE,GlobalConstant.MMKV_KEY);
         //载入Dokit监测
         new DoKit.Builder(this)
                 .productId(context.getString(R.string.value_dokit_pid))

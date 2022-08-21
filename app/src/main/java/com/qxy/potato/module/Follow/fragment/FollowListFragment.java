@@ -1,4 +1,4 @@
-package com.qxy.potato.module.mine.fragment;
+package com.qxy.potato.module.Follow.fragment;
 
 import android.app.Activity;
 import android.view.View;
@@ -10,21 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qxy.potato.base.BaseFragment;
 import com.qxy.potato.bean.Fans;
 import com.qxy.potato.bean.Followings;
+import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.databinding.LinearlayoutMineFollowListBinding;
-import com.qxy.potato.module.mine.adapter.FansRecycleViewAdapter;
-import com.qxy.potato.module.mine.adapter.FollowingsRecycleViewAdapter;
-import com.qxy.potato.module.mine.presenter.FollowPresenter;
-import com.qxy.potato.module.mine.view.IFollowView;
+import com.qxy.potato.module.Follow.adapter.FansRecycleViewAdapter;
+import com.qxy.potato.module.Follow.adapter.FollowingsRecycleViewAdapter;
+import com.qxy.potato.module.Follow.presenter.FollowPresenter;
+import com.qxy.potato.module.Follow.view.IFollowView;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.ToastUtil;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.MaterialHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-
-import java.util.LinkedList;
-import java.util.List;
+import com.tencent.mmkv.MMKV;
 
 public class FollowListFragment extends BaseFragment<FollowPresenter, LinearlayoutMineFollowListBinding> implements IFollowView {
     public FollowListFragment(int type) {
@@ -47,6 +44,11 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
 
     private LinearLayoutManager manager;
 
+    private boolean followingsHasMore;
+    private boolean fansHasMore;
+
+    private MMKV mmkv=MMKV.defaultMMKV();
+
 //    private FollowingsRecycleViewAdapter followingsAdapter;
 //    private FansRecycleViewAdapter fansAdapter;
 
@@ -63,42 +65,42 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
         refreshLayout = getBinding().smartlayout;
         refreshLayout.setRefreshHeader(new MaterialHeader(activity));
         refreshLayout.setRefreshFooter(new ClassicsFooter(activity));
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                switch (mType){
-                    case FollowFragment.FOLLOWINGS:{
-                        list.setAdapter(null);
-                        followingCursor=0;
-                        presenter.getFollowingsList(followingCursor,12);
-                        break;
-                    }
-                    case FollowFragment.Fans:{
-                        list.setAdapter(null);
-                        fanCursor=0;
-                        presenter.getFansList(fanCursor,12);
-                        break;
-                    }
-                    default:
-                        break;
+        refreshLayout.setOnRefreshListener(refreshlayout -> {
+            switch (mType){
+                case FollowFragment.FOLLOWINGS:{
+                    list.setAdapter(null);
+                    followingCursor=0;
+                    presenter.getFollowingsList(followingCursor,12);
+                    break;
                 }
+                case FollowFragment.Fans:{
+                    list.setAdapter(null);
+                    fanCursor=0;
+                    presenter.getFansList(fanCursor,12);
+                    break;
+                }
+                default:
+                    break;
             }
         });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                switch (mType){
-                    case FollowFragment.FOLLOWINGS:{
+        refreshLayout.setOnLoadMoreListener(refreshlayout -> {
+            switch (mType){
+                case FollowFragment.FOLLOWINGS:{
+                    if(followingsHasMore)
                         presenter.getFollowingsList(followingCursor,12);
-                        break;
-                    }
-                    case FollowFragment.Fans:{
-                        presenter.getFansList(fanCursor,12);
-                        break;
-                    }
-                    default:
-                        break;
+                    else
+                        refreshlayout.finishLoadMoreWithNoMoreData();
+                    break;
                 }
+                case FollowFragment.Fans:{
+                    if(fansHasMore)
+                        presenter.getFansList(fanCursor,12);
+                    else
+                        refreshlayout.finishLoadMoreWithNoMoreData();
+                    break;
+                }
+                default:
+                    break;
             }
         });
 
@@ -129,26 +131,37 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
 
     @Override
     public void showFollowingsList(Followings followings) {
-        if(list.getAdapter()==null){
+        if(list.getAdapter()==null&&followings.getList()!=null){
             list.setAdapter(new FollowingsRecycleViewAdapter(followings.getList()));
+            mmkv.encode(GlobalConstant.FOLLOWINGS_TOTAL,followings.getList().size());
         }else{
             FollowingsRecycleViewAdapter adapter=(FollowingsRecycleViewAdapter)list.getAdapter();
             adapter.addData(followings.getList());
-            refreshLayout.finishRefresh();
+            mmkv.encode(GlobalConstant.FOLLOWINGS_TOTAL,followings.getList().size()+mmkv.getInt(GlobalConstant.FOLLOWINGS_TOTAL,0));
         }
+        if(refreshLayout.isRefreshing())
+            refreshLayout.finishRefresh();
+        if(refreshLayout.isLoading())
+            refreshLayout.finishLoadMore();
+        followingsHasMore=followings.isHas_more();
         followingCursor=followings.getCursor();
     }
 
     @Override
     public void showFansList(Fans fans) {
-        if(list.getAdapter()==null){
+        if(list.getAdapter()==null&&fans.getList()!=null){
             list.setAdapter(new FansRecycleViewAdapter(fans.getList()));
         }else{
             FansRecycleViewAdapter adapter=(FansRecycleViewAdapter)list.getAdapter();
             adapter.addData(fans.getList());
-            refreshLayout.finishRefresh();
         }
+        if(refreshLayout.isRefreshing())
+            refreshLayout.finishRefresh();
+        if(refreshLayout.isLoading())
+            refreshLayout.finishLoadMore();
+        fansHasMore=fans.isHas_more();
         fanCursor=fans.getCursor();
+        mmkv.encode(GlobalConstant.FANS_TOTAL,fans.getTotal());
         total.setText("我的粉丝("+fans.getTotal()+"人)");
     }
 

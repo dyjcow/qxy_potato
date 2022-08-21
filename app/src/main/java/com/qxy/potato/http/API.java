@@ -171,6 +171,6 @@ public class API {
         @GET("video/list/")
         Observable<BaseBean<MyVideo>> GetMyVideos(@Header("access-token") String accessToken,
                                                   @Query("open_id") String open_id,
-                                                  @QueryMap HashMap<String,Integer> queryMap);
+                                                  @QueryMap HashMap<String,Long> queryMap);
     }
 }
