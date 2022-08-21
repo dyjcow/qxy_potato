@@ -164,9 +164,11 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
         //跳转去登录页
         getBinding().homeIcon.setOnClickListener(v -> {
-            if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN))
+            if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)){
                 getBinding().homeNavigationView.getMenu().getItem(1).setTitle("登出");
                 ActivityUtil.startActivity(LoginActivity.class,true);
+            }
+
         });
 
         //下拉加载更多
