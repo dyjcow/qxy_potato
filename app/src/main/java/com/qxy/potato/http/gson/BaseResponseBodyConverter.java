@@ -2,9 +2,13 @@ package com.qxy.potato.http.gson;
 
 import com.qxy.potato.R;
 import com.qxy.potato.base.BaseException;
+import com.qxy.potato.common.GlobalConstant;
+import com.qxy.potato.module.mine.activity.LoginActivity;
+import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
 import com.google.gson.TypeAdapter;
+import com.tencent.mmkv.MMKV;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +25,12 @@ import retrofit2.Converter;
  */
 public class BaseResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final TypeAdapter<T> adapter;
+
+    private final int access_Token_out = 10008;
+
+    private final int refresh_Token_out = 10010;
+
+    private final int as_Token_out = 2190008;
 
     BaseResponseBodyConverter(TypeAdapter<T> adapter) {
         this.adapter = adapter;
@@ -42,8 +52,13 @@ public class BaseResponseBodyConverter<T> implements Converter<ResponseBody, T> 
                 JSONObject object = new JSONObject(jsonString);
                 int error_code = object.getJSONObject("data").getInt(MyUtil.getString(R.string.error_code));
                 if (0 != error_code ) {
-                    String data;
-                    data = object.getJSONObject("data").getString(MyUtil.getString(R.string.error_msg));
+                    if (error_code == access_Token_out ||
+                        error_code == refresh_Token_out ||
+                        error_code == as_Token_out){
+                        MMKV.defaultMMKV().encode(GlobalConstant.IS_LOGIN,false);
+                        ActivityUtil.startActivity(LoginActivity.class,true);
+                    }
+                    String data = object.getJSONObject("data").getString(MyUtil.getString(R.string.error_msg));
                     //异常处理
                     throw new BaseException(error_code, data);
                 }

@@ -1,4 +1,4 @@
-package com.qxy.potato.module.mine.workmanager;
+package com.qxy.potato.module.home.workmanager;
 
 import android.content.Context;
 
@@ -6,7 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.qxy.potato.base.BaseEvent;
+import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
+import com.qxy.potato.util.EventBusUtil;
 import com.tencent.mmkv.MMKV;
 
 /**
@@ -42,6 +45,8 @@ public class ClientCancelWork extends Worker {
     @Override
     public Result doWork() {
         MMKV.defaultMMKV().encode(GlobalConstant.IS_CLIENT,false);
+        BaseEvent<String> event = new BaseEvent<>(EventCode.CLIENT_AGAIN,"client");
+        EventBusUtil.sendEvent(event);
         return Result.success();
     }
 }

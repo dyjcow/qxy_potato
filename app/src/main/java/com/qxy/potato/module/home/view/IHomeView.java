@@ -1,11 +1,15 @@
 package com.qxy.potato.module.home.view;
 
+import androidx.annotation.NonNull;
+import androidx.work.ListenableWorker;
+
 import com.qxy.potato.base.BaseView;
 import com.qxy.potato.bean.MyVideo;
 import com.qxy.potato.bean.UserInfo;
 import com.qxy.potato.bean.VideoList;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author :yinxiaolong
@@ -28,5 +32,6 @@ public interface IHomeView extends BaseView {
      */
     void loginFailed(String msg);
 
-    void cancelClientValue();
+    void startWork(long duration, @NonNull TimeUnit timeUnit,
+                   String tag, @NonNull Class<? extends ListenableWorker> workerClass);
 }

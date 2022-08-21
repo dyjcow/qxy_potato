@@ -1,9 +1,9 @@
 package com.qxy.potato.module.home.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.work.Constraints;
+import androidx.work.ListenableWorker;
+import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
@@ -33,9 +37,13 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.qxy.potato.R;
+import com.qxy.potato.annotation.BindEventBus;
 import com.qxy.potato.base.BaseActivity;
+import com.qxy.potato.base.BaseEvent;
 import com.qxy.potato.bean.MyVideo;
 import com.qxy.potato.bean.UserInfo;
+import com.qxy.potato.bean.VideoVersion;
+import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.databinding.ActivityHomeBinding;
 import com.qxy.potato.module.home.adapter.HomeAdapter;
@@ -43,14 +51,12 @@ import com.qxy.potato.module.home.adapter.HomeItemDecoration;
 import com.qxy.potato.module.home.presenter.HomePresenter;
 import com.qxy.potato.module.home.view.IHomeView;
 import com.qxy.potato.module.mine.activity.LoginActivity;
-import com.qxy.potato.module.mine.workmanager.ClientCancelWork;
 import com.qxy.potato.module.videolist.activity.RankActivity;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.DisplayUtil;
 
 
 import com.qxy.potato.util.LogUtil;
-import com.qxy.potato.util.MyUtil;
 import com.qxy.potato.util.ToastUtil;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -60,11 +66,14 @@ import com.tamsiree.rxui.view.dialog.RxDialogSure;
 import com.tencent.mmkv.MMKV;
 
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
+@BindEventBus
 public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBinding>implements IHomeView, IApiEventHandler {
 
     private MMKV mmkv=MMKV.defaultMMKV();
@@ -118,7 +127,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         //点赞的dialog
         getBinding().homeTextViewLike.setOnClickListener(view -> {
             RxDialogSure rxDialogSure=new RxDialogSure(this);
-            rxDialogSure.setLogo(R.drawable.ic_launcher_foreground);
+            rxDialogSure.setLogo(R.drawable.potato);
             rxDialogSure.setSureListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -195,6 +204,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
      * @param item
      * @return
      */
+    @SuppressLint("RtlHardcoded")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -213,7 +223,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     protected void initData() {
         presenter.getPersonInfo();
         presenter.getPersonalVideoList(cursor);
-        // TODO: 2022/8/20 此处通过修改图片URL来配置背景图片（接口无） 
         Glide.with(this).load("https://www.lxtlovely.top/getpic.php").into(new CustomTarget<Drawable>() {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
@@ -259,6 +268,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         this.cursor=cursor;
         adapter=new HomeAdapter(R.layout.reycylerview_item_home,list);
         adapter.addChildClickViewIds(R.id.home_item_imageView);
+        adapter.setAnimationEnable(true);
+        adapter.setAnimationFirstOnly(true);
+        adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom);
 
         //recyclerview初始化
         getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120,5,5,5));
@@ -284,7 +296,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 }
             }
 
-            adapter.notifyDataSetChanged();
+//            adapter.notifyDataSetChanged();
         }
 
 
@@ -296,6 +308,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     @Override
     public void loginSuccess() {
         initData();
+
         ToastUtil.showToast("授权登录成功");
     }
 
@@ -309,21 +322,43 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         ToastUtil.showToast(msg);
     }
 
+    /**
+     * 启动对应的后台任务
+     *
+     * @param duration 间隔时间
+     * @param timeUnit 时间计算单位
+     * @param tag 事件标签
+     * @param workerClass 对应的 Work类
+     */
     @Override
-    public void cancelClientValue() {
-        WorkRequest request = new OneTimeWorkRequest.Builder(ClientCancelWork.class)
-                .setInitialDelay(2, TimeUnit.HOURS)
+    public void startWork(long duration, @NonNull TimeUnit timeUnit, String tag,
+                          @NonNull Class<? extends ListenableWorker> workerClass) {
+        WorkRequest request = new OneTimeWorkRequest.Builder(workerClass)
+                .setInitialDelay(duration,timeUnit)
+                .addTag(tag)
                 .build();
         WorkManager.getInstance(this).enqueue(request);
     }
 
+    /**
+     * 订阅的事件，当请求重新刷新clientToken的时候执行
+     *
+     * @param event 接收的event事件
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshClientToken(BaseEvent<String> event){
+        if (event.getEventCode() == EventCode.CLIENT_AGAIN)
+            presenter.getClientToken();
+    }
 
+
+    /**
+     * 解除presenter与Activity的绑定
+     */
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        LogUtil.d("onRestart: "+mmkv.decodeBool(GlobalConstant.IS_LOGIN));
-//        initData();
-
+    protected void onDestroy() {
+        super.onDestroy();
+        WorkManager.getInstance(this).cancelAllWorkByTag(GlobalConstant.CLIENT_TOKEN);
     }
 
     @Override

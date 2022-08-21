@@ -1,9 +1,7 @@
 package com.qxy.potato.module.mine.activity;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -19,7 +17,6 @@ import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.qxy.potato.base.BaseActivity;
 import com.qxy.potato.base.BaseEvent;
-import com.qxy.potato.bean.PictureGirl;
 import com.qxy.potato.annotation.BindEventBus;
 import com.qxy.potato.bean.VideoVersion;
 import com.qxy.potato.common.EventCode;
@@ -27,10 +24,9 @@ import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.databinding.ActivityMainBinding;
 import com.qxy.potato.module.mine.presenter.MinePresenter;
 import com.qxy.potato.module.mine.view.IMineView;
-import com.qxy.potato.module.mine.workmanager.ClientCancelWork;
+import com.qxy.potato.module.home.workmanager.ClientCancelWork;
 import com.qxy.potato.module.videolist.activity.RankActivity;
 import com.qxy.potato.util.ActivityUtil;
-import com.qxy.potato.util.EventBusUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.ToastUtil;
 import com.tencent.mmkv.MMKV;
@@ -38,7 +34,6 @@ import com.tencent.mmkv.MMKV;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @BindEventBus

@@ -12,6 +12,8 @@ public class GlobalConstant {
 
     public static final String ACCESS_TOKEN = "accessToken";
 
+    public static final String REFRESH_TOKEN = "refresh_token";
+
     public static final String IS_LOGIN = "isLogin";
 
     public static final String CLIENT_TOKEN = "client_token";
@@ -19,6 +21,8 @@ public class GlobalConstant {
     public static final String IS_CLIENT = "is_client";
 
     public static final String OPEN_ID = "open_id";
+
+    public static final String MMKV_KEY = "potato_key";
 
 
 }
