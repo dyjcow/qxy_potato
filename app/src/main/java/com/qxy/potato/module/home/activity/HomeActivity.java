@@ -14,11 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.work.Constraints;
 import androidx.work.ListenableWorker;
-import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
-import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
@@ -42,7 +39,6 @@ import com.qxy.potato.base.BaseActivity;
 import com.qxy.potato.base.BaseEvent;
 import com.qxy.potato.bean.MyVideo;
 import com.qxy.potato.bean.UserInfo;
-import com.qxy.potato.bean.VideoVersion;
 import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.databinding.ActivityHomeBinding;
@@ -51,7 +47,7 @@ import com.qxy.potato.module.home.adapter.HomeItemDecoration;
 import com.qxy.potato.module.home.presenter.HomePresenter;
 import com.qxy.potato.module.home.view.IHomeView;
 import com.qxy.potato.module.mine.activity.LoginActivity;
-import com.qxy.potato.module.videolist.activity.RankActivity;
+import com.qxy.potato.module.videorank.activity.RankActivity;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.DisplayUtil;
 
