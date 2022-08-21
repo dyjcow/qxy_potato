@@ -21,8 +21,8 @@
     <string name="mxzp" translatable="false">https://www.mxnzp.com/</string>
     <string name="pic" translatable="false">https://www.lxtlovely.top/getpic.php</string>
     <string name="mock" translatable="false">https://mock.apifox.cn/m1/1441895-0-default/</string>
-
-    <!--    请求参数-->
+    <string name="download_douyin" translatable="false">https://www.douyin.com/downloadpage/app</string>
+<!--    请求参数-->
     <string name="grant_type" translatable="false">grant_type</string>
     <string name="client_key" translatable="false">client_key</string>
     <string name="client_secret" translatable="false">client_secret</string>

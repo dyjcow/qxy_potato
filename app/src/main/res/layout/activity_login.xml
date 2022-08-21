@@ -74,4 +74,5 @@
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="@+id/checkBox" />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,6 +48,7 @@ import com.qxy.potato.module.home.adapter.HomeItemDecoration;
 import com.qxy.potato.module.home.presenter.HomePresenter;
 import com.qxy.potato.module.home.view.IHomeView;
 import com.qxy.potato.module.mine.activity.LoginActivity;
+import com.qxy.potato.module.mine.activity.WebViewActivity;
 import com.qxy.potato.module.videorank.activity.RankActivity;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.DisplayUtil;
@@ -291,9 +292,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 // TODO: 2022/8/20  填入webViewActivity
-                /*Intent intent=new Intent(HomeActivity.class,*//*webView*//*);
-                intent.putExtra("shareUrl",list.get(position).getShare_url());
-                startActivity(intent);*/
+                Intent intent=new Intent(HomeActivity.this,WebViewActivity.class);
+                intent.putExtra("url",list.get(position).getShare_url());
+                startActivity(intent);
             }
         });
         if (videos!=null) {
