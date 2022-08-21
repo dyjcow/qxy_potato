@@ -1,7 +1,6 @@
 package com.qxy.potato.module.home.presenter;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.qxy.potato.R;
@@ -14,12 +13,14 @@ import com.qxy.potato.bean.MyVideo;
 import com.qxy.potato.bean.UserInfo;
 import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.module.home.view.IHomeView;
+import com.qxy.potato.module.home.workmanager.ClientCancelWork;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
 import com.tamsiree.rxkit.view.RxToast;
 import com.tencent.mmkv.MMKV;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author :yinxiaolong
@@ -108,6 +109,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
                     @Override
                     public void onSuccess(BaseBean<AccessToken> o) {
                         mmkv.encode(GlobalConstant.ACCESS_TOKEN,o.data.getAccess_token());
+                        mmkv.encode(GlobalConstant.REFRESH_TOKEN,o.data.getRefresh_token());
                         mmkv.encode(GlobalConstant.OPEN_ID,o.data.getOpen_id());
                         mmkv.encode(GlobalConstant.IS_LOGIN,true);
                         baseView.loginSuccess();
@@ -135,7 +137,9 @@ public class HomePresenter extends BasePresenter<IHomeView> {
                 mmkv.encode(GlobalConstant.CLIENT_TOKEN,o.data.getAccess_token());
                 mmkv.encode(GlobalConstant.IS_CLIENT,true);
                 LogUtil.d(mmkv.decodeString(GlobalConstant.CLIENT_TOKEN));
-                baseView.cancelClientValue();
+                //两小时后取消连接状态
+                baseView.startWork(120, TimeUnit.MINUTES,
+                        GlobalConstant.CLIENT_TOKEN, ClientCancelWork.class);
             }
 
             @Override
