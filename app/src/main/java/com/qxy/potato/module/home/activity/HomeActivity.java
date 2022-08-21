@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -105,11 +106,22 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
                 collapsingToolbarLayout.setTitle(" 作品");
                 getBinding().homeIconSmall.setVisibility(View.VISIBLE);
+
+
+                if (getBinding().homeToolbar.getMenu().findItem(R.id.open_rank)!=null) {
+                    getBinding().homeToolbar.getMenu().findItem(R.id.open_rank).setIcon(R.mipmap.home_openrank);
+                }
+
                 //Toast.makeText(getApplicationContext(),"折叠了",Toast.LENGTH_SHORT).show();
             }else {   //展开监听
                // Toast.makeText(getApplicationContext(),"展开了",Toast.LENGTH_SHORT).show();
                 getBinding().homeIconSmall.setVisibility(View.INVISIBLE);
                 collapsingToolbarLayout.setTitle(" ");
+
+                if (getBinding().homeToolbar.getMenu().findItem(R.id.open_rank)!=null) {
+                    getBinding().homeToolbar.getMenu().findItem(R.id.open_rank).setIcon(R.mipmap.home_openrank2);
+                }
+
             }
         });
         //点击小头像返回顶部
@@ -232,9 +244,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         });
         boolean isLogin=mmkv.decodeBool(GlobalConstant.IS_LOGIN);
         if (isLogin){
-            getBinding().homeNavigationView.getMenu().getItem(1).setTitle("登出");
+            getBinding().homeNavigationView.getMenu().getItem(2).setTitle("登出");
         }else {
-            getBinding().homeNavigationView.getMenu().getItem(1).setTitle("登录");
+            getBinding().homeNavigationView.getMenu().getItem(2).setTitle("登录");
         }
         LogUtil.d("initData");
     }
@@ -243,7 +255,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     @Override
     public void showPersonalInfo(UserInfo userInfo) {
-        getBinding().homeTextViewLike.setText(getLIke+"获赞");
+        //getBinding().homeTextViewLike.setText(HomeAdapter.getLiked+"获赞");
         getBinding().homeTextViewFans.setText(0+"粉丝");
         getBinding().homeTextViewFollower.setText(0+"关注");
         getBinding().textViewIntroduce.setText("无");
@@ -258,6 +270,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     }
 
     private List<MyVideo.Videos> checkList=new ArrayList<>();
+    private int getLiked=0;
     @Override
     public void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore,long cursor) {
         this.isHasMore=isHasMore;
@@ -282,15 +295,17 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             }
         });
         if (videos!=null) {
-
+            int position=list.size()-1;
             for (int i = 0; i < videos.size(); i++) {
                 checkList.clear();
                 if (!videos.get(i).getShare_url().equals(""))
                 {
+                    getLiked+=videos.get(i).getStatistics().getDigg_count();
                     checkList.add(videos.get(i));
                     adapter.addData(videos.get(i));
                 }
             }
+            getBinding().homeTextViewLike.setText(getLiked+"获赞");
 
 //            adapter.notifyDataSetChanged();
         }
