@@ -48,10 +48,6 @@
             android:exported="true">
 
         </activity>
-        <activity
-            android:name=".module.mine.activity.MineActivity"
-            android:exported="true">
-        </activity>
 
         <receiver
             android:name=".module.douyinapi.StayInDyReceiver"
