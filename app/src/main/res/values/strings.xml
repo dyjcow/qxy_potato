@@ -10,19 +10,19 @@
     <string name="OTHER_MSG">Unknown error</string>
     <string name="rank_rule">Rank rule</string>
 
-<!--    报文代码-->
+    <!--    报文代码-->
     <string name="error_code" translatable="false">error_code</string>
     <string name="error_msg" translatable="false">description</string>
     <string name="code" translatable="false">code</string>
     <string name="msg" translatable="false">msg</string>
 
-<!--    BaseUrl-->
+    <!--    BaseUrl-->
     <string name="url" translatable="false">https://open.douyin.com/</string>
     <string name="mxzp" translatable="false">https://www.mxnzp.com/</string>
     <string name="pic" translatable="false">https://www.lxtlovely.top/getpic.php</string>
     <string name="mock" translatable="false">https://mock.apifox.cn/m1/1441895-0-default/</string>
 
-<!--    请求参数-->
+    <!--    请求参数-->
     <string name="grant_type" translatable="false">grant_type</string>
     <string name="client_key" translatable="false">client_key</string>
     <string name="client_secret" translatable="false">client_secret</string>
@@ -35,7 +35,7 @@
     <string name="open_id" translatable="false">open_id</string>
     <string name="access_token" translatable="false">access_token</string>
 
-<!--    Login页面-->
+    <!--    Login页面-->
     <string name="login">Login With Tiktok</string>
     <string name="has_read">I have read and agree</string>
     <string name="user_agreement">\'User Agreement\'</string>

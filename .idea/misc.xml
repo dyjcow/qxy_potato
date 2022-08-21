@@ -11,12 +11,16 @@
         <entry key="..\:/Work/potato/app/src/main/res/drawable/ge_ticket_button_bg.xml" value="0.181" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/tab_indicator.xml" value="0.1735" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/tablayout_rank_indicator.xml" value="0.181" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/Fragment_rank_background.xml" value="0.20606884057971014" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_home.xml" value="0.20606884057971014" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_main.xml" value="0.13072916666666667" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_rank.xml" value="0.18840579710144928" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/activity_video_rank.xml" value="0.1" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/coordinator_rank_background.xml" value="0.18840579710144928" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/fragment_rank_background.xml" value="0.1" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.19067028985507245" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/reycylerview_item_home.xml" value="0.20606884057971014" />
       </map>
     </option>
   </component>
