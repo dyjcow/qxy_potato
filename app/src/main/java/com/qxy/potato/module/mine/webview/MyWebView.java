@@ -111,8 +111,8 @@ public class MyWebView extends WebView {
 			 * @param url
 			 */
 			@Override public void onPageFinished(WebView view, String url) {
-				super.onPageFinished(view, url);
-				//								view.loadUrl("javascript:try{autoplay();}catch(e){}");
+//				super.onPageFinished(view, url);
+				//		view.loadUrl("javascript:try{autoplay();}catch(e){}");
 
 				//		view.loadUrl("javascript:myFunction()");
 
@@ -131,7 +131,7 @@ public class MyWebView extends WebView {
 				//				String videoJs = "javascript: var v = document.getElementsByTagName('video'); alert(v[0])";
 				//
 				//				view.loadUrl(videoJs);
-				LogUtil.i("fuck");
+//				LogUtil.i("fuck");
 				//				String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].autoplay=true; alert(v[0]);  v[0].load();";
 				//
 				//				view.loadUrl(videoJs);
@@ -143,6 +143,16 @@ public class MyWebView extends WebView {
 				//				String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].autoplay=true;  v[0].onload=function() {this.play()}";
 				//
 				//				view.loadUrl(videoJs);
+
+//慢
+//				getSettings().setBlockNetworkImage(false);
+//				//判断webview是否加载了，图片资源
+//				if (!getSettings().getLoadsImagesAutomatically()) {
+//					//设置wenView加载图片资源
+//					getSettings().setLoadsImagesAutomatically(true);
+//				}
+				super.onPageFinished(view, url);
+
 
 			}
 
@@ -191,6 +201,9 @@ public class MyWebView extends WebView {
 
 		com.tencent.smtt.sdk.WebSettings webSetting = this.getSettings();
 
+//		//先阻塞加载图片(先加载页面再加载大资源)
+//		webSetting.setBlockNetworkImage(true);
+
 		// 设置允许JS弹窗
 		webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
 
@@ -203,6 +216,7 @@ public class MyWebView extends WebView {
 		String appCacheDir = App.getContext().getDir("cache", Context.MODE_PRIVATE).getPath();
 		webSetting.setAppCachePath(
 				appCacheDir); //设置应用缓存文件的路径。为了让应用缓存API可用，此方法必须传入一个应用可写的路径。 该方法只会执行一次，重复调用会被忽略。
+//		webSetting.setAppCacheMaxSize(5*1024*1024);
 
 		webSetting.setLoadsImagesAutomatically(
 				true); // WebView是否下载图片资源，默认为true。如果该设置项的值由false变为true，WebView展示的内容所引用的所有的图片资源将自动下载。

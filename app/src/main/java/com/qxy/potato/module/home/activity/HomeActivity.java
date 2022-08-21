@@ -43,6 +43,7 @@ import com.qxy.potato.module.home.adapter.HomeItemDecoration;
 import com.qxy.potato.module.home.presenter.HomePresenter;
 import com.qxy.potato.module.home.view.IHomeView;
 import com.qxy.potato.module.mine.activity.LoginActivity;
+import com.qxy.potato.module.mine.activity.WebViewActivity;
 import com.qxy.potato.module.mine.workmanager.ClientCancelWork;
 import com.qxy.potato.module.videolist.activity.RankActivity;
 import com.qxy.potato.util.ActivityUtil;
@@ -112,6 +113,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         //跳转到关注页
         // TODO: 2022/8/20 跳转到关注页 
         getBinding().homeTextViewFollower.setOnClickListener(view -> Toast.makeText(HomeActivity.this, "Followers", Toast.LENGTH_SHORT).show());
+
+
         //跳转到粉丝页
         // TODO: 2022/8/20 跳转到粉丝页 
         getBinding().homeTextViewFans.setOnClickListener(view -> Toast.makeText(HomeActivity.this, "Fans", Toast.LENGTH_SHORT).show());
@@ -268,9 +271,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 // TODO: 2022/8/20  填入webViewActivity
-                /*Intent intent=new Intent(HomeActivity.class,*//*webView*//*);
-                intent.putExtra("shareUrl",list.get(position).getShare_url());
-                startActivity(intent);*/
+                Intent intent=new Intent(HomeActivity.this,WebViewActivity.class);
+                intent.putExtra("url",list.get(position).getShare_url());
+                startActivity(intent);
             }
         });
         if (videos!=null) {

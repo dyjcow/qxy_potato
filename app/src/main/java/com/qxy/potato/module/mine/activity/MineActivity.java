@@ -2,9 +2,7 @@ package com.qxy.potato.module.mine.activity;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
-import android.webkit.WebViewFragment;
 
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -18,7 +16,6 @@ import com.bytedance.sdk.open.aweme.common.model.BaseReq;
 import com.bytedance.sdk.open.aweme.common.model.BaseResp;
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
-import com.qxy.potato.R;
 import com.qxy.potato.base.BaseActivity;
 import com.qxy.potato.base.BaseEvent;
 import com.qxy.potato.annotation.BindEventBus;
@@ -26,8 +23,7 @@ import com.qxy.potato.bean.VideoVersion;
 import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.databinding.ActivityMainBinding;
-import com.qxy.potato.module.mine.fragment.TestFragment;
-import com.qxy.potato.module.mine.fragment.VideoDisplayragment;
+
 import com.qxy.potato.module.mine.presenter.MinePresenter;
 import com.qxy.potato.module.mine.view.IMineView;
 import com.qxy.potato.module.mine.workmanager.ClientCancelWork;
@@ -35,11 +31,14 @@ import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.ToastUtil;
 import com.tencent.mmkv.MMKV;
+import com.tencent.smtt.export.external.TbsCoreSettings;
+import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.WebView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 @BindEventBus
@@ -47,8 +46,7 @@ public class MineActivity extends BaseActivity<MinePresenter, ActivityMainBindin
     DouYinOpenApi douYinOpenApi;
     MMKV kv = MMKV.defaultMMKV();
 
-    private long mBackPressed;//用来记录按下时间，连点两次返回键才返回
-    private static final int BACK_PRESSED_INTERVAL = 1500;//时间间隔
+
 
     /**
      * 初始化presenter，也是与Activity的绑定
@@ -76,18 +74,11 @@ public class MineActivity extends BaseActivity<MinePresenter, ActivityMainBindin
         //跳转到榜单
 //        getBinding().imgRank.setOnClickListener(v->ActivityUtil.startActivity(RankActivity.class));
 
-        //跳转到Webview测试用
-//        getBinding().imgRank.setOnClickListener(v->ActivityUtil.startActivity(WebViewTestActivity.class));
-
-
-        //TODO： 个人界面碎片按下面样例添加；跳转到视频碎片需传入url。
-//        //个人界面碎片
-//        getFragmentManager().beginTransaction().add(R.id.fragment_webview, new TestFragment()).commit();
-//        //打开视频详情页（添加tag）
-//        getFragmentManager().beginTransaction().add(R.id.fragment_webview, VideoDisplayragment.newInstance(url),"WebView").addToBackStack(null).commit();
 
 
         presenter.getClientVersionDemo();
+
+
 
     }
 
@@ -99,7 +90,10 @@ public class MineActivity extends BaseActivity<MinePresenter, ActivityMainBindin
         douYinOpenApi = DouYinOpenApiFactory.create(this);
         douYinOpenApi.handleIntent(getIntent(), this);
         initClient();
-        mBackPressed =System.currentTimeMillis();
+
+
+
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -181,36 +175,6 @@ public class MineActivity extends BaseActivity<MinePresenter, ActivityMainBindin
     }
 
 
-    /**
-     * 配置Webview的返回键,碎片切换要加到返回栈中
-     */
-    @Override public void onBackPressed() {
-        Fragment fragment = getFragmentManager().findFragmentByTag("WebView");
-        if(fragment!=null){//说明现在是webview播放页面
-            VideoDisplayragment videoDisplayragment = (VideoDisplayragment) fragment;
-            WebView webView = videoDisplayragment.getmWebViewWebView();
-            //不空且是焦点
-            if (webView != null && webView.isFocused()) {
-
-                if (webView.canGoBack()) {//WebView的向前
-                    webView.goBack();
-                } else {
-                    if(mBackPressed + BACK_PRESSED_INTERVAL > System.currentTimeMillis()){//连续两次才返回到个人碎片（1.5s内）
-                        super.onBackPressed();
-                        return;
-                    }else{//提示
-                        ToastUtil.showToast("再点一次返回键返回个人界面");
-                        mBackPressed = System.currentTimeMillis();
-
-                    }
-                }
-            }
-        } else {//正常系统返回键
-                super.onBackPressed();
-            }
-
-
-    }
 
 
 }

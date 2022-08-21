@@ -25,7 +25,7 @@
         android:theme="@style/Theme.Potato"
         tools:targetApi="31">
         <activity
-                android:name=".module.mine.activity.WebViewTestActivity"
+                android:name=".module.mine.activity.WebViewActivity"
                 android:exported="false" />
 
         <activity
