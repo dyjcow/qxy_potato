@@ -14,15 +14,15 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textview_mine_number"
+            android:id="@+id/textview_follow_total"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center_vertical"
             android:paddingStart="17dp"
-            android:text="我的关注(2人)" />
+            android:text="我的粉丝(2人)" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_mine_list"
+            android:id="@+id/recyclerview_follow_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

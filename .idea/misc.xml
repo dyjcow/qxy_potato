@@ -10,10 +10,10 @@
         <entry key="..\:/Develop/qxy_potato/app/src/main/res/drawable/tablayout_follow_indicator.xml" value="0.1015" />
         <entry key="..\:/Develop/qxy_potato/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Develop/qxy_potato/app/src/main/res/layout/coordinator_rank_background.xml" value="0.1" />
-        <entry key="..\:/Develop/qxy_potato/app/src/main/res/layout/linearlayout_mine_follow_list.xml" value="0.1" />
+        <entry key="..\:/Develop/qxy_potato/app/src/main/res/layout/linearlayout_mine_follow_list.xml" value="0.25" />
         <entry key="..\:/Develop/qxy_potato/app/src/main/res/layout/recyclerview_item_follow.xml" value="0.67" />
         <entry key="..\:/Develop/qxy_potato/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.15760869565217392" />
-        <entry key="..\:/Develop/qxy_potato/app/src/main/res/layout/relativelayout_mine_follow.xml" value="0.1" />
+        <entry key="..\:/Develop/qxy_potato/app/src/main/res/layout/relativelayout_mine_follow.xml" value="0.33" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/tab_indicator.xml" value="0.1735" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_login.xml" value="0.21195652173913043" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_main.xml" value="0.13072916666666667" />

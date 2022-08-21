@@ -20,6 +20,7 @@ import com.qxy.potato.module.mine.adapter.FollowPagerAdapter;
 import com.qxy.potato.util.ActivityUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,6 +45,10 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
 
     private Activity activity = ActivityUtil.getCurrentActivity();
 
+    public static final int FOLLOWINGS=0;
+    public static final int Fans=1;
+
+
 
     @Override
     protected BasePresenter createPresenter() {
@@ -62,10 +67,7 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         AppCompatActivity compatActivity = (AppCompatActivity) activity;
 
         //加入关注和粉丝碎片
-//        List<FollowListFragment> list = Arrays.asList(new FollowListFragment(), new FollowListFragment());
-        List<FollowListFragment> list = new ArrayList<>();
-        list.add(new FollowListFragment());
-        list.add(new FollowListFragment());
+        List<FollowListFragment> list = Arrays.asList(new FollowListFragment(FOLLOWINGS), new FollowListFragment(Fans));
         viewPager.setAdapter(new FollowPagerAdapter(compatActivity.getSupportFragmentManager(), compatActivity.getLifecycle(), list));
 
         //绑定

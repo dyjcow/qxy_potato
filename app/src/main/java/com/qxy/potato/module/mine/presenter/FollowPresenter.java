@@ -58,7 +58,7 @@ public class FollowPresenter extends BasePresenter<IFollowView> {
         queryMap.put(MyUtil.getString(R.string.count),count);
 
         addDisposable(apiServer.GetMyFollowings(token, openId, queryMap),
-                new BaseObserver<BaseBean<Fans>>(baseView,false) {
+                new BaseObserver<BaseBean<Fans>>(baseView,true) {
 
                     @Override
                     public void onSuccess(BaseBean<Fans> o) {

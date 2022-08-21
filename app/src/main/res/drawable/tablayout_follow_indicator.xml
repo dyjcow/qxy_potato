@@ -4,8 +4,6 @@
         android:width="38dp"
         android:height="3dp"
         android:gravity="center">
-        <shape>
-            <corners android:radius="5dp" />
-        </shape>
+        <shape />
     </item>
 </layer-list>

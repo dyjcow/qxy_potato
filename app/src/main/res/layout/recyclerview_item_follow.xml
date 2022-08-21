@@ -6,6 +6,7 @@
     android:orientation="horizontal">
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/avatar"
         android:layout_width="62dp"
         android:layout_height="62dp"
         android:layout_gravity="center_vertical"
@@ -14,6 +15,7 @@
         app:shapeAppearance="@style/CircleStyle" />
 
     <TextView
+        android:id="@+id/nickname"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
