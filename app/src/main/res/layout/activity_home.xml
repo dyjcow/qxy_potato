@@ -50,7 +50,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/textViw_personal_name"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:shapeAppearance="@style/circle" />
+                    app:shapeAppearance="@style/CircleStyle" />
 
                 <TextView
                     android:id="@+id/textViw_personal_name"
@@ -103,7 +103,7 @@
                     android:src="@mipmap/roundtest"
                     app:layout_collapseMode="pin"
 
-                    app:shapeAppearance="@style/circle" />
+                    app:shapeAppearance="@style/CircleStyle" />
 
             </androidx.appcompat.widget.Toolbar>
 

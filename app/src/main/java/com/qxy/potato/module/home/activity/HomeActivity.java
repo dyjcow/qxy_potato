@@ -45,6 +45,7 @@ import com.qxy.potato.bean.UserInfo;
 import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.databinding.ActivityHomeBinding;
+import com.qxy.potato.module.Follow.activity.FollowActivity;
 import com.qxy.potato.module.home.adapter.HomeAdapter;
 import com.qxy.potato.module.home.adapter.HomeItemDecoration;
 import com.qxy.potato.module.home.presenter.HomePresenter;
@@ -70,6 +71,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -136,10 +138,19 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         getBinding().homeIconSmall.setOnClickListener(view -> getBinding().nestedScrollViewLayout.smoothScrollTo(0,0,200));
         //跳转到关注页
         // TODO: 2022/8/20 跳转到关注页 
-        getBinding().homeTextViewFollower.setOnClickListener(view -> Toast.makeText(HomeActivity.this, "Followers", Toast.LENGTH_SHORT).show());
+        getBinding().homeTextViewFollower.setOnClickListener(view -> {
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("type", "Followings");
+                    ActivityUtil.startActivity(FollowActivity.class, map);
+                }
+        );
         //跳转到粉丝页
         // TODO: 2022/8/20 跳转到粉丝页 
-        getBinding().homeTextViewFans.setOnClickListener(view -> Toast.makeText(HomeActivity.this, "Fans", Toast.LENGTH_SHORT).show());
+        getBinding().homeTextViewFans.setOnClickListener(view -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("type", "Fans");
+            ActivityUtil.startActivity(FollowActivity.class, map);
+        });
         //点赞的dialog
         getBinding().homeTextViewLike.setOnClickListener(view -> {
             RxDialogSure rxDialogSure=new RxDialogSure(this);
@@ -218,6 +229,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     /**
      * 打开drawerLayout
+     *
      * @param item
      * @return
      */
@@ -267,10 +279,13 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         //getBinding().homeTextViewLike.setText(HomeAdapter.getLiked+"获赞");
         getBinding().homeTextViewFans.setText(0+"粉丝");
         getBinding().homeTextViewFollower.setText(0+"关注");
+        getBinding().homeTextViewLike.setText(getLIke + "获赞");
+        getBinding().homeTextViewFans.setText(mmkv.decodeInt(GlobalConstant.FANS_TOTAL,0) + "粉丝");
+        getBinding().homeTextViewFollower.setText(mmkv.decodeInt(GlobalConstant.FOLLOWINGS_TOTAL,0) + "关注");
         getBinding().textViewIntroduce.setText("无");
         getBinding().homeTextviewSchool.setText("无");
-        getBinding().homeTextviewPlace.setText((userInfo.getCountry() + userInfo.getDistrict()).equals("") ?"无":(userInfo.getCountry()+userInfo.getDistrict()));
-        getBinding().homeTextviewAge.setText(userInfo.getGender()+"");
+        getBinding().homeTextviewPlace.setText((userInfo.getCountry() + userInfo.getDistrict()).equals("") ? "无" : (userInfo.getCountry() + userInfo.getDistrict()));
+        getBinding().homeTextviewAge.setText(userInfo.getGender() + "");
         Glide.with(this).load(userInfo.getAvatar()).into(getBinding().homeIconSmall);
         Glide.with(this).load(userInfo.getAvatar_larger()).into(getBinding().homeIcon);
         getBinding().textViwPersonalName.setText(userInfo.getNickname());

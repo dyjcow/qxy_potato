@@ -25,6 +25,9 @@
         android:theme="@style/Theme.Potato"
         tools:targetApi="31">
         <activity
+            android:name=".module.Follow.activity.FollowActivity"
+            android:exported="false" />
+        <activity
             android:name=".module.mine.activity.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">

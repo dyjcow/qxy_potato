@@ -10,6 +10,8 @@
     <string name="OTHER_MSG">Unknown error</string>
     <string name="rank_rule">Rank rule</string>
     <string name="double_quit">"Presse again, quit  "</string>
+    <string name="followings">followings</string>
+    <string name="fans">fans</string>
 
     <!--    报文代码-->
     <string name="error_code" translatable="false">error_code</string>
