@@ -21,7 +21,9 @@ public class FollowingsRecycleViewAdapter extends BaseQuickAdapter<Followings.Fo
 
     @Override
     protected void convert(@NonNull BaseViewHolder baseViewHolder, Followings.Following following) {
+        //加载昵称
         baseViewHolder.setText(R.id.nickname,following.getNickname());
+        //加载头像
         ImageView avatar=baseViewHolder.getView(R.id.avatar);
         Glide.with(ActivityUtil.getCurrentActivity()).load(following.getAvatar()).into(avatar);
     }

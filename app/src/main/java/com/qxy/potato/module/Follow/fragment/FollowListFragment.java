@@ -24,6 +24,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.tencent.mmkv.MMKV;
 
 public class FollowListFragment extends BaseFragment<FollowPresenter, LinearlayoutMineFollowListBinding> implements IFollowView {
+    //通过type进行相应操作，复用fragment
     public FollowListFragment(int type) {
         super();
         mType=type;
@@ -36,25 +37,21 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
 
     private Activity activity=ActivityUtil.getCurrentActivity();
 
+    //刷新布局（非常好用）
     private RefreshLayout refreshLayout;
 
+    //用户总数（关注的我隐藏了，不好获取）
     private TextView total;
 
-    private RecyclerView list;
+    private RecyclerView recyclerView;
 
-    private LinearLayoutManager manager;
-
+    //用于判断能否上拉加载
     private boolean followingsHasMore;
     private boolean fansHasMore;
 
     private MMKV mmkv=MMKV.defaultMMKV();
 
-//    private FollowingsRecycleViewAdapter followingsAdapter;
-//    private FansRecycleViewAdapter fansAdapter;
-
-//    private List<Followings.Following> loadFollowings=new LinkedList<>();
-//    private List<Fans.Fan> loadFans=new LinkedList<>();
-
+    //便于下次请求
     private int followingCursor=0;
     private int fanCursor=0;
 
@@ -68,13 +65,14 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
         refreshLayout.setOnRefreshListener(refreshlayout -> {
             switch (mType){
                 case FollowFragment.FOLLOWINGS:{
-                    list.setAdapter(null);
+                    //每次刷新重新加载
+                    recyclerView.setAdapter(null);
                     followingCursor=0;
                     presenter.getFollowingsList(followingCursor,12);
                     break;
                 }
                 case FollowFragment.Fans:{
-                    list.setAdapter(null);
+                    recyclerView.setAdapter(null);
                     fanCursor=0;
                     presenter.getFansList(fanCursor,12);
                     break;
@@ -86,6 +84,7 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
         refreshLayout.setOnLoadMoreListener(refreshlayout -> {
             switch (mType){
                 case FollowFragment.FOLLOWINGS:{
+                    //判断有无更多，有则通过followingCursor发起请求
                     if(followingsHasMore)
                         presenter.getFollowingsList(followingCursor,12);
                     else
@@ -93,6 +92,7 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
                     break;
                 }
                 case FollowFragment.Fans:{
+                    //判断有无更多，有则通过fanCursor发起请求
                     if(fansHasMore)
                         presenter.getFansList(fanCursor,12);
                     else
@@ -108,13 +108,15 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
         if(mType==FollowFragment.FOLLOWINGS)
             total.setVisibility(View.INVISIBLE);
 
-        list=getBinding().recyclerviewFollowList;
-        manager=new LinearLayoutManager(activity);
-        list.setLayoutManager(manager);
+        recyclerView =getBinding().recyclerviewFollowList;
+        //指定布局方式
+        LinearLayoutManager manager = new LinearLayoutManager(activity);
+        recyclerView.setLayoutManager(manager);
     }
 
     @Override
     protected void initData() {
+        //获取初始12条数据
         switch (mType){
             case FollowFragment.FOLLOWINGS:{
                 presenter.getFollowingsList(followingCursor,12);
@@ -131,14 +133,21 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
 
     @Override
     public void showFollowingsList(Followings followings) {
-        if(list.getAdapter()==null&&followings.getList()!=null){
-            list.setAdapter(new FollowingsRecycleViewAdapter(followings.getList()));
-            mmkv.encode(GlobalConstant.FOLLOWINGS_TOTAL,followings.getList().size());
-        }else{
-            FollowingsRecycleViewAdapter adapter=(FollowingsRecycleViewAdapter)list.getAdapter();
-            adapter.addData(followings.getList());
-            mmkv.encode(GlobalConstant.FOLLOWINGS_TOTAL,followings.getList().size()+mmkv.getInt(GlobalConstant.FOLLOWINGS_TOTAL,0));
+        //判断防止空指针
+        if(followings.getList()!=null){
+            //通过判断适配器是否设置，从而知道是第一次还是后来的加载
+            if(recyclerView.getAdapter()==null){
+                recyclerView.setAdapter(new FollowingsRecycleViewAdapter(followings.getList()));
+                //存储，每次重启可能会导致关注数的上下浮动
+                mmkv.encode(GlobalConstant.FOLLOWINGS_TOTAL,followings.getList().size());
+            }else{
+                FollowingsRecycleViewAdapter adapter=(FollowingsRecycleViewAdapter) recyclerView.getAdapter();
+                adapter.addData(followings.getList());
+                //因为关注总数的特殊性，累加
+                mmkv.encode(GlobalConstant.FOLLOWINGS_TOTAL,followings.getList().size()+mmkv.getInt(GlobalConstant.FOLLOWINGS_TOTAL,0));
+            }
         }
+        //判断是否有动画，有则结束
         if(refreshLayout.isRefreshing())
             refreshLayout.finishRefresh();
         if(refreshLayout.isLoading())
@@ -149,25 +158,32 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
 
     @Override
     public void showFansList(Fans fans) {
-        if(list.getAdapter()==null&&fans.getList()!=null){
-            list.setAdapter(new FansRecycleViewAdapter(fans.getList()));
-        }else{
-            FansRecycleViewAdapter adapter=(FansRecycleViewAdapter)list.getAdapter();
-            adapter.addData(fans.getList());
+        //判断防止空指针
+        if(fans.getList()!=null){
+            //通过判断适配器是否设置，从而知道是第一次还是后来的加载
+            if(recyclerView.getAdapter()==null){
+                recyclerView.setAdapter(new FansRecycleViewAdapter(fans.getList()));
+            }else{
+                FansRecycleViewAdapter adapter=(FansRecycleViewAdapter) recyclerView.getAdapter();
+                adapter.addData(fans.getList());
+            }
         }
+        //判断是否有动画，有则结束
         if(refreshLayout.isRefreshing())
             refreshLayout.finishRefresh();
         if(refreshLayout.isLoading())
             refreshLayout.finishLoadMore();
         fansHasMore=fans.isHas_more();
         fanCursor=fans.getCursor();
+        //存储粉丝总数
         mmkv.encode(GlobalConstant.FANS_TOTAL,fans.getTotal());
         total.setText("我的粉丝("+fans.getTotal()+"人)");
     }
 
     @Override
     public void loadFail(String msg) {
-        if(list.getAdapter()!=null){
+        //判断是否有动画，有则结束
+        if(refreshLayout.isRefreshing()||refreshLayout.isLoading()){
             refreshLayout.finishRefresh(false);
         }
         ToastUtil.showToast(msg);

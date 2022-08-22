@@ -17,6 +17,8 @@ public class FollowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_follow);
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
+
+        //通过type判断默认启动的标签位置
         switch (type) {
             case "Followings": {
                 getSupportFragmentManager().beginTransaction().
@@ -33,7 +35,7 @@ public class FollowActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        //系统返回直接结束活动
         ActivityUtil.finishActivity(this);
-        finish();
     }
 }

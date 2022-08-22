@@ -49,6 +49,7 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
 
     private int mType;
 
+    //获取默认启动标签页面
     public FollowFragment(int type) {
         super();
         mType=type;
@@ -71,11 +72,11 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
 
         AppCompatActivity compatActivity = (AppCompatActivity) activity;
 
-        //加入关注和粉丝碎片
+        //加入关注和粉丝碎片，传入type类型来生成不同碎片
         List<FollowListFragment> list = Arrays.asList(new FollowListFragment(FOLLOWINGS), new FollowListFragment(Fans));
         viewPager.setAdapter(new FollowPagerAdapter(compatActivity.getSupportFragmentManager(), compatActivity.getLifecycle(), list));
 
-        //绑定
+        //tabLayout与viewPager绑定
         mediator = new TabLayoutMediator(tabLayout, viewPager, strategy);
         mediator.attach();
 
@@ -83,6 +84,7 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         viewPager.registerOnPageChangeCallback(changeCallback);
         tabLayout.addOnTabSelectedListener(selectedListener);
 
+        //设置默认启动页面
         if(mType==Fans)
             tabLayout.getTabAt(Fans).select();
     }
@@ -92,6 +94,7 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         textView.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         textView.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
+        //设置文本内容
         switch (position) {
             case 0:
                 textView.setText(R.string.followings);
@@ -104,6 +107,7 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         tab.setCustomView(textView);
     };
 
+    //根据标签选中与否更改文本效果
     private TabLayout.OnTabSelectedListener selectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
@@ -127,6 +131,7 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         }
     };
 
+    //根据页面切换与否更改文本效果
     private ViewPager2.OnPageChangeCallback changeCallback = new ViewPager2.OnPageChangeCallback() {
         @Override
         public void onPageSelected(int position) {
