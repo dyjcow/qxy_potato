@@ -165,7 +165,7 @@
                     android:layout_marginTop="5dp"
                     android:src="@mipmap/home_man"
                     android:layout_width="20dp"
-                    android:layout_height="@dimen/dk_dp_20"/>
+                    android:layout_height="20dp"/>
                 <TextView
                     android:id="@+id/home_textview_age"
                     android:background="@drawable/home_textview"
@@ -178,8 +178,8 @@
                 <TextView
                     android:id="@+id/home_textview_place"
                     android:background="@drawable/home_textview"
-                    android:layout_marginStart="@dimen/dk_dp_10"
-                    android:layout_margin="@dimen/dk_dp_5"
+                    android:layout_marginStart="10dp"
+                    android:layout_margin="5dp"
                     android:text="云南.大理"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -189,7 +189,7 @@
                     android:layout_marginTop="5dp"
                     android:src="@mipmap/home_school"
                     android:layout_width="20dp"
-                    android:layout_height="@dimen/dk_dp_20"/>
+                    android:layout_height="20dp"/>
                 <TextView
                     android:id="@+id/home_textview_school"
                     android:background="@drawable/home_textview"

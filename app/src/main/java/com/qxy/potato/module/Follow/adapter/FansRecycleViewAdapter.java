@@ -25,6 +25,7 @@ public class FansRecycleViewAdapter extends BaseQuickAdapter<Fans.Fan, BaseViewH
     protected void convert(@NonNull BaseViewHolder baseViewHolder, Fans.Fan fan) {
         baseViewHolder.setText(R.id.address,fan.getCountry()+fan.getProvince()+fan.getCity());
         baseViewHolder.setText(R.id.nickname,fan.getNickname());
+        baseViewHolder.setText(R.id.is_connect,"关注了你");
         ImageView avatar=baseViewHolder.getView(R.id.avatar);
         Glide.with(ActivityUtil.getCurrentActivity()).load(fan.getAvatar()).into(avatar);
         ImageView gender=baseViewHolder.getView(R.id.gender);

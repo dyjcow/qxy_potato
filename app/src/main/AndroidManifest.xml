@@ -23,7 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Potato"
-        tools:targetApi="31">
+        tools:targetApi="30">
         <activity
             android:name=".module.Follow.activity.FollowActivity"
             android:exported="false" />
@@ -48,9 +48,6 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".module.videolist.activity.RankActivity"
-            android:exported="false" />
-        <activity
             android:name=".module.mine.activity.LoginActivity"
             android:exported="true">
         </activity>
@@ -66,7 +63,9 @@
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
             android:label="dexopt"
-            android:process=":dexopt"></service>
+            android:process=":dexopt">
+
+        </service>
     </application>
 
 </manifest>

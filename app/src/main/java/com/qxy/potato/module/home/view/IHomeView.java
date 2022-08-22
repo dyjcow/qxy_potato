@@ -21,17 +21,6 @@ public interface IHomeView extends BaseView {
 
     void showPersonalVideo(List<MyVideo.Videos> videos,boolean isHasMore,long cursor);
 
-
-    /**
-     * 成功登录的操作
-     */
-    void loginSuccess();
-
-    /**
-     * 登录失败的操作
-     */
-    void loginFailed(String msg);
-
     void startWork(long duration, @NonNull TimeUnit timeUnit,
                    String tag, @NonNull Class<? extends ListenableWorker> workerClass);
 }

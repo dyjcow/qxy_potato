@@ -93,9 +93,9 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
 //        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
 //        map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
 //        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
-        map.put(MyUtil.getString(R.string.client_secret),"e8577e1931af9f81a805c53e526c1de6");
+        map.put(MyUtil.getString(R.string.client_secret),"3cd85c00cec461ef3ed8e17a4f244f42");
         map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
-        map.put(MyUtil.getString(R.string.client_key),"awot3nyb6b23iquy");
+        map.put(MyUtil.getString(R.string.client_key),"awf6mbxfmd4r795y");
         addDisposable(apiServer.PostClientToken(map), new BaseObserver<ClientToken>(baseView,false) {
 
 
