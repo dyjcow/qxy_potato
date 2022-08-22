@@ -18,8 +18,8 @@
         android:id="@+id/nickname"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
         android:layout_toEndOf="@id/avatar"
         android:ellipsize="end"
         android:singleLine="true"
@@ -31,16 +31,30 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/nickname"
-        android:layout_marginStart="13dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@id/avatar" />
+
+    <TextView
+        android:id="@+id/is_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已关注"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="12dp"
+        android:textSize="16sp"
+        android:background="@drawable/home_textview"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:layout_toStartOf="@id/gender"/>
 
     <ImageView
         android:id="@+id/gender"
         android:layout_width="20dp"
         android:layout_height="@dimen/dk_dp_20"
-        android:layout_marginTop="20dp"
-        android:layout_toEndOf="@id/nickname"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
         android:src="@mipmap/home_man" />
 
 </RelativeLayout>

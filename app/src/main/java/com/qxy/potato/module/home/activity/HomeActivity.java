@@ -83,11 +83,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
      * 保存用户按返回键的时间
      */
     private long mExitTime = 0;
-    private MMKV mmkv=MMKV.defaultMMKV();
-    private HomeAdapter adapter;
-    private Integer getLIke=0;
-    private DouYinOpenApi douYinOpenApi;
-    
+    private final MMKV mmkv=MMKV.defaultMMKV();
+    private int like = mmkv.decodeInt(GlobalConstant.LIKE_TOTAL,0);
+
     @Override
     protected HomePresenter createPresenter() {
         return new HomePresenter(this);
@@ -122,9 +120,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                     getBinding().homeToolbar.getMenu().findItem(R.id.open_rank).setIcon(R.mipmap.home_openrank);
                 }
 
-                //Toast.makeText(getApplicationContext(),"折叠了",Toast.LENGTH_SHORT).show();
             }else {   //展开监听
-               // Toast.makeText(getApplicationContext(),"展开了",Toast.LENGTH_SHORT).show();
                 getBinding().homeIconSmall.setVisibility(View.INVISIBLE);
                 collapsingToolbarLayout.setTitle(" ");
 
@@ -137,7 +133,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         //点击小头像返回顶部
         getBinding().homeIconSmall.setOnClickListener(view -> getBinding().nestedScrollViewLayout.smoothScrollTo(0,0,200));
         //跳转到关注页
-        // TODO: 2022/8/20 跳转到关注页 
         getBinding().homeTextViewFollower.setOnClickListener(view -> {
                     HashMap<String, String> map = new HashMap<>();
                     map.put("type", "Followings");
@@ -145,7 +140,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 }
         );
         //跳转到粉丝页
-        // TODO: 2022/8/20 跳转到粉丝页 
         getBinding().homeTextViewFans.setOnClickListener(view -> {
             HashMap<String, String> map = new HashMap<>();
             map.put("type", "Fans");
@@ -161,7 +155,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                     rxDialogSure.cancel();
                 }
             });
-            rxDialogSure.setContent("你一共获得"+getLIke+"点赞");
+            rxDialogSure.setContent("你一共获得"+like+"点赞");
             rxDialogSure.show();
         });
         //通过DrawerLayout打开榜单页面 和登录页
@@ -211,7 +205,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
          //首次进入获取clientToken
         initClient();
         //设置登录回调
-        douYinOpenApi = DouYinOpenApiFactory.create(this);
+        DouYinOpenApi douYinOpenApi = DouYinOpenApiFactory.create(this);
         douYinOpenApi.handleIntent(getIntent(), this);
     }
 
@@ -276,19 +270,23 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     @Override
     public void showPersonalInfo(UserInfo userInfo) {
-        //getBinding().homeTextViewLike.setText(HomeAdapter.getLiked+"获赞");
-        getBinding().homeTextViewLike.setText(getLIke + "获赞");
+        getBinding().homeTextViewLike.setText(like + "获赞");
         getBinding().homeTextViewFans.setText(mmkv.decodeInt(GlobalConstant.FANS_TOTAL,0) + "粉丝");
         getBinding().homeTextViewFollower.setText(mmkv.decodeInt(GlobalConstant.FOLLOWINGS_TOTAL,0) + "关注");
-        getBinding().textViewIntroduce.setText("无");
-        getBinding().homeTextviewSchool.setText("无");
-        getBinding().homeTextviewPlace.setText((userInfo.getCountry() + userInfo.getDistrict()).equals("") ? "无" : (userInfo.getCountry() + userInfo.getDistrict()));
-        getBinding().homeTextviewAge.setText(userInfo.getGender() + "");
+        getBinding().textViewIntroduce.setText("Hello");
+        getBinding().homeTextviewSchool.setText("广东工业大学");
+        getBinding().homeTextviewPlace.setText((userInfo.getCountry() + userInfo.getDistrict()).equals("")
+                ? "中国" : (userInfo.getCountry() + userInfo.getDistrict()));
+        String gender;
+        if (userInfo.getGender() == 0 ||userInfo.getGender() == 1){
+            gender = "男";
+        }else {
+            gender = "女";
+        }
+        getBinding().homeTextviewAge.setText(gender);
         Glide.with(this).load(userInfo.getAvatar()).into(getBinding().homeIconSmall);
         Glide.with(this).load(userInfo.getAvatar_larger()).into(getBinding().homeIcon);
         getBinding().textViwPersonalName.setText(userInfo.getNickname());
-
-
     }
 
     private List<MyVideo.Videos> checkList=new ArrayList<>();
@@ -297,7 +295,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     public void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore,long cursor) {
         this.isHasMore=isHasMore;
         this.cursor=cursor;
-        adapter=new HomeAdapter(R.layout.reycylerview_item_home,list);
+        HomeAdapter adapter = new HomeAdapter(R.layout.reycylerview_item_home, list);
         adapter.addChildClickViewIds(R.id.home_item_imageView);
         adapter.setAnimationEnable(true);
         adapter.setAnimationFirstOnly(true);
@@ -306,18 +304,16 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         //recyclerview初始化
         getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120,5,5,5));
         getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this,3));
-        getBinding().recyclerViewHome.setAdapter( adapter);
+        getBinding().recyclerViewHome.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                // TODO: 2022/8/20  填入webViewActivity
                 Intent intent=new Intent(HomeActivity.this,WebViewActivity.class);
                 intent.putExtra("url",list.get(position).getShare_url());
                 startActivity(intent);
             }
         });
         if (videos!=null) {
-            int position=list.size()-1;
             for (int i = 0; i < videos.size(); i++) {
                 checkList.clear();
                 if (!videos.get(i).getShare_url().equals(""))
@@ -327,9 +323,12 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                     adapter.addData(videos.get(i));
                 }
             }
-            getBinding().homeTextViewLike.setText(getLiked+"获赞");
+            if (like <= getLiked ){
+                mmkv.encode(GlobalConstant.LIKE_TOTAL,getLiked);
+                like = getLiked;
+            }
+            getBinding().homeTextViewLike.setText(like+"获赞");
 
-//            adapter.notifyDataSetChanged();
         }
 
 
