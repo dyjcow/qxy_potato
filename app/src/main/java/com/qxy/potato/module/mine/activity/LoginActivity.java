@@ -4,23 +4,32 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Handler;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
+import com.bytedance.sdk.open.aweme.CommonConstants;
 import com.bytedance.sdk.open.aweme.authorize.model.Authorization;
+import com.bytedance.sdk.open.aweme.common.handler.IApiEventHandler;
+import com.bytedance.sdk.open.aweme.common.model.BaseReq;
+import com.bytedance.sdk.open.aweme.common.model.BaseResp;
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.qxy.potato.R;
 import com.qxy.potato.base.BaseActivity;
 import com.qxy.potato.databinding.ActivityLoginBinding;
+import com.qxy.potato.module.home.activity.HomeActivity;
 import com.qxy.potato.module.mine.presenter.LoginPresenter;
 import com.qxy.potato.module.mine.view.ILoginView;
 import com.qxy.potato.util.ActivityUtil;
+import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
 import com.qxy.potato.util.ToastUtil;
 import com.tamsiree.rxkit.RxTool;
 import com.tamsiree.rxkit.view.RxToast;
 
-public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBinding> implements ILoginView {
+public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBinding> implements ILoginView, IApiEventHandler {
 
     private long mExitTime = 0;
     DouYinOpenApi douYinOpenApi;
@@ -75,6 +84,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
     @Override
     protected void initData() {
         douYinOpenApi = DouYinOpenApiFactory.create(this);
+        douYinOpenApi.handleIntent(getIntent(), this);
     }
 
     @Override
@@ -88,9 +98,27 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
                                 "video.data";
 //        request.optionalScope0 = mOptionalScope1;    // 用户授权时可选权限（默认不选）
         request.state = "ww";                                   // 用于保持请求和回调的状态，授权请求后原样带回给第三方。
-        request.callerLocalEntry = "com.qxy.potato.module.home.activity.HomeActivity";
+        request.callerLocalEntry = "com.qxy.potato.module.mine.activity.LoginActivity";
         return douYinOpenApi.authorize(request);               // 优先使用抖音app进行授权，如果抖音app因版本或者其他原因无法授权，则使用wap页授权
 
+    }
+
+    /**
+     * 成功登录的操作
+     */
+    @Override
+    public void loginSuccess() {
+        ActivityUtil.startActivity(HomeActivity.class,true);
+    }
+
+    /**
+     * 登录失败的操作
+     *
+     * @param msg
+     */
+    @Override
+    public void loginFailed(String msg) {
+        ToastUtil.showToast(msg);
     }
 
     /**
@@ -111,5 +139,28 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
             super.onBackPressed();
             ActivityUtil.closeAllActivity();
         }
+    }
+
+    @Override
+    public void onReq(BaseReq baseReq) {
+
+    }
+
+    @Override
+    public void onResp(BaseResp baseResp) {
+        if (baseResp.getType() == CommonConstants.ModeType.SEND_AUTH_RESPONSE) {
+            Authorization.Response response = (Authorization.Response) baseResp;
+            if (baseResp.isSuccess()) {
+                LogUtil.d("onRES");
+                presenter.getAccessToken(response.authCode);
+            }else {
+                ToastUtil.showToast("授权失败");
+            }
+        }
+    }
+
+    @Override
+    public void onErrorIntent(Intent intent) {
+
     }
 }

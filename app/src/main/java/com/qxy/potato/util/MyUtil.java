@@ -85,10 +85,8 @@ public class MyUtil {
      * @param context 传入当前Acitivity
      */
     public static void showLoading(Context context){
-        if (rxDialogLoading == null){
-            rxDialogLoading = new RxDialogLoading(context);
-            rxDialogLoading.setCanceledOnTouchOutside(false);
-        }
+        rxDialogLoading = new RxDialogLoading(context);
+        rxDialogLoading.setCanceledOnTouchOutside(false);
         rxDialogLoading.show();
     }
 

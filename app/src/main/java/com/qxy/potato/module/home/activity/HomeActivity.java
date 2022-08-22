@@ -64,6 +64,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
 import com.tamsiree.rxui.view.dialog.RxDialogSure;
+import com.tamsiree.rxui.view.dialog.RxDialogSureCancel;
 import com.tencent.mmkv.MMKV;
 
 
@@ -76,7 +77,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @BindEventBus
-public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBinding>implements IHomeView, IApiEventHandler {
+public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBinding>implements IHomeView {
 
 
     /**
@@ -163,14 +164,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             if (item.getItemId()==R.id.nav_rank){
                 ActivityUtil.startActivity(RankActivity.class);
             }else if (item.getItemId()==R.id.nav_login) {
-                if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)) {
-                    ActivityUtil.startActivity(LoginActivity.class,true);
-                }else {
-                    mmkv.encode(GlobalConstant.IS_LOGIN,false);
-                    Intent intent = new Intent(HomeActivity.this,HomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
+                eventLogin();
             }
             return true;
         });
@@ -204,9 +198,21 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
          //首次进入获取clientToken
         initClient();
-        //设置登录回调
-        DouYinOpenApi douYinOpenApi = DouYinOpenApiFactory.create(this);
-        douYinOpenApi.handleIntent(getIntent(), this);
+    }
+
+    private void eventLogin() {
+        if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)) {
+            ActivityUtil.startActivity(LoginActivity.class,true);
+        }else {
+            RxDialogSureCancel sureCancel = new RxDialogSureCancel(this);
+            sureCancel.setContent("确认退出登录吗？");
+            sureCancel.setSureListener(v -> {
+                mmkv.encode(GlobalConstant.IS_LOGIN,false);
+                ActivityUtil.startActivity(HomeActivity.class,true);
+            });
+            sureCancel.setCancelListener(v -> sureCancel.cancel());
+            sureCancel.show();
+        }
     }
 
 
@@ -259,7 +265,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         });
         boolean isLogin=mmkv.decodeBool(GlobalConstant.IS_LOGIN);
         if (isLogin){
-            getBinding().homeNavigationView.getMenu().getItem(2).setTitle("登出");
+            getBinding().homeNavigationView.getMenu().getItem(2).setTitle("退出登录");
         }else {
             getBinding().homeNavigationView.getMenu().getItem(2).setTitle("登录");
         }
@@ -334,25 +340,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     }
 
-    /**
-     * 成功登录的操作
-     */
-    @Override
-    public void loginSuccess() {
-        initData();
-
-        ToastUtil.showToast("授权登录成功");
-    }
-
-    /**
-     * 登录失败的操作
-     *
-     * @param msg
-     */
-    @Override
-    public void loginFailed(String msg) {
-        ToastUtil.showToast(msg);
-    }
 
     /**
      * 启动对应的后台任务
@@ -398,31 +385,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         super.onDestroy();
         WorkManager.getInstance(this).cancelAllWorkByTag(GlobalConstant.CLIENT_TOKEN);
     }
-
-    @Override
-    public void onReq(BaseReq baseReq) {
-
-    }
-
-    @Override
-    public void onResp(BaseResp baseResp) {
-        if (baseResp.getType() == CommonConstants.ModeType.SEND_AUTH_RESPONSE) {
-            Authorization.Response response = (Authorization.Response) baseResp;
-            if (baseResp.isSuccess()) {
-                LogUtil.d("onRES");
-                //延时执行
-                new Handler().postDelayed(() -> presenter.getAccessToken(response.authCode),1000);
-            }else {
-                ToastUtil.showToast("授权失败");
-            }
-        }
-    }
-
-    @Override
-    public void onErrorIntent(Intent intent) {
-
-    }
-
 
     /**
      * 初始化连接型token

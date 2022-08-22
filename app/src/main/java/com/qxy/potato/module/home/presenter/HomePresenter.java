@@ -76,7 +76,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
         HashMap<String,Long> map=new HashMap<>();
         map.put(MyUtil.getString(R.string.cursor),cursor);
         map.put(MyUtil.getString(R.string.count),(long)12);
-        addDisposable(apiServer.GetMyVideos(access_token, openId, map), new BaseObserver<BaseBean<MyVideo>>(baseView,false) {
+        addDisposable(apiServer.GetMyVideos(access_token, openId, map), new BaseObserver<BaseBean<MyVideo>>(baseView,true) {
             @Override
             public void onSuccess(BaseBean<MyVideo> o) {
                 baseView.showPersonalVideo(o.data.getList(),o.data.isHas_more(),o.data.getCursor());
@@ -94,36 +94,6 @@ public class HomePresenter extends BasePresenter<IHomeView> {
 
 
     /**
-     * 获取到 AccessToken 并存储
-     *
-     * @param authCode 授权码
-     */
-    public void getAccessToken(String authCode){
-        HashMap<String,String> map = new HashMap<>();
-        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
-        map.put(MyUtil.getString(R.string.code),authCode);
-        map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.authorization_code));
-        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
-        addDisposable(apiServer.PostAccessToken(map),
-                new BaseObserver<BaseBean<AccessToken>>(baseView, true) {
-                    @Override
-                    public void onSuccess(BaseBean<AccessToken> o) {
-                        mmkv.encode(GlobalConstant.ACCESS_TOKEN,o.data.getAccess_token());
-                        mmkv.encode(GlobalConstant.REFRESH_TOKEN,o.data.getRefresh_token());
-                        mmkv.encode(GlobalConstant.OPEN_ID,o.data.getOpen_id());
-                        mmkv.encode(GlobalConstant.IS_LOGIN,true);
-                        baseView.loginSuccess();
-                    }
-
-                    @Override
-                    public void onError(String msg) {
-                        baseView.loginFailed(msg);
-                    }
-                });
-    }
-
-
-    /**
      * 获取 ClientToken 并存储
      */
     public void getClientToken(){
@@ -131,9 +101,9 @@ public class HomePresenter extends BasePresenter<IHomeView> {
 //        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
 //        map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
 //        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
-        map.put(MyUtil.getString(R.string.client_secret),"e8577e1931af9f81a805c53e526c1de6");
+        map.put(MyUtil.getString(R.string.client_secret),"3cd85c00cec461ef3ed8e17a4f244f42");
         map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
-        map.put(MyUtil.getString(R.string.client_key),"awot3nyb6b23iquy");
+        map.put(MyUtil.getString(R.string.client_key),"awf6mbxfmd4r795y");
         addDisposable(apiServer.PostClientToken(map), new BaseObserver<BaseBean<ClientToken>>(baseView,false) {
             @Override
             public void onSuccess(BaseBean<ClientToken> o) {
