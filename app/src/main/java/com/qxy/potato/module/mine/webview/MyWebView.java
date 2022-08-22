@@ -1,6 +1,6 @@
 package com.qxy.potato.module.mine.webview;
 
-import static com.didichuxing.doraemonkit.util.ActivityUtils.startActivity;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.net.Uri;
 
 import com.qxy.potato.R;
 import com.qxy.potato.app.App;
+import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.ToastUtil;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -172,7 +173,7 @@ public class MyWebView extends WebView {
 
 
 						if(isInstall(intent)){//已安装则打开
-							startActivity(intent);
+							ActivityUtil.getCurrentActivity().startActivity(intent);
 							return true;
 						}else{//未安装抖音则跳转去系统浏览器下载页面
 							LogUtil.i("跳转到系统浏览器");
@@ -181,7 +182,7 @@ public class MyWebView extends WebView {
 							Uri uri = Uri.parse(getResources().getString(R.string.download_douyin));
 							intent1.addCategory(Intent.CATEGORY_BROWSABLE);
 							intent1.setData(uri);
-							startActivity(intent1);
+							ActivityUtil.getCurrentActivity().startActivity(intent1);
 
 							return true;
 						}

@@ -2,11 +2,10 @@ plugins {
     id 'com.android.application'
     id 'com.didi.dokit'
     id 'org.jetbrains.kotlin.android'
-//    id 'kotlin-kapt'
 }
 
 android {
-    compileSdk 31
+    compileSdk 30
 
     defaultConfig {
         applicationId "com.qxy.potato"
@@ -16,9 +15,7 @@ android {
         versionName "1.0"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments += [
-//                        "room.schemaLocation":"$projectDir/schemas".toString(),
-eventBusIndex : 'com.qxy.potato.MyEventBusIndex' ]
+                arguments += [eventBusIndex : 'com.qxy.potato.MyEventBusIndex' ]
             }
         }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -86,7 +83,7 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation files('libs\\tbs_sdk_thirdapp_v4.3.0.316_44216_sharewithdownloadwithfile_withoutGame_obfs_20220728_101601.jar')
     testImplementation 'junit:junit:4.+'
@@ -96,21 +93,13 @@ dependencies {
     //MMKV替代SP https://github.com/Tencent/MMKV/wiki/android_tutorial_cn
     implementation 'com.tencent:mmkv:1.2.14'
 
-    //刷新
-    implementation  'io.github.scwang90:refresh-layout-kernel:2.0.5'      //核心必须依赖
-    implementation  'io.github.scwang90:refresh-footer-classics:2.0.5'    //经典加载
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     //引入Rv管理
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
-    //引入Room数据库
-//    def room_version = "2.4.0-alpha01"
-//    //base
-//    implementation "androidx.room:room-runtime:$room_version"
-//    // To use Kotlin annotation processing tool (kapt)
-//    kapt "androidx.room:room-compiler:$room_version"
+
 
     /*retrofit raJava*/
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -118,7 +107,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     //glide
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
@@ -131,8 +120,6 @@ dependencies {
     implementation 'com.github.tamsiree.RxTool:RxKit:2.6.3'
     implementation 'com.github.tamsiree.RxTool:RxUI:2.6.3'
 
-    //权限管理框架
-    implementation 'com.guolindev.permissionx:permissionx:1.6.4'
 
     //ViewBinding
     implementation 'com.github.DylanCaiCoding.ViewBindingKTX:viewbinding-base:2.0.6'
@@ -144,12 +131,6 @@ dependencies {
     //Dokit
     //核心模块
     debugImplementation "io.github.didi.dokit:dokitx:${lastversion}"
-    //文件同步模块
-    debugImplementation "io.github.didi.dokit:dokitx-ft:${lastversion}"
-    //一机多控模块
-    debugImplementation "io.github.didi.dokit:dokitx-mc:${lastversion}"
-    //weex模块
-    debugImplementation "io.github.didi.dokit:dokitx-weex:${lastversion}"
     //no-op 模块
     releaseImplementation "io.github.didi.dokit:dokitx-no-op:${lastversion}"
 
@@ -165,6 +146,7 @@ dependencies {
     //WorkManager
     implementation 'androidx.work:work-runtime:2.5.0'
 
+    //选择框
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
     //retrofit缓存

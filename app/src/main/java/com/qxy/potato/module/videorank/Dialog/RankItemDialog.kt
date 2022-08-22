@@ -30,12 +30,12 @@ class RankItemDialog(video : VideoList.Video) : MyFullDialog<LayoutDialogItemBin
         if (video.tags == null) {
             binding.textViewType.text = "[国语]"
         } else {
-            binding.textViewType.text = video.tags.toString() + ""
+            binding.textViewType.text = video.tags.toString()
         }
         binding.textViewScore.text = "暂无评分"
-        binding.tvDiscussionHot.text = getNumber(video.discussion_hot)
-        binding.tvInfluenceHot.text = getNumber(video.influence_hot)
-        binding.tvSearchHot.text = getNumber(video.search_hot)
+        binding.tvDiscussionHot.text = "讨论热度: " + getNumber(video.discussion_hot)
+        binding.tvInfluenceHot.text =  "影响力: " + getNumber(video.influence_hot)
+        binding.tvSearchHot.text = "搜索热度: " + getNumber(video.search_hot)
         binding.tvActorsText.text = video.actors.toString()
     }
 

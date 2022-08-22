@@ -17,4 +17,15 @@ public interface ILoginView extends BaseView {
      * @return 返回是否打开sdk调用成功
      */
     boolean sendAuth();
+
+
+    /**
+     * 成功登录的操作
+     */
+    void loginSuccess();
+
+    /**
+     * 登录失败的操作
+     */
+    void loginFailed(String msg);
 }
