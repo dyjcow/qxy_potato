@@ -277,8 +277,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     @Override
     public void showPersonalInfo(UserInfo userInfo) {
         //getBinding().homeTextViewLike.setText(HomeAdapter.getLiked+"获赞");
-        getBinding().homeTextViewFans.setText(0+"粉丝");
-        getBinding().homeTextViewFollower.setText(0+"关注");
         getBinding().homeTextViewLike.setText(getLIke + "获赞");
         getBinding().homeTextViewFans.setText(mmkv.decodeInt(GlobalConstant.FANS_TOTAL,0) + "粉丝");
         getBinding().homeTextViewFollower.setText(mmkv.decodeInt(GlobalConstant.FOLLOWINGS_TOTAL,0) + "关注");
@@ -386,6 +384,12 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             presenter.getClientToken();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getBinding().homeTextViewFans.setText(mmkv.decodeInt(GlobalConstant.FANS_TOTAL,0) + "粉丝");
+        getBinding().homeTextViewFollower.setText(mmkv.decodeInt(GlobalConstant.FOLLOWINGS_TOTAL,0) + "关注");
+    }
 
     /**
      * 解除presenter与Activity的绑定
@@ -408,7 +412,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             if (baseResp.isSuccess()) {
                 LogUtil.d("onRES");
                 //延时执行
-                new Handler().postDelayed(() -> presenter.getAccessToken(response.authCode),500);
+                new Handler().postDelayed(() -> presenter.getAccessToken(response.authCode),1000);
             }else {
                 ToastUtil.showToast("授权失败");
             }
