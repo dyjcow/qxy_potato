@@ -5,7 +5,7 @@
 
     <!-- 圆角的半径 -->
     <corners android:radius="5dp"/>
-    <solid android:color="#FF0000"/>
+    <solid android:color="#D51010"/>
 
 </shape>
 

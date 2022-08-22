@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -80,7 +81,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
      * 保存用户按返回键的时间
      */
     private long mExitTime = 0;
-    private static final int OVER_TIME = 2000;
     private MMKV mmkv=MMKV.defaultMMKV();
     private HomeAdapter adapter;
     private Integer getLIke=0;
@@ -173,7 +173,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         //跳转去登录页
         getBinding().homeIcon.setOnClickListener(v -> {
             if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)){
-                getBinding().homeNavigationView.getMenu().getItem(1).setTitle("登出");
                 ActivityUtil.startActivity(LoginActivity.class,true);
             }
 
@@ -393,7 +392,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             Authorization.Response response = (Authorization.Response) baseResp;
             if (baseResp.isSuccess()) {
                 LogUtil.d("onRES");
-                presenter.getAccessToken(response.authCode);
+                //延时执行
+                new Handler().postDelayed(() -> presenter.getAccessToken(response.authCode),500);
             }else {
                 ToastUtil.showToast("授权失败");
             }
@@ -424,6 +424,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
      */
     @Override
     public void onBackPressed() {
+        int OVER_TIME = 2000;
         if ((System.currentTimeMillis() - mExitTime) > OVER_TIME) {
             ToastUtil.showToast(getResources().getString(R.string.double_quit) + getResources().getString(R.string.app_name));
             mExitTime = System.currentTimeMillis();

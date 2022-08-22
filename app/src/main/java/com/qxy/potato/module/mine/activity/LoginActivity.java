@@ -3,6 +3,7 @@ package com.qxy.potato.module.mine.activity;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.widget.CompoundButton;
 
 import com.bytedance.sdk.open.aweme.authorize.model.Authorization;
@@ -13,12 +14,15 @@ import com.qxy.potato.base.BaseActivity;
 import com.qxy.potato.databinding.ActivityLoginBinding;
 import com.qxy.potato.module.mine.presenter.LoginPresenter;
 import com.qxy.potato.module.mine.view.ILoginView;
+import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.MyUtil;
 import com.qxy.potato.util.ToastUtil;
 import com.tamsiree.rxkit.RxTool;
 import com.tamsiree.rxkit.view.RxToast;
 
 public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBinding> implements ILoginView {
+
+    private long mExitTime = 0;
     DouYinOpenApi douYinOpenApi;
     private boolean is_clicked_user_agreement = false;
 
@@ -89,5 +93,23 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
 
     }
 
-
+    /**
+     * Called when the activity has detected the user's press of the back
+     * key. The {@link #getOnBackPressedDispatcher() OnBackPressedDispatcher} will be given a
+     * chance to handle the back button before the default behavior of
+     * {@link Activity#onBackPressed()} is invoked.
+     *
+     * @see #getOnBackPressedDispatcher()
+     */
+    @Override
+    public void onBackPressed() {
+        int OVER_TIME = 2000;
+        if ((System.currentTimeMillis() - mExitTime) > OVER_TIME) {
+            ToastUtil.showToast(getResources().getString(R.string.double_quit) + getResources().getString(R.string.app_name));
+            mExitTime = System.currentTimeMillis();
+        } else {
+            super.onBackPressed();
+            ActivityUtil.closeAllActivity();
+        }
+    }
 }

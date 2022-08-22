@@ -43,7 +43,7 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
             LogUtil.i(token);
             addDisposable(apiServer.GetVideoListNow(type, token), new BaseObserver<BaseBean<VideoList>>(baseView,false) {
                 @Override public void onSuccess(BaseBean<VideoList> o) {
-                    baseView.showRankSuccess(o.data);
+                    baseView.showRankSuccess(o.data,-1);
                 }
 
                 @Override public void onError(String msg) {
@@ -66,7 +66,7 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
             LogUtil.i(token);
             addDisposable(apiServer.GetVideoListLast(type,version, token), new BaseObserver<BaseBean<VideoList>>(baseView,false) {
                 @Override public void onSuccess(BaseBean<VideoList> o) {
-                    baseView.showRankSuccess(o.data);
+                    baseView.showRankSuccess(o.data,version);
                 }
 
                 @Override public void onError(String msg) {
@@ -90,9 +90,12 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
      */
     private void getClientToken(int type,int version){
         HashMap<String,String> map = new HashMap<>();
-        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
+//        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
+//        map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
+//        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
+        map.put(MyUtil.getString(R.string.client_secret),"e8577e1931af9f81a805c53e526c1de6");
         map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
-        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
+        map.put(MyUtil.getString(R.string.client_key),"awot3nyb6b23iquy");
         addDisposable(apiServer.PostClientToken(map), new BaseObserver<ClientToken>(baseView,false) {
 
 
@@ -117,9 +120,9 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
         });
     }
 
-    public void getClientVersion(){
-        addDisposable(apiServer.GetVideoVersion(1,10,mmkv.decodeString(GlobalConstant.CLIENT_TOKEN)),
-                new BaseObserver<BaseBean<VideoVersion>>(baseView, false) {
+    public void getClientVersion(int type){
+        addDisposable(apiServer.GetVideoVersion(type,20,mmkv.decodeString(GlobalConstant.CLIENT_TOKEN)),
+                new BaseObserver<BaseBean<VideoVersion>>(baseView, true) {
                     @Override
                     public void onSuccess(BaseBean<VideoVersion> o) {
                         List<VideoVersion.Version> list = o.data.getList();

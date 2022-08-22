@@ -42,7 +42,7 @@
             android:exported="false" />
         <activity
             android:name=".module.home.activity.HomeActivity"
-            android:exported="false">
+            android:exported="true">
         </activity>
         <activity
             android:name=".module.videolist.activity.RankActivity"

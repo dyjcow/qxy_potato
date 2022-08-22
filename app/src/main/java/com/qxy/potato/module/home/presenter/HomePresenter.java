@@ -128,9 +128,12 @@ public class HomePresenter extends BasePresenter<IHomeView> {
      */
     public void getClientToken(){
         HashMap<String,String> map = new HashMap<>();
-        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
+//        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
+//        map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
+//        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
+        map.put(MyUtil.getString(R.string.client_secret),"e8577e1931af9f81a805c53e526c1de6");
         map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
-        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
+        map.put(MyUtil.getString(R.string.client_key),"awot3nyb6b23iquy");
         addDisposable(apiServer.PostClientToken(map), new BaseObserver<BaseBean<ClientToken>>(baseView,false) {
             @Override
             public void onSuccess(BaseBean<ClientToken> o) {

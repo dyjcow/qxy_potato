@@ -14,6 +14,7 @@ import com.qxy.potato.bean.VideoList;
 import com.qxy.potato.databinding.RecyclerviewItemRankBinding;
 import com.qxy.potato.util.ActivityUtil;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -37,9 +38,13 @@ public class VideoRVAdapter extends BaseQuickAdapter<VideoList.Video, BaseViewHo
                 .load(video.getPoster())
                 .into(binding.imageViewIcon);
         binding.textViewName.setText(video.getName());
-        binding.textViewPopDegree.setText(video.getHot()+"");
+        binding.textViewPopDegree.setText(getNumber(video.getHot()));
         binding.textViewReleaseTime.setText(video.getRelease_date()+" 上映");
-        binding.textViewType.setText(video.getTags()+"");
+        if (video.getTags() == null){
+            binding.textViewType.setText("[国语]");
+        }else {
+            binding.textViewType.setText(video.getTags()+"");
+        }
         binding.textViewScore.setText("暂无评分");
         if (video.getType()==1) {
             binding.buttonGetTicket.setOnClickListener(new View.OnClickListener() {
@@ -52,5 +57,11 @@ public class VideoRVAdapter extends BaseQuickAdapter<VideoList.Video, BaseViewHo
         }else {
             binding.buttonGetTicket.setVisibility(View.GONE);
         }
+    }
+
+    private String getNumber(int num){
+        float n = (float)num/10000;
+        DecimalFormat decimalFormat= new DecimalFormat( ".00" );
+        return decimalFormat.format(n) + "万";
     }
 }

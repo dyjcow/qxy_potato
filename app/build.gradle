@@ -86,7 +86,7 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation files('libs\\tbs_sdk_thirdapp_v4.3.0.316_44216_sharewithdownloadwithfile_withoutGame_obfs_20220728_101601.jar')
     testImplementation 'junit:junit:4.+'
@@ -165,5 +165,8 @@ dependencies {
     implementation 'androidx.work:work-runtime:2.5.0'
 
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
+
+    //retrofit缓存
+    implementation 'ren.yale.android:retrofitcachelibrx2:1.1.1'
 
 }
