@@ -15,9 +15,11 @@ import com.qxy.potato.util.MyUtil;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
+import ren.yale.android.retrofitcachelibrx2.anno.Cache;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -96,7 +98,8 @@ public class API {
          * @param token PostClientToken 中获取到的token
          * @return 对应的observable
          */
-        @Headers({"Content-Type:application/json","urlName:mock"})
+        @Cache(time = 1, timeUnit = TimeUnit.DAYS)
+        @Headers({"Content-Type:application/json"})
         @GET("discovery/ent/rank/item/")
         Observable<BaseBean<VideoList>> GetVideoListNow(@Query("type") int type,
                                                         @Header("access-token") String token);
@@ -110,7 +113,8 @@ public class API {
          * @param token PostClientToken 中获取到的token
          * @return 对应的observable
          */
-        @Headers({"Content-Type:application/json","urlName:mock"})
+        @Cache(time = 1, timeUnit = TimeUnit.DAYS)
+        @Headers({"Content-Type:application/json"})
         @GET("discovery/ent/rank/item/")
         Observable<BaseBean<VideoList>> GetVideoListLast(@Query("type") int type,
                                                          @Query("version") int version,
@@ -124,7 +128,8 @@ public class API {
          * @param token PostClientToken 中获取到的token
          * @return 对应的observable
          */
-        @Headers({"Content-Type:application/json","urlName:mock"})
+        @Cache(time = 1, timeUnit = TimeUnit.DAYS)
+        @Headers({"Content-Type:application/json"})
         @GET("discovery/ent/rank/version/")
         Observable<BaseBean<VideoVersion>> GetVideoVersion(@Query("type") int type,
                                                            @Query("count") int count,
@@ -156,6 +161,7 @@ public class API {
          * @param queryMap 传入 open_id 、cursor 和 count
          * @return 对应的observable
          */
+        @Cache(time = 1, timeUnit = TimeUnit.DAYS)
         @Headers({"Content-Type:application/json"})
         @GET("following/list/")
         Observable<BaseBean<Followings>> GetMyFollowings(@Header("access-token") String accessToken,
@@ -167,6 +173,7 @@ public class API {
          * @param queryMap 传入 open_id 、cursor 和 count
          * @return 对应的observable
          */
+        @Cache(time = 1, timeUnit = TimeUnit.DAYS)
         @Headers({"Content-Type:application/json"})
         @GET("video/list/")
         Observable<BaseBean<MyVideo>> GetMyVideos(@Header("access-token") String accessToken,

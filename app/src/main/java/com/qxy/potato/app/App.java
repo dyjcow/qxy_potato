@@ -21,6 +21,8 @@ import com.tencent.smtt.sdk.QbSdk;
 
 import org.greenrobot.eventbus.EventBus;
 
+import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
+
 /**
  * @author ：Dyj
  * @date ：Created in 2022/5/24 12:42
@@ -73,6 +75,9 @@ public class App extends Application {
         LogUtil.setIsLog(true);
         //注册Activity生命周期
         registerActivityLifecycleCallbacks(ActivityUtil.getActivityLifecycleCallbacks());
+
+        //网络缓存
+        RetrofitCache.getInstance().init(this);
 
         QbSdk.initX5Environment(getContext(), new QbSdk.PreInitCallback() {
             @Override

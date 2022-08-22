@@ -65,7 +65,7 @@ public class RankActivity extends BaseActivity<RankPresenter,ActivityVideoRankBi
     private void showView(){
         List<VideoRankFragment> fragmentList = new ArrayList<>();
         for (int i = 1 ; i <= 3; i++){
-            VideoRankFragment rankFragment = new VideoRankFragment(1);
+            VideoRankFragment rankFragment = new VideoRankFragment(i);
             fragmentList.add(rankFragment);
         }
         VRViewPageAdapter adapter = new VRViewPageAdapter(this,fragmentList);

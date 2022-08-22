@@ -6,6 +6,8 @@ import com.qxy.potato.base.BaseObserver;
 import com.qxy.potato.base.BasePresenter;
 import com.qxy.potato.bean.ClientToken;
 import com.qxy.potato.bean.VideoList;
+import com.qxy.potato.bean.VideoVersion;
+import com.qxy.potato.common.EventCode;
 import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.module.videorank.view.IVideoRankView;
 import com.qxy.potato.util.LogUtil;
@@ -13,6 +15,7 @@ import com.qxy.potato.util.MyUtil;
 import com.tencent.mmkv.MMKV;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author ：Dyj
@@ -40,9 +43,7 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
             LogUtil.i(token);
             addDisposable(apiServer.GetVideoListNow(type, token), new BaseObserver<BaseBean<VideoList>>(baseView,false) {
                 @Override public void onSuccess(BaseBean<VideoList> o) {
-
-
-                    baseView.showRankSuccess(o.data);
+                    baseView.showRankSuccess(o.data,-1);
                 }
 
                 @Override public void onError(String msg) {
@@ -53,24 +54,48 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
 
         }else{
             //记录
-            getClientToken(type);
+            getClientToken(type,-1);
         }
 
+    }
 
 
+    public void getLastVersionRank(int type,int version){
+        if (MMKV.defaultMMKV().decodeBool(GlobalConstant.IS_CLIENT,false)){
+            String token = MMKV.defaultMMKV().decodeString(GlobalConstant.CLIENT_TOKEN);
+            LogUtil.i(token);
+            addDisposable(apiServer.GetVideoListLast(type,version, token), new BaseObserver<BaseBean<VideoList>>(baseView,false) {
+                @Override public void onSuccess(BaseBean<VideoList> o) {
+                    baseView.showRankSuccess(o.data,version);
+                }
+
+                @Override public void onError(String msg) {
+                    LogUtil.d("获取最近榜单错误信息："+msg);
+                    baseView.showRankFailed(msg);
+                }
+            });
+
+        }else{
+            //记录
+            getClientToken(type,version);
+        }
     }
 
 
 
     /**
      * 获取 ClientToken 并存储
-     * @param tmp
+     * @param type  榜单类型
+     * @param version 榜单版本
      */
-    private void getClientToken(int tmp){
+    private void getClientToken(int type,int version){
         HashMap<String,String> map = new HashMap<>();
-        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
+//        map.put(MyUtil.getString(R.string.client_secret),MyUtil.getString(R.string.value_client_secret));
+//        map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
+//        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
+        map.put(MyUtil.getString(R.string.client_secret),"e8577e1931af9f81a805c53e526c1de6");
         map.put(MyUtil.getString(R.string.grant_type),MyUtil.getString(R.string.client_credential));
-        map.put(MyUtil.getString(R.string.client_key),MyUtil.getString(R.string.value_client_key));
+        map.put(MyUtil.getString(R.string.client_key),"awot3nyb6b23iquy");
         addDisposable(apiServer.PostClientToken(map), new BaseObserver<ClientToken>(baseView,false) {
 
 
@@ -80,8 +105,11 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
                 mmkv.encode(GlobalConstant.IS_CLIENT,true);
 
                 //再次请求
-                getNowRank(tmp);
-
+                if (version == -1){
+                    getNowRank(type);
+                }else {
+                    getLastVersionRank(type,version);
+                }
             }
 
             @Override
@@ -90,5 +118,22 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
 
             }
         });
+    }
+
+    public void getClientVersion(int type){
+        addDisposable(apiServer.GetVideoVersion(type,20,mmkv.decodeString(GlobalConstant.CLIENT_TOKEN)),
+                new BaseObserver<BaseBean<VideoVersion>>(baseView, true) {
+                    @Override
+                    public void onSuccess(BaseBean<VideoVersion> o) {
+                        List<VideoVersion.Version> list = o.data.getList();
+                        list.get(0).setTag(EventCode.IS_FIRST_LIST);
+                        MyUtil.showOneOptionPicker(list,"HistoryList");
+                    }
+
+                    @Override
+                    public void onError(String msg) {
+
+                    }
+                });
     }
 }

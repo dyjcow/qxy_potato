@@ -14,4 +14,7 @@
     <string name="has_read">我已阅读并同意</string>
     <string name="user_agreement">“用户协议”</string>
     <string name="read_and_click">请阅读和同意用户协议!</string>
+    <string name="double_quit">再按一次退出</string>
+    <string name="disconnected_network">网络断开</string>
+    <string name="note_use">请注意，正使用流量播放</string>
 </resources>

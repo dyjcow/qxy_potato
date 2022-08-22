@@ -3,6 +3,8 @@ package com.qxy.potato.module.videorank.view;
 import com.qxy.potato.base.BaseView;
 import com.qxy.potato.bean.VideoList;
 
+import java.util.List;
+
 /**
  * @author ：Dyj
  * @date ：Created in 2022/8/21 16:23
@@ -18,7 +20,7 @@ public interface IVideoRankView extends BaseView {
      *
      * @param videoList 传入的影视List
      */
-    void showRankSuccess(VideoList videoList);
+    void showRankSuccess(VideoList videoList,int version);
 
     /**
      * 错误信息提示

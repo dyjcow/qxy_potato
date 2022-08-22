@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        package="com.qxy.potato">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.qxy.potato">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -25,15 +25,9 @@
         android:theme="@style/Theme.Potato"
         tools:targetApi="31">
         <activity
-                android:name=".module.mine.activity.WebViewActivity"
-                android:exported="false" />
-
-        <activity
-            android:name=".module.videorank.activity.RankActivity"
-            android:exported="false" />
-        <activity
-            android:name=".module.home.activity.HomeActivity"
-            android:exported="true">
+            android:name=".module.mine.activity.SplashActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,12 +35,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".module.mine.activity.WebViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".module.videorank.activity.RankActivity"
+            android:exported="false" />
+        <activity
+            android:name=".module.home.activity.HomeActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".module.videolist.activity.RankActivity"
             android:exported="false" />
         <activity
             android:name=".module.mine.activity.LoginActivity"
             android:exported="true">
-
         </activity>
 
         <receiver
@@ -56,15 +59,11 @@
                 <action android:name="com.aweme.opensdk.action.stay.in.dy" />
                 <action android:name="com.aweme.opensdk.action.stay.in.dy.im" />
             </intent-filter>
-        </receiver>
-
-<!--        该Service仅在TBS内核首次Dex加载时触发并执行dex2oat任务，任务完成后自动结束。-->
+        </receiver> <!-- 该Service仅在TBS内核首次Dex加载时触发并执行dex2oat任务，任务完成后自动结束。 -->
         <service
-                android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
-                android:label="dexopt"
-                android:process=":dexopt" >
-        </service>
-
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt"></service>
     </application>
 
 </manifest>
