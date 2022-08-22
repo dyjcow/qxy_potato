@@ -4,6 +4,7 @@ import com.qxy.potato.http.cookie.CookiesManager;
 import com.qxy.potato.http.gson.BaseConverterFactory;
 import com.qxy.potato.util.MyUtil;
 
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -69,6 +70,9 @@ public class RetrofitService {
                 //设置Cookie持久化
                 .cookieJar(new CookiesManager(MyUtil.getApplication()))
                 .build();
+
+        //加入缓存
+        OkHttpClient okHttpClient3 = Okhttp3Client.getInstance().getOkHttpClient();
 
         //关联okHttp并加上rxJava和Gson的配置和baseUrl
         Retrofit retrofit = new Retrofit.Builder()

@@ -1,6 +1,7 @@
 package com.qxy.potato.base;
 
 import com.qxy.potato.R;
+import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
 import com.google.gson.JsonParseException;
 

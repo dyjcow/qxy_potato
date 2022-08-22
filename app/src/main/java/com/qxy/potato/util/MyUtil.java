@@ -4,18 +4,30 @@ package com.qxy.potato.util;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.contrarywind.interfaces.IPickerViewData;
 import com.qxy.potato.R;
+import com.qxy.potato.base.BaseEvent;
+import com.qxy.potato.bean.VideoVersion;
+import com.qxy.potato.common.EventCode;
 import com.tamsiree.rxui.view.dialog.RxDialogLoading;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -95,6 +107,33 @@ public class MyUtil {
         rxDialogLoading.cancel(RxDialogLoading.RxCancelType.error,getString(R.string.load_error));
     }
 
+    public static void showOneOptionPicker(List<?> list, String title){
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(ActivityUtil.getCurrentActivity(), new OnOptionsSelectListener() {
+
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+                BaseEvent<?> event = new BaseEvent<>(EventCode.SELECT_VERSION, list.get(options1));
+                EventBusUtil.sendEvent(event);
+
+            }
+        })
+                .setTitleText(title)
+                .setDividerColor(Color.BLACK)
+                .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
+                .setContentTextSize(16)
+//                .setLayoutRes(R.layout.rank, new CustomListener() {
+//                    @Override
+//                    public void customLayout(View v) {
+//
+//                    }
+//                })
+                .build();
+
+        pvOptions.setPicker(list);//一级选择器
+        pvOptions.show();
+    }
+
     /**
      * Application 层面下调用颜色资源
      *
@@ -136,31 +175,6 @@ public class MyUtil {
      */
     public static int getWeatherIcon(Context context, String icon){
         return context.getResources().getIdentifier("icon_"+icon,"drawable",context.getPackageName());
-    }
-
-    /**
-     * 获得空气状态的颜色值
-     *
-     * @param context 对应的 context 值
-     * @param aqi  传入的 aqi 字段
-     * @return 判断后返回的资源颜色
-     */
-    public static int getAirColor(Context context,int aqi){
-        String flag;
-        if (aqi <= 50) flag = "1";
-        else if (aqi <= 100) flag = "2";
-        else if (aqi <= 150) flag = "3";
-        else if (aqi <= 200) flag = "4";
-        else if (aqi <= 250) flag = "5";
-        else flag = "6";
-        int id = context.getResources().getIdentifier("color_air_leaf_"+flag,"color",context.getPackageName());
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return context.getResources().getColor(id, context.getTheme());
-        } else {
-            //noinspection deprecation
-            return context.getResources().getColor(id);
-        }
     }
 
 

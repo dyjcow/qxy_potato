@@ -11,9 +11,14 @@ import androidx.viewbinding.ViewBinding;
 
 
 import com.dylanc.viewbinding.base.ViewBindingUtil;
-import com.qxy.potato.util.BindEventBus;
+import com.qxy.potato.R;
+import com.qxy.potato.annotation.BindEventBus;
+import com.qxy.potato.util.DisplayUtil;
 import com.qxy.potato.util.MyUtil;
+import com.qxy.potato.util.NetworkUtil;
 import com.qxy.potato.util.ToastUtil;
+import com.tamsiree.rxkit.view.RxToast;
+import com.zackratos.ultimatebarx.ultimatebarx.java.UltimateBarX;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -75,6 +80,11 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>,V
         if(this.getClass().isAnnotationPresent(BindEventBus.class)){
             EventBus.getDefault().register(this);
         }
+        DisplayUtil.setCustomDensity(this);
+        UltimateBarX.statusBarOnly(this)
+                .light(true)
+                .transparent()
+                .apply();
         //强制使用竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         binding = ViewBindingUtil.inflateWithGeneric(this, getLayoutInflater());
@@ -83,6 +93,24 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>,V
 
         initView();
         initData();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Dispatch onResume() to fragments.  Note that for better inter-operation
+     * with older versions of the platform, at the point of this call the
+     * fragments attached to the activity are <em>not</em> resumed.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!NetworkUtil.isNetworkAvailable(this)
+                || NetworkUtil.getNetworkType(this) == 0){
+            RxToast.warning(MyUtil.getString(R.string.disconnected_network));
+        }else if (NetworkUtil.getNetworkType(this) != 1){
+            RxToast.info(MyUtil.getString(R.string.note_use));
+        }
     }
 
     /**

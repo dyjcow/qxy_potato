@@ -9,4 +9,10 @@ package com.qxy.potato.common;
  */
 public class EventCode {
 
+    public static final int SELECT_VERSION = 0x000;
+
+    public static final int IS_FIRST_LIST = 0x001;
+
+    public static final int CLIENT_AGAIN = 0x002;
+
 }

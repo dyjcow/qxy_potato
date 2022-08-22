@@ -2,24 +2,37 @@ package com.qxy.potato.http;
 
 import com.qxy.potato.R;
 import com.qxy.potato.base.BaseBean;
-import com.qxy.potato.bean.AirQuality;
-import com.qxy.potato.bean.CitySearch;
-import com.qxy.potato.bean.DailyFeel;
-import com.qxy.potato.bean.MoonRise;
+import com.qxy.potato.bean.AccessToken;
+import com.qxy.potato.bean.ClientToken;
+import com.qxy.potato.bean.Fans;
+import com.qxy.potato.bean.Followings;
+import com.qxy.potato.bean.MyVideo;
 import com.qxy.potato.bean.PictureGirl;
-import com.qxy.potato.bean.PopularCity;
-import com.qxy.potato.bean.WeatherDay;
-import com.qxy.potato.bean.WeatherHours;
-import com.qxy.potato.bean.WeatherNow;
+import com.qxy.potato.bean.UserInfo;
+import com.qxy.potato.bean.VideoList;
+import com.qxy.potato.bean.VideoVersion;
 import com.qxy.potato.util.MyUtil;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import ren.yale.android.retrofitcachelibrx2.anno.Cache;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * @author ：Dyj
@@ -39,12 +52,11 @@ public class API {
      */
     static HashMap<String,String> getKeyUrl(){
         HashMap<String,String> keyUrl = new HashMap<>();
-//        String GEO_URL = MyUtil.getString(R.string.geourl);
-//        String M_URL = MyUtil.getString(R.string.mxzp);
-//        keyUrl.put("geo",GEO_URL);
-//        keyUrl.put("m",M_URL);
+        keyUrl.put("m",MyUtil.getString(R.string.mxzp));
+        keyUrl.put("mock",MyUtil.getString(R.string.mock));
         return keyUrl;
     }
+
 
 
     /**
@@ -54,100 +66,118 @@ public class API {
     public interface SZApi {
 
         /**
-         * 获取当前实时天气
-         *
-         * @param location 位置代码或者经纬度信息
-         * @return 对应 observable
-         */
-        @GET("v7/weather/now")
-        Observable<BaseBean<WeatherNow>> getWeatherNow(@Query("location") String location);
-
-        /**
-         * 获取未来7天的天气信息
-         *
-         * @param location 位置代码或者经纬度信息
-         * @return 对应 observable
-         */
-        @GET("v7/weather/15d")
-        Observable<BaseBean<List<WeatherDay>>> getWeatherDay(@Query("location") String location);
-
-        /**
-         * 获取未来24小时天气情况
-         *
-         * @param location 位置代码或者经纬度信息
-         * @return 对应 observable
-         */
-        @GET("v7/weather/24h")
-        Observable<BaseBean<List<WeatherHours>>> getWeatherHours(@Query("location") String location);
-
-        /**
-         * 生活指数
-         *
-         * @param type 生活指数类型
-         * @param location 位置代码或者经纬度信息
-         * @return 对应 observable
-         */
-        @GET("v7/indices/1d")
-        Observable<BaseBean<List<DailyFeel>>> getDailyFeel(@Query("type") String type,@Query("location") String location);
-
-        /**
-         * 城市搜索
-         *
-         * @param location 位置代码或者经纬度信息
-         * @return 对应 observable
-         */
-        @Headers("urlName:geo")
-        @GET("v2/city/lookup")
-        Observable<BaseBean<List<CitySearch>>> getCitySearch(@Query("location") String location);
-
-        /**
-         * 获取热门城市
-         *
-         * @param number 热门城市数量
-         * @param range 城市范围，world是世界，cn是中国
-         * @return 对应 observable
-         */
-        @Headers("urlName:geo")
-        @GET("v2/city/top")
-        Observable<BaseBean<List<PopularCity>>> getPopularCity(@Query("number") String number,@Query("range") String range);
-
-        /**
-         * 日出日落
-         *
-         * @param location 位置代码或者经纬度信息
-         * @param date 日期，最多可选择未来60天（包含今天）的数据。日期格式为yyyyMMdd
-         * @return 对应 observable
-         */
-        @GET("v7/astronomy/sun")
-        Observable<BaseBean<?>> getSunRise(@Query("location") String location,@Query("date") String date);
-
-        /**
-         * 月升月落
-         *
-         * @param location 位置代码或者经纬度信息
-         * @param date 日期，最多可选择未来60天（包含今天）的数据。日期格式为yyyyMMdd
-         * @return 对应 observable
-         */
-        @GET("v7/astronomy/moon")
-        Observable<BaseBean<List<MoonRise>>> getMoonRise(@Query("location") String location,@Query("date") String date);
-
-        /**
-         * 获取空气质量
-         *
-         * @param location 位置代码或者经纬度信息
-         * @return 对应 observable
-         */
-        @GET("v7/air/now")
-        Observable<BaseBean<AirQuality>> getAirQuality(@Query("location") String location);
-
-
-        /**
          * 背景图片
          * @return 对应 observable
          */
-        @Headers({"app_id:kvq0nvszkwmqqqbh","app_secret:N0V3S20vM0lCd1dzZkZJWFpaalRkdz09","urlName:m"})
+        @Headers({"urlName:m"})
         @GET("api/image/girl/list/random")
-        Observable<BaseBean<List<PictureGirl>>> getPic();
+        Observable<BaseBean<List<PictureGirl>>> getPic(@HeaderMap HashMap<String,String> map);
 
+
+        /**
+         * 请求授权登录
+         *
+         * @param map 传入Body中的 HashMap
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/x-www-form-urlencoded"})
+        @FormUrlEncoded
+        @POST("oauth/access_token/")
+        Observable<BaseBean<AccessToken>> PostAccessToken(@FieldMap HashMap<String,String> map);
+
+
+        @Headers({"Content-Type:application/x-www-form-urlencoded"})
+        @FormUrlEncoded
+        @POST("oauth/client_token/")
+        Observable<BaseBean<ClientToken>> PostClientToken(@FieldMap HashMap<String,String> map);
+
+        /**
+         * 获取本周榜单
+         *
+         * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
+         * @param token PostClientToken 中获取到的token
+         * @return 对应的observable
+         */
+        @Cache(time = 1, timeUnit = TimeUnit.DAYS)
+        @Headers({"Content-Type:application/json"})
+        @GET("discovery/ent/rank/item/")
+        Observable<BaseBean<VideoList>> GetVideoListNow(@Query("type") int type,
+                                                        @Header("access-token") String token);
+
+
+        /**
+         * 获取以往榜单
+         *
+         * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
+         * @param version 从其他地方获取到传入的的榜单版本
+         * @param token PostClientToken 中获取到的token
+         * @return 对应的observable
+         */
+        @Cache(time = 1, timeUnit = TimeUnit.DAYS)
+        @Headers({"Content-Type:application/json"})
+        @GET("discovery/ent/rank/item/")
+        Observable<BaseBean<VideoList>> GetVideoListLast(@Query("type") int type,
+                                                         @Query("version") int version,
+                                                         @Header("access-token") String token);
+
+        /**
+         * 获取榜单版本
+         *
+         * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
+         * @param count 每页数量
+         * @param token PostClientToken 中获取到的token
+         * @return 对应的observable
+         */
+        @Cache(time = 1, timeUnit = TimeUnit.DAYS)
+        @Headers({"Content-Type:application/json"})
+        @GET("discovery/ent/rank/version/")
+        Observable<BaseBean<VideoVersion>> GetVideoVersion(@Query("type") int type,
+                                                           @Query("count") int count,
+                                                           @Header("access-token") String token);
+
+        /**
+         * @param fieldMap 传入 open_id 和 access_token
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/x-www-form-urlencoded"})
+        @FormUrlEncoded
+        @POST("oauth/userinfo/")
+        Observable<BaseBean<UserInfo>> GetMyInfo(@FieldMap HashMap<String,String> fieldMap);
+
+
+        /**
+         * @param accessToken access_token
+         * @param queryMap 传入 open_id 、cursor 和 count
+         * @return 对应的observable
+         */
+        @Headers({"Content-Type:application/json"})
+        @GET("fans/list/")
+        Observable<BaseBean<Fans>> GetMyFans(@Header("access-token") String accessToken,
+                                             @Query("open_id") String open_id,
+                                             @QueryMap HashMap<String,Integer> queryMap);
+
+        /**
+         * @param accessToken access_token
+         * @param queryMap 传入 open_id 、cursor 和 count
+         * @return 对应的observable
+         */
+        @Cache(time = 1, timeUnit = TimeUnit.DAYS)
+        @Headers({"Content-Type:application/json"})
+        @GET("following/list/")
+        Observable<BaseBean<Followings>> GetMyFollowings(@Header("access-token") String accessToken,
+                                                         @Query("open_id") String open_id,
+                                                         @QueryMap HashMap<String,Integer> queryMap);
+
+        /**
+         * @param accessToken access_token
+         * @param queryMap 传入 open_id 、cursor 和 count
+         * @return 对应的observable
+         */
+        @Cache(time = 1, timeUnit = TimeUnit.DAYS)
+        @Headers({"Content-Type:application/json"})
+        @GET("video/list/")
+        Observable<BaseBean<MyVideo>> GetMyVideos(@Header("access-token") String accessToken,
+                                                  @Query("open_id") String open_id,
+                                                  @QueryMap HashMap<String,Long> queryMap);
     }
 }

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
 
 import com.qxy.potato.util.ActivityUtil;
-import com.qxy.potato.util.BindEventBus;
+import com.qxy.potato.annotation.BindEventBus;
 import com.qxy.potato.util.MyUtil;
 import com.dylanc.viewbinding.base.ViewBindingUtil;
 

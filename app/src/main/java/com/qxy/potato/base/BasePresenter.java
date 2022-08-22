@@ -1,7 +1,10 @@
 package com.qxy.potato.base;
 
+import com.qxy.potato.annotation.BindEventBus;
 import com.qxy.potato.http.API;
 import com.qxy.potato.http.RetrofitService;
+
+import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

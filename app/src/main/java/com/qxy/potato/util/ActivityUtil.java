@@ -11,6 +11,8 @@ import android.app.Application.ActivityLifecycleCallbacks;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -103,68 +105,36 @@ public class ActivityUtil {
         return activity;
     }
 
+
     /**
-     * 携带一个数据跳转
+     * 启动 activity， 带上参数
      *
-     * @param classes 需要跳转过去的Activity
-     * @param data 传过去的数据
+     * @param classes 需要打开的 activity
+     * @param hashMap 需要传递的参数
      */
-    public static void actionStart(Class classes, String data){
+    public static void startActivity(@SuppressWarnings("rawtypes") Class classes, HashMap<String, String> hashMap) {
+        startActivity(classes, hashMap, false);
+    }
+
+    /**
+     * 启动 activity， 可以设置是否关闭当前 activity
+     *
+     * @param classes  需要打开的 activity
+     * @param hashMap  需要传递的参数
+     * @param isFinish 是否关闭当前 activity
+     */
+    public static void startActivity(@SuppressWarnings("rawtypes") Class classes, HashMap<String, String> hashMap, boolean isFinish) {
         Activity currentActivity = getCurrentActivity();
         Intent intent = new Intent(currentActivity, classes);
-        intent.putExtra("param1",data);
+        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
+            intent.putExtra(entry.getKey(), entry.getValue());
+        }
         currentActivity.startActivity(intent);
+        if (isFinish) {
+            finishActivity(currentActivity);
+        }
     }
 
-
-    /**
-     * 携带两个数据跳转
-     *
-     * @param classes 需要跳转过去的Activity
-     * @param data1 传过去的数据1
-     * @param data2 传过去的数据2
-     */
-    public static void actionSecondStart(Class classes, String data1, String data2){
-        Activity currentActivity = getCurrentActivity();
-        Intent intent = new Intent(currentActivity, classes);
-        intent.putExtra("param1",data1);
-        intent.putExtra("param2",data2);
-        currentActivity.startActivity(intent);
-    }
-
-    public static void actionThirdStart(Class classes, String data1, String data2, int path){
-        Activity currentActivity = getCurrentActivity();
-        Intent intent = new Intent(currentActivity, classes);
-        intent.putExtra("param1",data1);
-        intent.putExtra("param2",data2);
-        intent.putExtra("param3",path);
-        currentActivity.startActivity(intent);
-    }
-
-    /**
-     * 获取数据
-     *
-     * @return 返回接收到的数据
-     */
-    public static String getIntentData(){
-        Intent intent = getCurrentActivity().getIntent();
-        return intent.getStringExtra("param1");
-    }
-
-    /**
-     * 获取第二个数据
-     *
-     * @return 返回接收到的第二个数据
-     */
-    public static String getIntentSecondData(){
-        Intent intent = getCurrentActivity().getIntent();
-        return intent.getStringExtra("param2");
-    }
-
-    public static int getIntentThirdData(){
-        Intent intent = getCurrentActivity().getIntent();
-        return intent.getIntExtra("param3",0);
-    }
 
     private static class MyActivityLifecycleCallbacks implements ActivityLifecycleCallbacks {
         private MyActivityLifecycleCallbacks() {

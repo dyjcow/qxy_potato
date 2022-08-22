@@ -13,26 +13,14 @@ import java.io.Serializable;
 public class BaseBean<T> implements Serializable {
 
 
-    /**
-     * data :
-     * errorCode : 0
-     * errorMsg :
-     */
 
+    //From 测试图片
     public int code;
-    public String fxLink;
     public String msg;
-    public String updateTime;
-    public String sunrise;
-    public String sunset;
-    public String moonrise;
-    public String moonset;
+
+    public String message;
+
     public T data;
-    public T topCityList;
-    public T location;
-    public T daily;
-    public T hourly;
-    public T now;
 
 
     public BaseBean(int code, String msg) {
