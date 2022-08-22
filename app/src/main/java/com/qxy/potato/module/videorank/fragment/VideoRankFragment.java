@@ -17,10 +17,10 @@ import com.qxy.potato.bean.VideoList;
 import com.qxy.potato.bean.VideoVersion;
 import com.qxy.potato.common.EventCode;
 import com.qxy.potato.databinding.FragmentRankBackgroundBinding;
-import com.qxy.potato.module.videolist.rank.MyItemDecoration;
-import com.qxy.potato.module.videorank.Dialog.MyFullDialog;
+
 import com.qxy.potato.module.videorank.Dialog.RankItemDialog;
-import com.qxy.potato.module.videorank.activity.RankActivity;
+
+import com.qxy.potato.module.videorank.adapter.MyItemDecoration;
 import com.qxy.potato.module.videorank.adapter.VideoRVAdapter;
 import com.qxy.potato.module.videorank.presenter.VideoRankPresenter;
 import com.qxy.potato.module.videorank.view.IVideoRankView;
