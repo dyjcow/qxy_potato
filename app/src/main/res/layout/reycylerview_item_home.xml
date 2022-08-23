@@ -47,7 +47,7 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/home_textview_top"
-        android:text="顶置"
+        android:text="置顶"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@+id/playCount"
         app:layout_constraintHorizontal_bias="0.142"
