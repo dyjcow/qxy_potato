@@ -36,4 +36,10 @@
         <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <!--ShapeableImageView 圆角-->
+    <style name="RoundedStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">5dp</item>
+    </style>
 </resources>

@@ -1,8 +1,11 @@
 package com.qxy.potato.http;
 
+import com.qxy.potato.R;
 import com.qxy.potato.http.cookie.CookiesManager;
 import com.qxy.potato.http.gson.BaseConverterFactory;
 import com.qxy.potato.util.MyUtil;
+import com.qxy.potato.util.NetworkUtil;
+import com.tamsiree.rxkit.view.RxToast;
 
 
 import java.util.concurrent.TimeUnit;
@@ -26,6 +29,8 @@ public class RetrofitService {
 
     private volatile static RetrofitService apiRetrofit;
     private API.SZApi apiServer;
+    //保证非wifi状态下的单次提示
+    private static int tag;
 
     /**
      * 单例调用
@@ -40,7 +45,20 @@ public class RetrofitService {
                 }
             }
         }
+        if (tag == 0){
+            checkNetWork();
+        }
         return apiRetrofit;
+    }
+
+    private static void checkNetWork() {
+        if (!NetworkUtil.isNetworkAvailable(MyUtil.getApplication())
+                || NetworkUtil.getNetworkType(MyUtil.getApplication()) == 0){
+            RxToast.warning(MyUtil.getString(R.string.disconnected_network));
+        }else if (NetworkUtil.getNetworkType(MyUtil.getApplication()) != 1){
+            tag = 1;
+            RxToast.info(MyUtil.getString(R.string.note_use));
+        }
     }
 
 
@@ -82,7 +100,7 @@ public class RetrofitService {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(API.BASE_URL)
                 .build();
-
+        tag = 0;
         apiServer = retrofit.create(API.SZApi.class);
     }
 

@@ -309,6 +309,11 @@ public class DisplayUtil {
         return hasNavigationBar;
     }
 
+    /**
+     * 设置统一的Density,使得对应的对应的dp转化为同一px。从而适配多种屏幕
+     *
+     * @param activity 当前Activity
+     */
     public static void setCustomDensity( Activity activity ){
         final Application application = MyUtil.getApplication();
 

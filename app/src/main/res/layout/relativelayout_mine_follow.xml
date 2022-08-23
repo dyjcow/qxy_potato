@@ -5,14 +5,14 @@
     android:id="@+id/fragment_mine_follow_followers"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".module.mine.activity.MineActivity">
+    tools:context=".module.Follow.activity.FollowActivity">
 
     <ImageButton
         android:id="@+id/imagebutton_mine_back"
         android:layout_width="27dp"
         android:layout_height="27dp"
         android:layout_marginStart="19dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="20dp"
         android:background="#00000000"
         android:scaleType="fitXY"
         android:src="@mipmap/back" />
@@ -22,7 +22,7 @@
         android:layout_width="229dp"
         android:layout_height="41dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="17dp"
         app:tabIndicator="@drawable/tablayout_follow_indicator"
         app:tabIndicatorAnimationDuration="1000"
         app:tabIndicatorColor="#1A1A1A"
@@ -33,11 +33,11 @@
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </com.google.android.material.tabs.TabLayout>
 
