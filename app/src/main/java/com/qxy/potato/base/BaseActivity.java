@@ -95,23 +95,6 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>,V
         initData();
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Dispatch onResume() to fragments.  Note that for better inter-operation
-     * with older versions of the platform, at the point of this call the
-     * fragments attached to the activity are <em>not</em> resumed.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!NetworkUtil.isNetworkAvailable(this)
-                || NetworkUtil.getNetworkType(this) == 0){
-            RxToast.warning(MyUtil.getString(R.string.disconnected_network));
-        }else if (NetworkUtil.getNetworkType(this) != 1){
-            RxToast.info(MyUtil.getString(R.string.note_use));
-        }
-    }
 
     /**
      * 解除presenter与Activity的绑定

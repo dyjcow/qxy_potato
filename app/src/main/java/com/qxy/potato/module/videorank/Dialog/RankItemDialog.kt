@@ -1,5 +1,6 @@
 package com.qxy.potato.module.videorank.Dialog
 
+import android.view.View
 import com.bumptech.glide.Glide
 import com.qxy.potato.bean.VideoList
 import com.qxy.potato.databinding.LayoutDialogItemBinding
@@ -34,9 +35,16 @@ class RankItemDialog(video : VideoList.Video) : MyFullDialog<LayoutDialogItemBin
         }
         binding.textViewScore.text = "暂无评分"
         binding.tvDiscussionHot.text = "讨论热度: " + getNumber(video.discussion_hot)
-        binding.tvInfluenceHot.text =  "影响力: " + getNumber(video.influence_hot)
         binding.tvSearchHot.text = "搜索热度: " + getNumber(video.search_hot)
-        binding.tvActorsText.text = video.actors.toString()
+        if(video.type == 3){
+            binding.tvInfluenceHot.visibility = View.INVISIBLE
+            binding.tvActors.text = "导演"
+            binding.tvActorsText.text = video.directors.toString()
+        }else{
+            binding.tvInfluenceHot.text =  "影响力: " + getNumber(video.influence_hot)
+            binding.tvActorsText.text = video.actors.toString()
+        }
+
     }
 
     private fun getNumber(num: Int): String? {

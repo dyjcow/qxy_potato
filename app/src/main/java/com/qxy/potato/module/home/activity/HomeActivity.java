@@ -11,11 +11,13 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.work.ListenableWorker;
 import androidx.work.OneTimeWorkRequest;
@@ -163,11 +165,16 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         getBinding().homeNavigationView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId()==R.id.nav_rank){
                 ActivityUtil.startActivity(RankActivity.class);
+                getBinding().drawerLayout.closeDrawers();
             }else if (item.getItemId()==R.id.nav_login) {
                 eventLogin();
             }
             return true;
         });
+
+        ViewGroup.LayoutParams params = getBinding().homeNavigationView.getLayoutParams();
+        params.width = getResources().getDisplayMetrics().widthPixels / 2; //屏幕的三分之一
+
 
         //跳转去登录页
         getBinding().homeIcon.setOnClickListener(v -> {
@@ -210,7 +217,10 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 mmkv.encode(GlobalConstant.IS_LOGIN,false);
                 ActivityUtil.startActivity(HomeActivity.class,true);
             });
-            sureCancel.setCancelListener(v -> sureCancel.cancel());
+            sureCancel.setCancelListener(v -> {
+                sureCancel.cancel();
+                getBinding().drawerLayout.closeDrawers();
+            });
             sureCancel.show();
         }
     }
