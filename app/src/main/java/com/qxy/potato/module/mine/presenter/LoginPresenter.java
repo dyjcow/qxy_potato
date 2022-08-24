@@ -8,6 +8,7 @@ import com.qxy.potato.bean.AccessToken;
 import com.qxy.potato.bean.PictureGirl;
 import com.qxy.potato.common.GlobalConstant;
 import com.qxy.potato.module.mine.view.ILoginView;
+import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.MyUtil;
 import com.tencent.mmkv.MMKV;
 
@@ -51,6 +52,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                         mmkv.encode(GlobalConstant.REFRESH_TOKEN, o.data.getRefresh_token());
                         mmkv.encode(GlobalConstant.OPEN_ID, o.data.getOpen_id());
                         mmkv.encode(GlobalConstant.IS_LOGIN, true);
+                        LogUtil.d(o.data.getAccess_token());
                         baseView.loginSuccess();
                     }
                 });

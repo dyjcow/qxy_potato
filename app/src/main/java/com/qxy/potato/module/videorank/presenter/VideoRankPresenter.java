@@ -39,7 +39,7 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
      */
     public void getNowRank(int type) {
         //获取到token
-        if (MMKV.defaultMMKV().decodeBool(GlobalConstant.IS_CLIENT, false)) {
+        if (MMKV.defaultMMKV().decodeBool(GlobalConstant.IS_CLIENT, true)) {
             String token = MMKV.defaultMMKV().decodeString(GlobalConstant.CLIENT_TOKEN);
             LogUtil.i(token);
             addDisposable(apiServer.GetVideoListNow(type, token), new BaseObserver<BaseBean<VideoList>>(baseView, false) {
@@ -64,7 +64,7 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
 
 
     public void getLastVersionRank(int type, int version) {
-        if (MMKV.defaultMMKV().decodeBool(GlobalConstant.IS_CLIENT, false)) {
+        if (MMKV.defaultMMKV().decodeBool(GlobalConstant.IS_CLIENT, true)) {
             String token = MMKV.defaultMMKV().decodeString(GlobalConstant.CLIENT_TOKEN);
             LogUtil.i(token);
             addDisposable(apiServer.GetVideoListLast(type, version, token), new BaseObserver<BaseBean<VideoList>>(baseView, false) {

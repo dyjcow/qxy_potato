@@ -2,6 +2,7 @@ package com.qxy.potato.module.videorank.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
@@ -69,8 +70,14 @@ public class RankActivity extends BaseActivity<RankPresenter, ActivityVideoRankB
             fragmentList.add(rankFragment);
         }
         VRViewPageAdapter adapter = new VRViewPageAdapter(this, fragmentList);
-        getBinding().viewPager2.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);
+        // 关闭预加载
+        getBinding().viewPager2.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);  // 可以不设置 因为默认是 -1 默认不进行预加载
+        // 这个必须设置 不然仍然会启用预加载
+        ((RecyclerView)getBinding().viewPager2.getChildAt(0)).getLayoutManager().setItemPrefetchEnabled(false);
+        // 设置缓存数量，对应 RecyclerView 中的 mCachedViews，即屏幕外的视图数量,此处设置为2
+        ((RecyclerView)getBinding().viewPager2.getChildAt(0)).setItemViewCacheSize(2);
         getBinding().viewPager2.setAdapter(adapter);
+        //联动viewPage和TabLayout
         new TabLayoutMediator(getBinding().tabLayout, getBinding().viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
