@@ -137,7 +137,7 @@ public class MyWebView extends WebView {
              */
             @Override
             public void onLoadResource(final WebView view, String url) {
-                super.onLoadResource(view, url);
+
                 LogUtil.i(url);
                 //				//视频自动播放js方法
                 //				String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].play();";
@@ -153,7 +153,7 @@ public class MyWebView extends WebView {
                 String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].autoplay=true;  v[0].onload=function() {this.play()}";
 
                 view.loadUrl(videoJs);
-
+                super.onLoadResource(view, url);
             }
 
             /**
