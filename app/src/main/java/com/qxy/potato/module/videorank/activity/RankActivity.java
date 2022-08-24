@@ -69,6 +69,7 @@ public class RankActivity extends BaseActivity<RankPresenter, ActivityVideoRankB
             VideoRankFragment rankFragment = new VideoRankFragment(i);
             fragmentList.add(rankFragment);
         }
+
         VRViewPageAdapter adapter = new VRViewPageAdapter(this, fragmentList);
         // 关闭预加载
         getBinding().viewPager2.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);  // 可以不设置 因为默认是 -1 默认不进行预加载

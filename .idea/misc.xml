@@ -3,6 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/drawable/black_bg.xml" value="0.1455" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/drawable/splash_bg.xml" value="0.1" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/activity_follow.xml" value="0.1" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/activity_home.xml" value="0.11096014492753623" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/activity_splash.xml" value="0.13125" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/activity_video_rank.xml" value="0.13125" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/activity_web_view.xml" value="0.14166666666666666" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/fragment_rank_background.xml" value="0.13125" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/fragment_videodisplay.xml" value="0.12760416666666666" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/linearlayout_mine_follow_list.xml" value="0.264" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/recyclerview_item_follow.xml" value="0.4" />
+        <entry key="..\:/Android Project/douyin1/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.13125" />
         <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/include_pickerview_topbar.xml" value="0.19067028985507245" />
         <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/layout_basepickerview.xml" value="0.19067028985507245" />
         <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/pickerview_options.xml" value="0.19067028985507245" />
@@ -10,7 +23,6 @@
         <entry key="..\:/Work/potato/app/src/main/res/drawable-v23/splash_bg.xml" value="0.2915" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.181" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/ge_ticket_button_bg.xml" value="0.181" />
-        <entry key="..\:/Work/potato/app/src/main/res/drawable/shape_login_gradient.xml" value="0.1" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/shape_sheet_dialog_bg.xml" value="0.181" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/splash_bg.xml" value="0.181" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/tab_indicator.xml" value="0.1735" />
@@ -35,7 +47,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

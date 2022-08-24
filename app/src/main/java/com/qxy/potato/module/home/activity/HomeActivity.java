@@ -101,6 +101,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     @Override
     protected void initView() {
+
+
+
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.home_collapsing_toolbar);
         AppBarLayout appBarLayout = findViewById(R.id.appBar);
         //设置toolbar
@@ -210,6 +213,12 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
         //首次进入获取clientToken
         initClient();
+
+
+//        //测试用
+//        ActivityUtil.startActivity(WebViewActivity.class);
+
+
     }
 
     private void eventLogin() {
@@ -313,7 +322,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 Intent intent = new Intent(HomeActivity.this, WebViewActivity.class);
-                intent.putExtra("url", list.get(position).getShare_url());
+                intent.putStringArrayListExtra("url",getURLList());
+                intent.putExtra("position",position);
                 startActivity(intent);
             }
         });
@@ -337,6 +347,17 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     }
 
+    /**
+     * 转换用于webview的list
+     * @return
+     */
+    private ArrayList<String> getURLList(){
+        ArrayList<String> url = new ArrayList<>();
+        for(MyVideo.Videos videos:list){
+            url.add(videos.getShare_url());
+        }
+        return url;
+    }
 
     /**
      * 启动对应的后台任务

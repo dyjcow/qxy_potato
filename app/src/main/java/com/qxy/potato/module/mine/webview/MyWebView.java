@@ -5,6 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewParent;
+import android.widget.AbsListView;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
+
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.qxy.potato.R;
 import com.qxy.potato.app.App;
@@ -27,6 +36,48 @@ public class MyWebView extends WebView {
         super(context);
         init();
     }
+
+
+    //处理webview与ViewPager的滑动冲突，这里是响应webview的滑动，webview到边缘后响应父视图（ViewPager）的滑动
+
+    @Override
+    protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
+        if (clampedX) {
+            ViewParent viewParent = findViewParentIfNeeds(this);
+            viewParent.requestDisallowInterceptTouchEvent(false);
+        }
+        super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            ViewParent viewParent = findViewParentIfNeeds(this);
+            if (viewParent != null)
+                viewParent.requestDisallowInterceptTouchEvent(true);
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private ViewParent findViewParentIfNeeds(View tag) {
+        ViewParent parent = tag.getParent();
+        if (parent == null) {
+            return null;
+        }
+        if (parent instanceof ViewPager2 || parent instanceof AbsListView || parent instanceof ScrollView || parent instanceof HorizontalScrollView) {
+            return parent;
+        } else {
+            if (parent instanceof View) {
+                findViewParentIfNeeds((View) parent);
+            } else {
+                return parent;
+            }
+        }
+        return parent;
+    }
+
+
+
 
     private void init() {
         //不使用系统浏览器
@@ -100,6 +151,7 @@ public class MyWebView extends WebView {
 
                 //借助js，onload()加载完成就回调，实现自动播放
                 String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].autoplay=true;  v[0].onload=function() {this.play()}";
+
                 view.loadUrl(videoJs);
 
             }
@@ -287,6 +339,14 @@ public class MyWebView extends WebView {
      */
     private boolean isInstall(Intent intent) {
         return App.getContext().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
+    }
+
+    /**
+     * onResume播放视频
+     */
+    public void play(){
+        String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].play()";
+        loadUrl(videoJs);
     }
 
 

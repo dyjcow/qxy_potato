@@ -19,6 +19,10 @@
         <item name="android:windowBackground">@drawable/splash_bg</item>
     </style>
 
+    <style name="BlackTheme" parent="Theme.Potato">
+        <item name="android:windowBackground">@drawable/black_bg</item>
+    </style>
+
     <!--activity的进出场动画-->
     <style name="windowAnimation">
         <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
