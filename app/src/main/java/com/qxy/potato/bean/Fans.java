@@ -4,33 +4,33 @@ import java.util.List;
 
 /**
  * {
- *   "cursor": -1,
- *   "has_more": false,
- *   "list": [
- *     {
- *       "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-i-0813_675418f4e4a34cebb20a984e9126ea1d.jpeg?from=4010531038",
- *       "city": "",
- *       "country": "",
- *       "gender": 0,
- *       "nickname": "SoulMateJJWW",
- *       "open_id": "_000CG_Me-c6QzHRNWhqGGz-fXUzsYL7gwgn",
- *       "province": "",
- *       "union_id": ""
- *     },
- *     {
- *       "country": "",
- *       "gender": 0,
- *       "nickname": "啊啊啊啊啊啊啊啊",
- *       "open_id": "_0001O3B03_sCaj6k4UFrk3MABBOtFg4hL_J",
- *       "province": "",
- *       "union_id": "",
- *       "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/mosaic-legacy_3795_3033762272.jpeg?from=4010531038",
- *       "city": ""
- *     }
- *   ],
- *   "total": 2,
- *   "error_code": 0,
- *   "description": ""
+ * "cursor": -1,
+ * "has_more": false,
+ * "list": [
+ * {
+ * "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-i-0813_675418f4e4a34cebb20a984e9126ea1d.jpeg?from=4010531038",
+ * "city": "",
+ * "country": "",
+ * "gender": 0,
+ * "nickname": "SoulMateJJWW",
+ * "open_id": "_000CG_Me-c6QzHRNWhqGGz-fXUzsYL7gwgn",
+ * "province": "",
+ * "union_id": ""
+ * },
+ * {
+ * "country": "",
+ * "gender": 0,
+ * "nickname": "啊啊啊啊啊啊啊啊",
+ * "open_id": "_0001O3B03_sCaj6k4UFrk3MABBOtFg4hL_J",
+ * "province": "",
+ * "union_id": "",
+ * "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/mosaic-legacy_3795_3033762272.jpeg?from=4010531038",
+ * "city": ""
+ * }
+ * ],
+ * "total": 2,
+ * "error_code": 0,
+ * "description": ""
  * }
  */
 

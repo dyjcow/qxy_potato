@@ -13,13 +13,15 @@ import java.text.DecimalFormat
  * @modified By：
  * @version:     1.0
  */
-class RankItemDialog(video : VideoList.Video) : MyFullDialog<LayoutDialogItemBinding>() {
-    private val video : VideoList.Video
+class RankItemDialog(video: VideoList.Video) : MyFullDialog<LayoutDialogItemBinding>() {
+    private val video: VideoList.Video
+
     init {
         this.video = video
     }
+
     override fun initView() {
-        binding.ivClose.setOnClickListener{
+        binding.ivClose.setOnClickListener {
             dismiss()
         }
         Glide.with(this)
@@ -36,12 +38,12 @@ class RankItemDialog(video : VideoList.Video) : MyFullDialog<LayoutDialogItemBin
         binding.textViewScore.text = "暂无评分"
         binding.tvDiscussionHot.text = "讨论热度: " + getNumber(video.discussion_hot)
         binding.tvSearchHot.text = "搜索热度: " + getNumber(video.search_hot)
-        if(video.type == 3){
+        if (video.type == 3) {
             binding.tvInfluenceHot.visibility = View.INVISIBLE
             binding.tvActors.text = "导演"
             binding.tvActorsText.text = video.directors.toString()
-        }else{
-            binding.tvInfluenceHot.text =  "影响力: " + getNumber(video.influence_hot)
+        } else {
+            binding.tvInfluenceHot.text = "影响力: " + getNumber(video.influence_hot)
             binding.tvActorsText.text = video.actors.toString()
         }
 

@@ -31,8 +31,8 @@ import com.tamsiree.rxkit.view.RxToast;
 
 public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBinding> implements ILoginView, IApiEventHandler {
 
-    private long mExitTime = 0;
     DouYinOpenApi douYinOpenApi;
+    private long mExitTime = 0;
     private boolean is_clicked_user_agreement = false;
 
     /**
@@ -51,9 +51,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
     @Override
     protected void initView() {
         getBinding().btnLogin.setOnClickListener(v -> {
-            if (is_clicked_user_agreement){
+            if (is_clicked_user_agreement) {
                 sendAuth();
-            }else {
+            } else {
                 showAnimator();
             }
         });
@@ -64,18 +64,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
             }
         });
         getBinding().tvUserAgreement.setOnClickListener(view -> ToastUtil.showToast("待添加用户协议"));
-    }
-
-    private void showAnimator() {
-        RxToast.info(MyUtil.getString(R.string.read_and_click),500);
-        ObjectAnimator animatorLeft = ObjectAnimator.ofFloat(getBinding().checkBox,
-                "translationX",-20f,0f,20f,0f);
-        ObjectAnimator animatorRight = ObjectAnimator.ofFloat(getBinding().tvUserAgreement,
-                "translationX",-20f,0f,20f,0f);
-        AnimatorSet animatorSet =  new AnimatorSet();
-        animatorSet.setDuration(300);
-        animatorSet.play(animatorLeft).with(animatorRight);
-        animatorSet.start();
     }
 
     /**
@@ -93,9 +81,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
         request.scope = "user_info,trial.whitelist";                          // 用户授权时必选权限
         // 用户授权时可选权限（默认选择）
         request.optionalScope1 = "fans.list," +
-                                "following.list," +
-                                "video.list," +
-                                "video.data";
+                "following.list," +
+                "video.list," +
+                "video.data";
 //        request.optionalScope0 = mOptionalScope1;    // 用户授权时可选权限（默认不选）
         request.state = "ww";                                   // 用于保持请求和回调的状态，授权请求后原样带回给第三方。
         request.callerLocalEntry = "com.qxy.potato.module.mine.activity.LoginActivity";
@@ -103,12 +91,24 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
 
     }
 
+    private void showAnimator() {
+        RxToast.info(MyUtil.getString(R.string.read_and_click), 500);
+        ObjectAnimator animatorLeft = ObjectAnimator.ofFloat(getBinding().checkBox,
+                "translationX", -20f, 0f, 20f, 0f);
+        ObjectAnimator animatorRight = ObjectAnimator.ofFloat(getBinding().tvUserAgreement,
+                "translationX", -20f, 0f, 20f, 0f);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(300);
+        animatorSet.play(animatorLeft).with(animatorRight);
+        animatorSet.start();
+    }
+
     /**
      * 成功登录的操作
      */
     @Override
     public void loginSuccess() {
-        ActivityUtil.startActivity(HomeActivity.class,true);
+        ActivityUtil.startActivity(HomeActivity.class, true);
     }
 
     /**
@@ -153,7 +153,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
             if (baseResp.isSuccess()) {
                 LogUtil.d("onRES");
                 presenter.getAccessToken(response.authCode);
-            }else {
+            } else {
                 ToastUtil.showToast("授权失败");
             }
         }

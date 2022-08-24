@@ -34,7 +34,6 @@ public class LogUtil {
     }
 
 
-
     public static void i(String msg) {
         if (IS_LOG) {
             String[] info = getAutoJumpLogInfos();
@@ -54,6 +53,15 @@ public class LogUtil {
             }
         }
 
+    }
+
+    private static String[] getAutoJumpLogInfos() {
+        String[] infos = new String[]{"", "", ""};
+        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+        infos[0] = elements[4].getClassName().substring(elements[4].getClassName().lastIndexOf(".") + 1);
+        infos[1] = elements[4].getMethodName();
+        infos[2] = "(" + elements[4].getFileName() + ":" + elements[4].getLineNumber() + ")";
+        return infos;
     }
 
     public static void i(String TAG, String msg) {
@@ -159,14 +167,5 @@ public class LogUtil {
             }
         }
 
-    }
-
-    private static String[] getAutoJumpLogInfos() {
-        String[] infos = new String[]{"", "", ""};
-        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-        infos[0] = elements[4].getClassName().substring(elements[4].getClassName().lastIndexOf(".") + 1);
-        infos[1] = elements[4].getMethodName();
-        infos[2] = "(" + elements[4].getFileName() + ":" + elements[4].getLineNumber() + ")";
-        return infos;
     }
 }

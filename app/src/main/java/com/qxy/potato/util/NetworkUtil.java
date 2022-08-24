@@ -77,7 +77,7 @@ public class NetworkUtil {
                             return NETWORN_4G;
                         //如果是5g
                         case TelephonyManager.NETWORK_TYPE_NR:
-                            return  NETWORN_5G;
+                            return NETWORN_5G;
                         default:
                             //中国移动 联通 电信 三种3G制式
                             if (strSubTypeName.equalsIgnoreCase("TD-SCDMA") || strSubTypeName.equalsIgnoreCase("WCDMA") || strSubTypeName.equalsIgnoreCase("CDMA2000")) {
@@ -109,4 +109,4 @@ public class NetworkUtil {
         return false;
     }
 
-    }
+}

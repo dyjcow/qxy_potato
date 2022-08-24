@@ -79,28 +79,32 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @BindEventBus
-public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBinding>implements IHomeView {
+public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBinding> implements IHomeView {
 
 
+    private final MMKV mmkv = MMKV.defaultMMKV();
+    List<MyVideo.Videos> list = new ArrayList<>();
     /**
      * 保存用户按返回键的时间
      */
     private long mExitTime = 0;
-    private final MMKV mmkv=MMKV.defaultMMKV();
-    private int like = mmkv.decodeInt(GlobalConstant.LIKE_TOTAL,0);
+    private int like = mmkv.decodeInt(GlobalConstant.LIKE_TOTAL, 0);
+    private long cursor = 0;
+    private boolean isHasMore = false;
+    private List<MyVideo.Videos> checkList = new ArrayList<>();
+    private int getLiked = 0;
 
     @Override
     protected HomePresenter createPresenter() {
         return new HomePresenter(this);
     }
 
-    List<MyVideo.Videos> list=new ArrayList<>();
     @Override
     protected void initView() {
-        CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.home_collapsing_toolbar);
-        AppBarLayout appBarLayout=findViewById(R.id.appBar);
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.home_collapsing_toolbar);
+        AppBarLayout appBarLayout = findViewById(R.id.appBar);
         //设置toolbar
-        Toolbar toolbar=findViewById(R.id.home_toolbar);
+        Toolbar toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
 
         //折叠框的配置
@@ -112,29 +116,29 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {
 
 
-            if(getSupportActionBar().getHeight()+DisplayUtil.dp2px(20)- appBarLayout1.getHeight()==verticalOffset){
+            if (getSupportActionBar().getHeight() + DisplayUtil.dp2px(20) - appBarLayout1.getHeight() == verticalOffset) {
                 //折叠监听
 
                 collapsingToolbarLayout.setTitle(" 作品");
                 getBinding().homeIconSmall.setVisibility(View.VISIBLE);
 
 
-                if (getBinding().homeToolbar.getMenu().findItem(R.id.open_rank)!=null) {
+                if (getBinding().homeToolbar.getMenu().findItem(R.id.open_rank) != null) {
                     getBinding().homeToolbar.getMenu().findItem(R.id.open_rank).setIcon(R.mipmap.home_openrank);
                 }
 
-            }else {   //展开监听
+            } else {   //展开监听
                 getBinding().homeIconSmall.setVisibility(View.INVISIBLE);
                 collapsingToolbarLayout.setTitle(" ");
 
-                if (getBinding().homeToolbar.getMenu().findItem(R.id.open_rank)!=null) {
+                if (getBinding().homeToolbar.getMenu().findItem(R.id.open_rank) != null) {
                     getBinding().homeToolbar.getMenu().findItem(R.id.open_rank).setIcon(R.mipmap.home_openrank2);
                 }
 
             }
         });
         //点击小头像返回顶部
-        getBinding().homeIconSmall.setOnClickListener(view -> getBinding().nestedScrollViewLayout.smoothScrollTo(0,0,200));
+        getBinding().homeIconSmall.setOnClickListener(view -> getBinding().nestedScrollViewLayout.smoothScrollTo(0, 0, 200));
         //跳转到关注页
         getBinding().homeTextViewFollower.setOnClickListener(view -> {
                     HashMap<String, String> map = new HashMap<>();
@@ -150,7 +154,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         });
         //点赞的dialog
         getBinding().homeTextViewLike.setOnClickListener(view -> {
-            RxDialogSure rxDialogSure=new RxDialogSure(this);
+            RxDialogSure rxDialogSure = new RxDialogSure(this);
             rxDialogSure.setLogo(R.drawable.potato);
             rxDialogSure.setSureListener(new View.OnClickListener() {
                 @Override
@@ -158,15 +162,15 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                     rxDialogSure.cancel();
                 }
             });
-            rxDialogSure.setContent("你一共获得"+like+"点赞");
+            rxDialogSure.setContent("你一共获得" + like + "点赞");
             rxDialogSure.show();
         });
         //通过DrawerLayout打开榜单页面 和登录页
         getBinding().homeNavigationView.setNavigationItemSelectedListener(item -> {
-            if (item.getItemId()==R.id.nav_rank){
+            if (item.getItemId() == R.id.nav_rank) {
                 ActivityUtil.startActivity(RankActivity.class);
                 getBinding().drawerLayout.closeDrawers();
-            }else if (item.getItemId()==R.id.nav_login) {
+            } else if (item.getItemId() == R.id.nav_login) {
                 eventLogin();
             }
             return true;
@@ -178,44 +182,45 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
         //跳转去登录页
         getBinding().homeIcon.setOnClickListener(v -> {
-            if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)){
-                ActivityUtil.startActivity(LoginActivity.class,true);
+            if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)) {
+                ActivityUtil.startActivity(LoginActivity.class, true);
             }
 
         });
 
         //下拉加载更多
-         getBinding().homeRefreshlayout.setEnableRefresh(false);
-         getBinding().homeRefreshlayout.setEnableLoadMore(true);
-         getBinding().homeRefreshlayout.setRefreshFooter(new ClassicsFooter(this));
-         getBinding().homeRefreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-             @Override
-             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        getBinding().homeRefreshlayout.setEnableRefresh(false);
+        getBinding().homeRefreshlayout.setEnableLoadMore(true);
+        getBinding().homeRefreshlayout.setRefreshFooter(new ClassicsFooter(this));
+        getBinding().homeRefreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
-                 if (isHasMore&&checkList.size()!=0) {
-                     presenter.getPersonalVideoList(cursor);
-                     refreshLayout.finishLoadMore(true);
-                 }else {
-                     refreshLayout.finishLoadMore(true);
-                     refreshLayout.setEnableLoadMore(false);
-                     getBinding().homeRecyclerviewFooter.setVisibility(View.VISIBLE);;
-                 }
-             }
-         });
+                if (isHasMore && checkList.size() != 0) {
+                    presenter.getPersonalVideoList(cursor);
+                    refreshLayout.finishLoadMore(true);
+                } else {
+                    refreshLayout.finishLoadMore(true);
+                    refreshLayout.setEnableLoadMore(false);
+                    getBinding().homeRecyclerviewFooter.setVisibility(View.VISIBLE);
+                    ;
+                }
+            }
+        });
 
-         //首次进入获取clientToken
+        //首次进入获取clientToken
         initClient();
     }
 
     private void eventLogin() {
         if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)) {
-            ActivityUtil.startActivity(LoginActivity.class,true);
-        }else {
+            ActivityUtil.startActivity(LoginActivity.class, true);
+        } else {
             RxDialogSureCancel sureCancel = new RxDialogSureCancel(this);
             sureCancel.setContent("确认退出登录吗？");
             sureCancel.setSureListener(v -> {
-                mmkv.encode(GlobalConstant.IS_LOGIN,false);
-                ActivityUtil.startActivity(HomeActivity.class,true);
+                mmkv.encode(GlobalConstant.IS_LOGIN, false);
+                ActivityUtil.startActivity(HomeActivity.class, true);
             });
             sureCancel.setCancelListener(v -> {
                 sureCancel.cancel();
@@ -225,36 +230,14 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         }
     }
 
-
     /**
-     * 加载Toolbar的menu
-     * @param menu
-     * @return
+     * 初始化连接型token
      */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_toolbar,menu);
-        return true;
+    private void initClient() {
+        mmkv.encode(GlobalConstant.IS_CLIENT, false);
+        presenter.getClientToken();
     }
 
-    /**
-     * 打开drawerLayout
-     *
-     * @param item
-     * @return
-     */
-    @SuppressLint("RtlHardcoded")
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if (item.getItemId() == R.id.open_rank) {
-            getBinding().drawerLayout.openDrawer(Gravity.RIGHT);
-        }
-        return true;
-    }
-
-    private long cursor=0;
-    private boolean isHasMore=false;
     /**
      * 相关数据的初始化
      */
@@ -273,118 +256,13 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
             }
         });
-        boolean isLogin=mmkv.decodeBool(GlobalConstant.IS_LOGIN);
-        if (isLogin){
+        boolean isLogin = mmkv.decodeBool(GlobalConstant.IS_LOGIN);
+        if (isLogin) {
             getBinding().homeNavigationView.getMenu().getItem(2).setTitle("退出登录");
-        }else {
+        } else {
             getBinding().homeNavigationView.getMenu().getItem(2).setTitle("登录");
         }
         LogUtil.d("initData");
-    }
-
-
-
-    @Override
-    public void showPersonalInfo(UserInfo userInfo) {
-        getBinding().homeTextViewLike.setText(like + "获赞");
-        getBinding().homeTextViewFans.setText(mmkv.decodeInt(GlobalConstant.FANS_TOTAL,0) + "粉丝");
-        getBinding().homeTextViewFollower.setText(mmkv.decodeInt(GlobalConstant.FOLLOWINGS_TOTAL,0) + "关注");
-        getBinding().textViewIntroduce.setText("Hello");
-        getBinding().homeTextviewSchool.setText("广东工业大学");
-        getBinding().homeTextviewPlace.setText((userInfo.getCountry() + userInfo.getDistrict()).equals("")
-                ? "中国" : (userInfo.getCountry() + userInfo.getDistrict()));
-        String gender;
-        if (userInfo.getGender() == 0 ||userInfo.getGender() == 1){
-            gender = "男";
-        }else {
-            gender = "女";
-        }
-        getBinding().homeTextviewAge.setText(gender);
-        Glide.with(this).load(userInfo.getAvatar()).into(getBinding().homeIconSmall);
-        Glide.with(this).load(userInfo.getAvatar_larger()).into(getBinding().homeIcon);
-        getBinding().textViwPersonalName.setText(userInfo.getNickname());
-    }
-
-    private List<MyVideo.Videos> checkList=new ArrayList<>();
-    private int getLiked=0;
-    @Override
-    public void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore,long cursor) {
-        this.isHasMore=isHasMore;
-        this.cursor=cursor;
-        HomeAdapter adapter = new HomeAdapter(R.layout.reycylerview_item_home, list);
-        adapter.addChildClickViewIds(R.id.home_item_imageView);
-        adapter.setAnimationEnable(true);
-        adapter.setAnimationFirstOnly(true);
-        adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom);
-
-        //recyclerview初始化
-        getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120,5,5,5));
-        getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this,3));
-        getBinding().recyclerViewHome.setAdapter(adapter);
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                Intent intent=new Intent(HomeActivity.this,WebViewActivity.class);
-                intent.putExtra("url",list.get(position).getShare_url());
-                startActivity(intent);
-            }
-        });
-        if (videos!=null) {
-            for (int i = 0; i < videos.size(); i++) {
-                checkList.clear();
-                if (!videos.get(i).getShare_url().equals(""))
-                {
-                    getLiked+=videos.get(i).getStatistics().getDigg_count();
-                    checkList.add(videos.get(i));
-                    adapter.addData(videos.get(i));
-                }
-            }
-            if (like <= getLiked ){
-                mmkv.encode(GlobalConstant.LIKE_TOTAL,getLiked);
-                like = getLiked;
-            }
-            getBinding().homeTextViewLike.setText(like+"获赞");
-
-        }
-
-
-    }
-
-
-    /**
-     * 启动对应的后台任务
-     *
-     * @param duration 间隔时间
-     * @param timeUnit 时间计算单位
-     * @param tag 事件标签
-     * @param workerClass 对应的 Work类
-     */
-    @Override
-    public void startWork(long duration, @NonNull TimeUnit timeUnit, String tag,
-                          @NonNull Class<? extends ListenableWorker> workerClass) {
-        WorkRequest request = new OneTimeWorkRequest.Builder(workerClass)
-                .setInitialDelay(duration,timeUnit)
-                .addTag(tag)
-                .build();
-        WorkManager.getInstance(this).enqueue(request);
-    }
-
-    /**
-     * 订阅的事件，当请求重新刷新clientToken的时候执行
-     *
-     * @param event 接收的event事件
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void refreshClientToken(BaseEvent<String> event){
-        if (event.getEventCode() == EventCode.CLIENT_AGAIN)
-            presenter.getClientToken();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        getBinding().homeTextViewFans.setText(mmkv.decodeInt(GlobalConstant.FANS_TOTAL,0) + "粉丝");
-        getBinding().homeTextViewFollower.setText(mmkv.decodeInt(GlobalConstant.FOLLOWINGS_TOTAL,0) + "关注");
     }
 
     /**
@@ -396,12 +274,132 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         WorkManager.getInstance(this).cancelAllWorkByTag(GlobalConstant.CLIENT_TOKEN);
     }
 
+    @Override
+    public void showPersonalInfo(UserInfo userInfo) {
+        getBinding().homeTextViewLike.setText(like + "获赞");
+        getBinding().homeTextViewFans.setText(mmkv.decodeInt(GlobalConstant.FANS_TOTAL, 0) + "粉丝");
+        getBinding().homeTextViewFollower.setText(mmkv.decodeInt(GlobalConstant.FOLLOWINGS_TOTAL, 0) + "关注");
+        getBinding().textViewIntroduce.setText("Hello");
+        getBinding().homeTextviewSchool.setText("广东工业大学");
+        getBinding().homeTextviewPlace.setText((userInfo.getCountry() + userInfo.getDistrict()).equals("")
+                ? "中国" : (userInfo.getCountry() + userInfo.getDistrict()));
+        String gender;
+        if (userInfo.getGender() == 0 || userInfo.getGender() == 1) {
+            gender = "男";
+        } else {
+            gender = "女";
+        }
+        getBinding().homeTextviewAge.setText(gender);
+        Glide.with(this).load(userInfo.getAvatar()).into(getBinding().homeIconSmall);
+        Glide.with(this).load(userInfo.getAvatar_larger()).into(getBinding().homeIcon);
+        getBinding().textViwPersonalName.setText(userInfo.getNickname());
+    }
+
+    @Override
+    public void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore, long cursor) {
+        this.isHasMore = isHasMore;
+        this.cursor = cursor;
+        HomeAdapter adapter = new HomeAdapter(R.layout.reycylerview_item_home, list);
+        adapter.addChildClickViewIds(R.id.home_item_imageView);
+        adapter.setAnimationEnable(true);
+        adapter.setAnimationFirstOnly(true);
+        adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom);
+
+        //recyclerview初始化
+        getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120, 5, 5, 5));
+        getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this, 3));
+        getBinding().recyclerViewHome.setAdapter(adapter);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                Intent intent = new Intent(HomeActivity.this, WebViewActivity.class);
+                intent.putExtra("url", list.get(position).getShare_url());
+                startActivity(intent);
+            }
+        });
+        if (videos != null) {
+            for (int i = 0; i < videos.size(); i++) {
+                checkList.clear();
+                if (!videos.get(i).getShare_url().equals("")) {
+                    getLiked += videos.get(i).getStatistics().getDigg_count();
+                    checkList.add(videos.get(i));
+                    adapter.addData(videos.get(i));
+                }
+            }
+            if (like <= getLiked) {
+                mmkv.encode(GlobalConstant.LIKE_TOTAL, getLiked);
+                like = getLiked;
+            }
+            getBinding().homeTextViewLike.setText(like + "获赞");
+
+        }
+
+
+    }
+
+
     /**
-     * 初始化连接型token
+     * 启动对应的后台任务
+     *
+     * @param duration    间隔时间
+     * @param timeUnit    时间计算单位
+     * @param tag         事件标签
+     * @param workerClass 对应的 Work类
      */
-    private void initClient() {
-        mmkv.encode(GlobalConstant.IS_CLIENT,false);
-        presenter.getClientToken();
+    @Override
+    public void startWork(long duration, @NonNull TimeUnit timeUnit, String tag,
+                          @NonNull Class<? extends ListenableWorker> workerClass) {
+        WorkRequest request = new OneTimeWorkRequest.Builder(workerClass)
+                .setInitialDelay(duration, timeUnit)
+                .addTag(tag)
+                .build();
+        WorkManager.getInstance(this).enqueue(request);
+    }
+
+    /**
+     * 订阅的事件，当请求重新刷新clientToken的时候执行
+     *
+     * @param event 接收的event事件
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshClientToken(BaseEvent<String> event) {
+        if (event.getEventCode() == EventCode.CLIENT_AGAIN)
+            presenter.getClientToken();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getBinding().homeTextViewFans.setText(mmkv.decodeInt(GlobalConstant.FANS_TOTAL, 0) + "粉丝");
+        getBinding().homeTextViewFollower.setText(mmkv.decodeInt(GlobalConstant.FOLLOWINGS_TOTAL, 0) + "关注");
+    }
+
+    /**
+     * 加载Toolbar的menu
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_toolbar, menu);
+        return true;
+    }
+
+    /**
+     * 打开drawerLayout
+     *
+     * @param item
+     * @return
+     */
+    @SuppressLint("RtlHardcoded")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.open_rank) {
+            getBinding().drawerLayout.openDrawer(Gravity.RIGHT);
+        }
+        return true;
     }
 
     /**

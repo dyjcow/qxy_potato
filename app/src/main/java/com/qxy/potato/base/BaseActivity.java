@@ -29,22 +29,40 @@ import org.greenrobot.eventbus.EventBus;
  * @modified By：
  * @version: 1.0
  */
-public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>,VB extends ViewBinding> extends AppCompatActivity implements BaseView{
+public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>, VB extends ViewBinding> extends AppCompatActivity implements BaseView {
 
-    private VB binding;
     /**
      * presenter层的引用
      */
     protected P presenter;
+    private VB binding;
 
     /**
-     * 错误
+     * {@inheritDoc}
+     * <p>
+     * Perform initialization of all fragments.
      *
-     * @param bean 错误信息
+     * @param savedInstanceState
      */
     @Override
-    public void onErrorCode(BaseBean bean) {
-        ToastUtil.showToast(bean.msg);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
+            EventBus.getDefault().register(this);
+        }
+        DisplayUtil.setCustomDensity(this);
+        UltimateBarX.statusBarOnly(this)
+                .light(true)
+                .transparent()
+                .apply();
+        //强制使用竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        binding = ViewBindingUtil.inflateWithGeneric(this, getLayoutInflater());
+        setContentView(binding.getRoot());
+        presenter = createPresenter();
+
+        initView();
+        initData();
     }
 
     /**
@@ -66,46 +84,16 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>,V
      */
     protected abstract void initData();
 
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Perform initialization of all fragments.
-     *
-     * @param savedInstanceState
-     */
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(this.getClass().isAnnotationPresent(BindEventBus.class)){
-            EventBus.getDefault().register(this);
-        }
-        DisplayUtil.setCustomDensity(this);
-        UltimateBarX.statusBarOnly(this)
-                .light(true)
-                .transparent()
-                .apply();
-        //强制使用竖屏
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        binding = ViewBindingUtil.inflateWithGeneric(this, getLayoutInflater());
-        setContentView(binding.getRoot());
-        presenter = createPresenter();
-
-        initView();
-        initData();
-    }
-
-
     /**
      * 解除presenter与Activity的绑定
      */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(this.getClass().isAnnotationPresent(BindEventBus.class)){
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
             EventBus.getDefault().unregister(this);
         }
-        if (presenter != null){
+        if (presenter != null) {
             presenter.detachView();
         }
     }
@@ -126,12 +114,22 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>,V
     }
 
     /**
+     * 错误
+     *
+     * @param bean 错误信息
+     */
+    @Override
+    public void onErrorCode(BaseBean bean) {
+        ToastUtil.showToast(bean.msg);
+    }
+
+    /**
      * 查看当前是否为深色模式
      *
      * @param context 传入当前context
      * @return 返回ture 偶然false
      */
-    public Boolean getDarkModeStatus(Context context){
+    public Boolean getDarkModeStatus(Context context) {
         int mode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         return mode == Configuration.UI_MODE_NIGHT_YES;
     }

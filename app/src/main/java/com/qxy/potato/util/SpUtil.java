@@ -4,7 +4,7 @@ package com.qxy.potato.util;
 import android.content.SharedPreferences;
 
 /**
- * @Author xucanyou666,DYJ
+ * @Author xucanyou666, DYJ
  * @Date 2020/4/27 11:38
  * email：913710642@qq.com
  */
@@ -48,18 +48,20 @@ public class SpUtil {
         return sp.getFloat(key, 0.0F);
     }
 
+    public static void setDouble(String key, double value) {
+        setLong(key, Double.doubleToLongBits(value));
+    }
+
     public static void setLong(String key, Long value) {
         sp.edit().putLong(key, value).apply();
     }
 
+    public static double getDouble(String key) {
+        return Double.longBitsToDouble(getLong(key));
+    }
+
     public static Long getLong(String key) {
         return sp.getLong(key, 0L);
-    }
-    public static void setDouble(String key, double value){
-        setLong(key,Double.doubleToLongBits(value));
-    }
-    public static double getDouble(String key){
-        return Double.longBitsToDouble(getLong(key));
     }
 
     public static void removeByKey(String key) {

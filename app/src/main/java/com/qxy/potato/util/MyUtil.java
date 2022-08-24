@@ -54,17 +54,6 @@ public class MyUtil {
         mApplicationContext = app;
     }
 
-
-    /**
-     * 获得全局context
-     *
-     * @return 当前的全局context
-     */
-    public static Application getApplication() {
-        return mApplicationContext;
-    }
-
-
     /**
      * 关闭键盘
      */
@@ -75,16 +64,12 @@ public class MyUtil {
         }
     }
 
-    public static String getString(int id) {
-        return getApplication().getResources().getString(id);
-    }
-
     /**
      * 展示dialog
      *
      * @param context 传入当前Acitivity
      */
-    public static void showLoading(Context context){
+    public static void showLoading(Context context) {
         rxDialogLoading = new RxDialogLoading(context);
         rxDialogLoading.setCanceledOnTouchOutside(false);
         rxDialogLoading.show();
@@ -93,19 +78,31 @@ public class MyUtil {
     /**
      * 成功隐藏dialog，显示成功
      */
-    public static void dismissSuccessLoading(){
-        rxDialogLoading.cancel(RxDialogLoading.RxCancelType.success,getString(R.string.load_success));
+    public static void dismissSuccessLoading() {
+        rxDialogLoading.cancel(RxDialogLoading.RxCancelType.success, getString(R.string.load_success));
     }
 
+    public static String getString(int id) {
+        return getApplication().getResources().getString(id);
+    }
+
+    /**
+     * 获得全局context
+     *
+     * @return 当前的全局context
+     */
+    public static Application getApplication() {
+        return mApplicationContext;
+    }
 
     /**
      * 失败隐藏dialog，显示失败
      */
-    public static void dismissFailedLoading(){
-        rxDialogLoading.cancel(RxDialogLoading.RxCancelType.error,getString(R.string.load_error));
+    public static void dismissFailedLoading() {
+        rxDialogLoading.cancel(RxDialogLoading.RxCancelType.error, getString(R.string.load_error));
     }
 
-    public static void showOneOptionPicker(List<?> list, String title){
+    public static void showOneOptionPicker(List<?> list, String title) {
         OptionsPickerView pvOptions = new OptionsPickerBuilder(ActivityUtil.getCurrentActivity(), new OnOptionsSelectListener() {
 
             @Override
@@ -152,10 +149,10 @@ public class MyUtil {
      * View 层面下调用资源 id
      *
      * @param context View 的 context 值
-     * @param id 颜色的资源 id
+     * @param id      颜色的资源 id
      * @return 对应的颜色值
      */
-    public static int ViewGetColor(Context context,int id){
+    public static int ViewGetColor(Context context, int id) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return context.getResources().getColor(id, context.getTheme());
         } else {
@@ -168,11 +165,11 @@ public class MyUtil {
      * 获取当前天气状况的图标
      *
      * @param context 对应的 context 值
-     * @param icon 传入的icon 字段
+     * @param icon    传入的icon 字段
      * @return 返回拼接后查询到的资源 id
      */
-    public static int getWeatherIcon(Context context, String icon){
-        return context.getResources().getIdentifier("icon_"+icon,"drawable",context.getPackageName());
+    public static int getWeatherIcon(Context context, String icon) {
+        return context.getResources().getIdentifier("icon_" + icon, "drawable", context.getPackageName());
     }
 
 
@@ -184,18 +181,18 @@ public class MyUtil {
      * @return
      */
     public static Bitmap compressBySize(Context context, int resourceId, float w, float h) {
-        BitmapDrawable bd = (BitmapDrawable) context.getResources().getDrawable(resourceId,context.getTheme());
+        BitmapDrawable bd = (BitmapDrawable) context.getResources().getDrawable(resourceId, context.getTheme());
         Matrix matrix = new Matrix();
         Bitmap src = bd.getBitmap();
         matrix.postScale(w / src.getWidth(), h / src.getHeight());
         return Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
     }
 
-    public static String split(String time){
+    public static String split(String time) {
         return time.split("T|\\+")[1];
     }
 
-    public static int getNowHour(){
+    public static int getNowHour() {
         return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
     }
 
@@ -204,13 +201,13 @@ public class MyUtil {
      * HH:mm
      */
     public static String getNowTime() {
-        SimpleDateFormat simpleDateFormat = new  SimpleDateFormat("HH:mm", Locale.US);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.US);
         // 获取当前时间
-        Date date = new  Date(System.currentTimeMillis());
+        Date date = new Date(System.currentTimeMillis());
         return simpleDateFormat.format(date);
     }
 
-    public static String getNowLanguage( ) {
+    public static String getNowLanguage() {
         Locale locale = getApplication().getResources().getConfiguration().locale;
         return locale.getLanguage();
     }

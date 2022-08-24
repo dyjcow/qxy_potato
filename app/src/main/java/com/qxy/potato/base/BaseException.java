@@ -15,15 +15,6 @@ public class BaseException extends IOException {
     private String errorMsg;
     private int errorCode;
 
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public int getErrorCode() {
-        return errorCode;
-    }
-
-
     public BaseException(String message) {
         this.errorMsg = message;
     }
@@ -33,9 +24,18 @@ public class BaseException extends IOException {
         this.errorMsg = errorMsg;
     }
 
+
     public BaseException(int errorCode, String message) {
         this.errorMsg = message;
         this.errorCode = errorCode;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public int getErrorCode() {
+        return errorCode;
     }
 
 }

@@ -33,43 +33,43 @@ public class FollowPresenter extends BasePresenter<IFollowView> {
         super(baseView);
     }
 
-    public void getFollowingsList(int cursor, int count){
-        HashMap<String,Integer> queryMap = new HashMap<>();
-        queryMap.put(MyUtil.getString(R.string.cursor),cursor);
-        queryMap.put(MyUtil.getString(R.string.count),count);
+    public void getFollowingsList(int cursor, int count) {
+        HashMap<String, Integer> queryMap = new HashMap<>();
+        queryMap.put(MyUtil.getString(R.string.cursor), cursor);
+        queryMap.put(MyUtil.getString(R.string.count), count);
         addDisposable(apiServer.GetMyFollowings(token, openId, queryMap),
-                new BaseObserver<BaseBean<Followings>>(baseView,false) {
+                new BaseObserver<BaseBean<Followings>>(baseView, false) {
+
+                    @Override
+                    public void onError(String msg) {
+                        LogUtil.e("获取关注列表失败：", msg);
+                        baseView.loadFail(msg);
+                    }
 
                     @Override
                     public void onSuccess(BaseBean<Followings> o) {
                         baseView.showFollowingsList(o.data);
                     }
+                });
+    }
+
+    public void getFansList(int cursor, int count) {
+        HashMap<String, Integer> queryMap = new HashMap<>();
+        queryMap.put(MyUtil.getString(R.string.cursor), cursor);
+        queryMap.put(MyUtil.getString(R.string.count), count);
+
+        addDisposable(apiServer.GetMyFans(token, openId, queryMap),
+                new BaseObserver<BaseBean<Fans>>(baseView, false) {
 
                     @Override
                     public void onError(String msg) {
-                        LogUtil.e("获取关注列表失败：",msg);
+                        LogUtil.e("获取粉丝列表失败：", msg);
                         baseView.loadFail(msg);
                     }
-        });
-    }
-
-    public void getFansList(int cursor, int count){
-        HashMap<String,Integer> queryMap = new HashMap<>();
-        queryMap.put(MyUtil.getString(R.string.cursor),cursor);
-        queryMap.put(MyUtil.getString(R.string.count),count);
-
-        addDisposable(apiServer.GetMyFans(token, openId, queryMap),
-                new BaseObserver<BaseBean<Fans>>(baseView,false) {
 
                     @Override
                     public void onSuccess(BaseBean<Fans> o) {
                         baseView.showFansList(o.data);
-                    }
-
-                    @Override
-                    public void onError(String msg) {
-                        LogUtil.e("获取粉丝列表失败：",msg);
-                        baseView.loadFail(msg);
                     }
                 });
     }

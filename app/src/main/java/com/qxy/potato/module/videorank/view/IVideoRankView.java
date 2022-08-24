@@ -20,7 +20,7 @@ public interface IVideoRankView extends BaseView {
      *
      * @param videoList 传入的影视List
      */
-    void showRankSuccess(VideoList videoList,int version);
+    void showRankSuccess(VideoList videoList, int version);
 
     /**
      * 错误信息提示

@@ -7,20 +7,20 @@ import java.util.List;
 
 /**
  * {
- *   "cursor": 10,
- *   "description": "",
- *   "error_code": 0,
- *   "has_more": true,
- *   "list": [
- *     {
- *       "active_time": "2022-08-08",
- *       "end_time": "2022-08-08",
- *       "start_time": "2022-08-01",
- *       "type": 1,
- *       "version": 141
- *     },
- *     ...
- *   ]
+ * "cursor": 10,
+ * "description": "",
+ * "error_code": 0,
+ * "has_more": true,
+ * "list": [
+ * {
+ * "active_time": "2022-08-08",
+ * "end_time": "2022-08-08",
+ * "start_time": "2022-08-01",
+ * "type": 1,
+ * "version": 141
+ * },
+ * ...
+ * ]
  * }
  */
 
@@ -129,9 +129,9 @@ public class VideoVersion {
 
         @Override
         public String getPickerViewText() {
-            if (tag == EventCode.IS_FIRST_LIST){
+            if (tag == EventCode.IS_FIRST_LIST) {
                 return "本周榜单" + "  " + start_time + "-" + end_time;
-            }else {
+            } else {
                 return version + "  " + start_time + "-" + end_time;
             }
 

@@ -28,49 +28,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitService {
 
     private volatile static RetrofitService apiRetrofit;
-    private API.SZApi apiServer;
     //保证非wifi状态下的单次提示
     private static int tag;
-
-    /**
-     * 单例调用
-     *
-     * @return RetrofitService
-     */
-    public static RetrofitService getInstance() {
-        if (apiRetrofit == null) {
-            synchronized (Object.class) {
-                if (apiRetrofit == null) {
-                    apiRetrofit = new RetrofitService();
-                }
-            }
-        }
-        if (tag == 0){
-            checkNetWork();
-        }
-        return apiRetrofit;
-    }
-
-    private static void checkNetWork() {
-        if (!NetworkUtil.isNetworkAvailable(MyUtil.getApplication())
-                || NetworkUtil.getNetworkType(MyUtil.getApplication()) == 0){
-            RxToast.warning(MyUtil.getString(R.string.disconnected_network));
-        }else if (NetworkUtil.getNetworkType(MyUtil.getApplication()) != 1){
-            tag = 1;
-            RxToast.info(MyUtil.getString(R.string.note_use));
-        }
-    }
-
-
-    /**
-     * 获取api对象
-     *
-     * @return api对象
-     */
-    public API.SZApi getApiService() {
-        return apiServer;
-    }
-
+    private API.SZApi apiServer;
 
     /**
      * 初始化retrofit
@@ -102,6 +62,44 @@ public class RetrofitService {
                 .build();
         tag = 0;
         apiServer = retrofit.create(API.SZApi.class);
+    }
+
+    /**
+     * 单例调用
+     *
+     * @return RetrofitService
+     */
+    public static RetrofitService getInstance() {
+        if (apiRetrofit == null) {
+            synchronized (Object.class) {
+                if (apiRetrofit == null) {
+                    apiRetrofit = new RetrofitService();
+                }
+            }
+        }
+        if (tag == 0) {
+            checkNetWork();
+        }
+        return apiRetrofit;
+    }
+
+    private static void checkNetWork() {
+        if (!NetworkUtil.isNetworkAvailable(MyUtil.getApplication())
+                || NetworkUtil.getNetworkType(MyUtil.getApplication()) == 0) {
+            RxToast.warning(MyUtil.getString(R.string.disconnected_network));
+        } else if (NetworkUtil.getNetworkType(MyUtil.getApplication()) != 1) {
+            tag = 1;
+            RxToast.info(MyUtil.getString(R.string.note_use));
+        }
+    }
+
+    /**
+     * 获取api对象
+     *
+     * @return api对象
+     */
+    public API.SZApi getApiService() {
+        return apiServer;
     }
 
 }

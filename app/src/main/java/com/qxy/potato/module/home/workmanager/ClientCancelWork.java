@@ -44,8 +44,8 @@ public class ClientCancelWork extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        MMKV.defaultMMKV().encode(GlobalConstant.IS_CLIENT,false);
-        BaseEvent<String> event = new BaseEvent<>(EventCode.CLIENT_AGAIN,"client");
+        MMKV.defaultMMKV().encode(GlobalConstant.IS_CLIENT, false);
+        BaseEvent<String> event = new BaseEvent<>(EventCode.CLIENT_AGAIN, "client");
         EventBusUtil.sendEvent(event);
         return Result.success();
     }

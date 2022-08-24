@@ -41,7 +41,7 @@ import java.util.Locale;
  * @version: 1.0
  */
 @BindEventBus
-public class VideoRankFragment extends BaseFragment<VideoRankPresenter,FragmentRankBackgroundBinding> implements IVideoRankView {
+public class VideoRankFragment extends BaseFragment<VideoRankPresenter, FragmentRankBackgroundBinding> implements IVideoRankView {
 
     private final int type;
 
@@ -64,7 +64,7 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter,FragmentR
      */
     @Override
     protected void initView() {
-        getBinding().textviewRankTime.setOnClickListener(v-> presenter.getClientVersion(type));
+        getBinding().textviewRankTime.setOnClickListener(v -> presenter.getClientVersion(type));
         getBinding().textviewRankRule.setOnClickListener(v -> {
         });
     }
@@ -83,12 +83,12 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter,FragmentR
      * @param videoList 传入的影视List
      */
     @Override
-    public void showRankSuccess(VideoList videoList,int version) {
-        VideoRVAdapter rvAdapter = new VideoRVAdapter(R.layout.recyclerview_item_rank,videoList.getList());
+    public void showRankSuccess(VideoList videoList, int version) {
+        VideoRVAdapter rvAdapter = new VideoRVAdapter(R.layout.recyclerview_item_rank, videoList.getList());
         rvAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                RankItemDialog itemDialog =  new  RankItemDialog(videoList.getList().get(position));
+                RankItemDialog itemDialog = new RankItemDialog(videoList.getList().get(position));
                 itemDialog.show(getActivity().getSupportFragmentManager(), "MyFullDialog");
             }
         });
@@ -96,10 +96,10 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter,FragmentR
         getBinding().recyclerview.setLayoutManager(new LinearLayoutManager(requireContext(),
                 RecyclerView.VERTICAL, false));
         getBinding().recyclerview.addItemDecoration(new MyItemDecoration(getContext()));
-        if (version == -1){
+        if (version == -1) {
             getBinding().textviewRankTime.setText(String.format("本周榜|更新于 %s", videoList.getActive_time()));
-        }else {
-            getBinding().textviewRankTime.setText(String.format(Locale.CHINESE,"%d期|更新于 %s", version, videoList.getActive_time()));
+        } else {
+            getBinding().textviewRankTime.setText(String.format(Locale.CHINESE, "%d期|更新于 %s", version, videoList.getActive_time()));
         }
 
     }
@@ -116,9 +116,9 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter,FragmentR
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMainActivityEvent(BaseEvent<VideoVersion.Version> event){
-        if (event.getEventCode() == EventCode.SELECT_VERSION){
-            presenter.getLastVersionRank(type,event.getData().getVersion());
+    public void onMainActivityEvent(BaseEvent<VideoVersion.Version> event) {
+        if (event.getEventCode() == EventCode.SELECT_VERSION) {
+            presenter.getLastVersionRank(type, event.getData().getVersion());
             ToastUtil.showToast(String.valueOf(event.getData().getVersion()));
         }
     }

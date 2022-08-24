@@ -17,7 +17,6 @@ import com.qxy.potato.R
 abstract class MyFullDialog<VB : ViewBinding> : BottomSheetDialogFragment() {
 
 
-
     protected lateinit var binding: VB
 
     /**
@@ -28,7 +27,11 @@ abstract class MyFullDialog<VB : ViewBinding> : BottomSheetDialogFragment() {
         setStyle(STYLE_NORMAL, R.style.BottomSheetDialogBg)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = ViewBindingUtil.inflateWithGeneric(this, inflater, container, false)
         initView()
         return binding.root
@@ -42,7 +45,8 @@ abstract class MyFullDialog<VB : ViewBinding> : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
         //拿到系统的 bottom_sheet
-        val view: FrameLayout = dialog?.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+        val view: FrameLayout =
+            dialog?.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
         //设置view高度
         view.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         //获取behavior

@@ -19,7 +19,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
 /**
- * @author yechao,dyj
+ * @author yechao, dyj
  * @date 2019/11/18/018
  * Describe : 重写ResponseBodyConverter对json预处理
  */
@@ -39,24 +39,24 @@ public class BaseResponseBodyConverter<T> implements Converter<ResponseBody, T> 
     @Override
     public T convert(ResponseBody value) throws IOException {
         String jsonString = value.string();
-        try{
+        try {
             JSONObject object = new JSONObject(jsonString);
             int code = object.getInt(MyUtil.getString(R.string.code));
-            String data ;
+            String data;
             if (code == 1) return adapter.fromJson(jsonString);
-            else  data = object.getString(MyUtil.getString(R.string.msg));
+            else data = object.getString(MyUtil.getString(R.string.msg));
             throw new BaseException(code, data);
-        }catch (JSONException ex){
+        } catch (JSONException ex) {
             ex.printStackTrace();
             try {
                 JSONObject object = new JSONObject(jsonString);
                 int error_code = object.getJSONObject("data").getInt(MyUtil.getString(R.string.error_code));
-                if (0 != error_code ) {
+                if (0 != error_code) {
                     if (error_code == access_Token_out ||
-                        error_code == refresh_Token_out ||
-                        error_code == as_Token_out){
-                        MMKV.defaultMMKV().encode(GlobalConstant.IS_LOGIN,false);
-                        ActivityUtil.startActivity(LoginActivity.class,true);
+                            error_code == refresh_Token_out ||
+                            error_code == as_Token_out) {
+                        MMKV.defaultMMKV().encode(GlobalConstant.IS_LOGIN, false);
+                        ActivityUtil.startActivity(LoginActivity.class, true);
                     }
                     String data = object.getJSONObject("data").getString(MyUtil.getString(R.string.error_msg));
                     //异常处理
@@ -71,10 +71,9 @@ public class BaseResponseBodyConverter<T> implements Converter<ResponseBody, T> 
                 throw new BaseException(MyUtil.getString(R.string.PARSE_ERROR_MSG));
             }
 
-        }finally {
+        } finally {
             value.close();
         }
-
 
 
     }

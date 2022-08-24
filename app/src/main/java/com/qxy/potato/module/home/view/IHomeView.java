@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public interface IHomeView extends BaseView {
     void showPersonalInfo(UserInfo userInfo);
 
-    void showPersonalVideo(List<MyVideo.Videos> videos,boolean isHasMore,long cursor);
+    void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore, long cursor);
 
     void startWork(long duration, @NonNull TimeUnit timeUnit,
                    String tag, @NonNull Class<? extends ListenableWorker> workerClass);

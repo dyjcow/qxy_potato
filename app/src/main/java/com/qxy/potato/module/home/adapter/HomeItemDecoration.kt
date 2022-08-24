@@ -14,10 +14,15 @@ class HomeItemDecoration(
     private val spaceH: Int = 0,
     private val spaceV: Int = 0,
     private val edgeH: Int = 0 // 网格两边的间距
-): RecyclerView.ItemDecoration() {
+) : RecyclerView.ItemDecoration() {
 
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
         super.getItemOffsets(outRect, view, parent, state)
         val position = parent.getChildAdapterPosition(view)
 
@@ -30,7 +35,7 @@ class HomeItemDecoration(
         }
 
         // p为每个Item都需要减去的间距
-        val  p = (2 * edgeH + (gridSize - 1) * spaceH) * 1f / gridSize
+        val p = (2 * edgeH + (gridSize - 1) * spaceH) * 1f / gridSize
         val left = edgeH + column * (spaceH - p)
         val right = p - left
 

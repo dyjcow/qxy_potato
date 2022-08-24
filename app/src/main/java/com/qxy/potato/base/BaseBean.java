@@ -13,7 +13,6 @@ import java.io.Serializable;
 public class BaseBean<T> implements Serializable {
 
 
-
     //From 测试图片
     public int code;
     public String msg;
