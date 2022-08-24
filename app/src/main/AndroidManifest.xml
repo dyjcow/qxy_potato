@@ -39,7 +39,8 @@
         </activity>
         <activity
             android:name=".module.mine.activity.WebViewActivity"
-            android:exported="false" />
+            android:exported="false"
+                android:theme="@style/BlackTheme"/>
         <activity
             android:name=".module.videorank.activity.RankActivity"
             android:exported="false" />
