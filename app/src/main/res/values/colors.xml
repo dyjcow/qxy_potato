@@ -12,4 +12,7 @@
     <color name="blue_200">#63C3C3</color>
     <color name="blue_500">#25ACC5</color>
     <color name="blue_700">#0096FF</color>
+    <color name="blue_left">#23CBC6</color>
+    <color name="blue_center">#28BBD7</color>
+    <color name="blue_right">#2FACE9</color>
 </resources>

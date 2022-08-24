@@ -7,6 +7,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
@@ -126,7 +127,12 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         //加入关注和粉丝碎片，传入type类型来生成不同碎片
         List<FollowListFragment> list = Arrays.asList(new FollowListFragment(FOLLOWINGS), new FollowListFragment(Fans));
         viewPager.setAdapter(new FollowPagerAdapter(compatActivity.getSupportFragmentManager(), compatActivity.getLifecycle(), list));
-
+        // 关闭预加载
+        viewPager.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);  // 可以不设置 因为默认是 -1 默认不进行预加载
+        // 这个必须设置 不然仍然会启用预加载
+        ((RecyclerView)viewPager.getChildAt(0)).getLayoutManager().setItemPrefetchEnabled(false);
+        // 设置缓存数量，对应 RecyclerView 中的 mCachedViews，即屏幕外的视图数量,此处设置为2
+        ((RecyclerView)viewPager.getChildAt(0)).setItemViewCacheSize(1);
         //tabLayout与viewPager绑定
         mediator = new TabLayoutMediator(tabLayout, viewPager, strategy);
         mediator.attach();
