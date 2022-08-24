@@ -2,23 +2,23 @@ package com.qxy.potato.bean;
 
 /**
  * {
- *   "avatar": "https://p3.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-i-0813_9d30078528ac47b1b5f0b9110a12c149.jpeg?from=4010531038",
- *   "avatar_larger": "https://p3.douyinpic.com/aweme/1080x1080/aweme-avatar/tos-cn-i-0813_9d30078528ac47b1b5f0b9110a12c149.jpeg?from=4010531038",
- *   "captcha": "",
- *   "city": "",
- *   "client_key": "aw8i3d4fhpduf8eg",
- *   "country": "",
- *   "desc_url": "",
- *   "description": "",
- *   "district": "",
- *   "e_account_role": "",
- *   "error_code": 0,
- *   "gender": 0,
- *   "log_id": "202208181614040102121462024A0F5E76",
- *   "nickname": "dyjdyj",
- *   "open_id": "_00021vY0_Bf5MvEhbErNQmr8KOaNOrZs_kt",
- *   "province": "",
- *   "union_id": "7b9a3f90-d781-4231-8c1d-a0ed021009a7"
+ * "avatar": "https://p3.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-i-0813_9d30078528ac47b1b5f0b9110a12c149.jpeg?from=4010531038",
+ * "avatar_larger": "https://p3.douyinpic.com/aweme/1080x1080/aweme-avatar/tos-cn-i-0813_9d30078528ac47b1b5f0b9110a12c149.jpeg?from=4010531038",
+ * "captcha": "",
+ * "city": "",
+ * "client_key": "aw8i3d4fhpduf8eg",
+ * "country": "",
+ * "desc_url": "",
+ * "description": "",
+ * "district": "",
+ * "e_account_role": "",
+ * "error_code": 0,
+ * "gender": 0,
+ * "log_id": "202208181614040102121462024A0F5E76",
+ * "nickname": "dyjdyj",
+ * "open_id": "_00021vY0_Bf5MvEhbErNQmr8KOaNOrZs_kt",
+ * "province": "",
+ * "union_id": "7b9a3f90-d781-4231-8c1d-a0ed021009a7"
  * }
  */
 

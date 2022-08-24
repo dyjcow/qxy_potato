@@ -52,12 +52,13 @@ public class App extends Application {
      * order matters.</p>
      */
     private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        context=getApplicationContext();
+        context = getApplicationContext();
         MMKV.initialize(this);
-        MMKV.mmkvWithID("MyID", MMKV.SINGLE_PROCESS_MODE,GlobalConstant.MMKV_KEY);
+        MMKV.mmkvWithID("MyID", MMKV.SINGLE_PROCESS_MODE, GlobalConstant.MMKV_KEY);
         //载入Dokit监测
         new DoKit.Builder(this)
                 .productId(context.getString(R.string.value_dokit_pid))
@@ -92,7 +93,7 @@ public class App extends Application {
              */
             @Override
             public void onViewInitFinished(boolean isX5) {
-                LogUtil.i("是否使用腾讯内核："+isX5);
+                LogUtil.i("是否使用腾讯内核：" + isX5);
 
             }
         });

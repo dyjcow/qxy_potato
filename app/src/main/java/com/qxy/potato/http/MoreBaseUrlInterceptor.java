@@ -1,8 +1,6 @@
 package com.qxy.potato.http;
 
 
-
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +20,7 @@ import okhttp3.Response;
  */
 public class MoreBaseUrlInterceptor implements Interceptor {
 
-    private final HashMap<String,String> keyUrl;
+    private final HashMap<String, String> keyUrl;
 
     public MoreBaseUrlInterceptor(HashMap<String, String> keyUrl) {
         this.keyUrl = keyUrl;
@@ -52,13 +50,13 @@ public class MoreBaseUrlInterceptor implements Interceptor {
                     .scheme(baseURL.scheme())//http协议如：http或者https
                     .host(baseURL.host())//主机地址
                     .encodedPath(baseURL.encodedPath() +
-                            oldUrl.encodedPath().substring(1,oldUrl.encodedPath().length()))
+                            oldUrl.encodedPath().substring(1, oldUrl.encodedPath().length()))
                     .port(baseURL.port())//端口
                     .build();
             //获取处理后的新newRequest
             Request newRequest = builder.url(newHttpUrl).build();
-            return  chain.proceed(newRequest);
-        }else{
+            return chain.proceed(newRequest);
+        } else {
             Request reOriginalRequest = builder.url(oldUrl).build();
             return chain.proceed(reOriginalRequest);
         }

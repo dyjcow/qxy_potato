@@ -4,52 +4,52 @@ import java.util.List;
 
 /**
  * {
- *   "has_more": false,
- *   "list": [
- *     {
- *       "open_id": "_000PDo4ZAdrtBIaLfLtRsDK27tuo-aSRc4y",
- *       "province": "云南",
- *       "union_id": "",
- *       "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-i-0813_afaa7f9600f4450e80b8a1041a802e38.jpeg?from=4010531038",
- *       "city": "大理",
- *       "country": "中国",
- *       "gender": 1,
- *       "nickname": "🌈nnnn"
- *     },
- *     {
- *       "gender": 0,
- *       "nickname": "啊啊啊啊啊啊啊啊",
- *       "open_id": "_0001O3B03_sCaj6k4UFrk3MABBOtFg4hL_J",
- *       "province": "",
- *       "union_id": "",
- *       "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/mosaic-legacy_3795_3033762272.jpeg?from=4010531038",
- *       "city": "",
- *       "country": ""
- *     },
- *     {
- *       "open_id": "_000ZTutfqOyn7QYP_4yieOS6xcwgDLw_QRd",
- *       "province": "广东",
- *       "union_id": "",
- *       "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-i-0813_f498bf416ce449369f256e94746d575a.jpeg?from=4010531038",
- *       "city": "湛江",
- *       "country": "中国",
- *       "gender": 0,
- *       "nickname": "70godplease"
- *     },
- *     {
- *       "country": "",
- *       "gender": 0,
- *       "nickname": "SoulMateJJWW",
- *       "open_id": "_000CG_Me-c6QzHRNWhqGGz-fXUzsYL7gwgn",
- *       "province": "",
- *       "union_id": "",
- *       "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-i-0813_675418f4e4a34cebb20a984e9126ea1d.jpeg?from=4010531038",
- *       "city": ""
- *     }
- *   ],
- *   "error_code": 0,
- *   "description": "",
- *   "cursor": -1
+ * "has_more": false,
+ * "list": [
+ * {
+ * "open_id": "_000PDo4ZAdrtBIaLfLtRsDK27tuo-aSRc4y",
+ * "province": "云南",
+ * "union_id": "",
+ * "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-i-0813_afaa7f9600f4450e80b8a1041a802e38.jpeg?from=4010531038",
+ * "city": "大理",
+ * "country": "中国",
+ * "gender": 1,
+ * "nickname": "🌈nnnn"
+ * },
+ * {
+ * "gender": 0,
+ * "nickname": "啊啊啊啊啊啊啊啊",
+ * "open_id": "_0001O3B03_sCaj6k4UFrk3MABBOtFg4hL_J",
+ * "province": "",
+ * "union_id": "",
+ * "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/mosaic-legacy_3795_3033762272.jpeg?from=4010531038",
+ * "city": "",
+ * "country": ""
+ * },
+ * {
+ * "open_id": "_000ZTutfqOyn7QYP_4yieOS6xcwgDLw_QRd",
+ * "province": "广东",
+ * "union_id": "",
+ * "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-i-0813_f498bf416ce449369f256e94746d575a.jpeg?from=4010531038",
+ * "city": "湛江",
+ * "country": "中国",
+ * "gender": 0,
+ * "nickname": "70godplease"
+ * },
+ * {
+ * "country": "",
+ * "gender": 0,
+ * "nickname": "SoulMateJJWW",
+ * "open_id": "_000CG_Me-c6QzHRNWhqGGz-fXUzsYL7gwgn",
+ * "province": "",
+ * "union_id": "",
+ * "avatar": "https://p3.douyinpic.com/aweme/720x720/aweme-avatar/tos-cn-i-0813_675418f4e4a34cebb20a984e9126ea1d.jpeg?from=4010531038",
+ * "city": ""
+ * }
+ * ],
+ * "error_code": 0,
+ * "description": "",
+ * "cursor": -1
  * }
  */
 

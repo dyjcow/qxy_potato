@@ -26,7 +26,7 @@ public class VRViewPageAdapter extends FragmentStateAdapter {
      * @see FragmentStateAdapter#FragmentStateAdapter(Fragment)
      * @see FragmentStateAdapter#FragmentStateAdapter(FragmentManager, Lifecycle)
      */
-    public VRViewPageAdapter(@NonNull FragmentActivity fragmentActivity,List<VideoRankFragment> list) {
+    public VRViewPageAdapter(@NonNull FragmentActivity fragmentActivity, List<VideoRankFragment> list) {
         super(fragmentActivity);
         this.list = list;
     }

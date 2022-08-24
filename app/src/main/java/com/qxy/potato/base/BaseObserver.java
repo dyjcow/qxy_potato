@@ -102,9 +102,8 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
         }
     }
 
+    public abstract void onError(String msg);
 
     public abstract void onSuccess(T o);
-
-    public abstract void onError(String msg);
 
 }

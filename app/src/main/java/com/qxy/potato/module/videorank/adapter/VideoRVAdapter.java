@@ -33,20 +33,20 @@ public class VideoRVAdapter extends BaseQuickAdapter<VideoList.Video, BaseViewHo
     @Override
     protected void convert(@NonNull BaseViewHolder baseViewHolder, VideoList.Video video) {
         RecyclerviewItemRankBinding binding = BaseViewHolderUtilKt
-                .getBinding(baseViewHolder,RecyclerviewItemRankBinding::bind);
+                .getBinding(baseViewHolder, RecyclerviewItemRankBinding::bind);
         Glide.with(ActivityUtil.getCurrentActivity())
                 .load(video.getPoster())
                 .into(binding.imageViewIcon);
         binding.textViewName.setText(video.getName());
         binding.textViewPopDegree.setText(getNumber(video.getHot()));
-        binding.textViewReleaseTime.setText(video.getRelease_date()+" 上映");
-        if (video.getTags() == null){
+        binding.textViewReleaseTime.setText(video.getRelease_date() + " 上映");
+        if (video.getTags() == null) {
             binding.textViewType.setText("[国语]");
-        }else {
-            binding.textViewType.setText(video.getTags()+"");
+        } else {
+            binding.textViewType.setText(video.getTags() + "");
         }
         binding.textViewScore.setText("暂无评分");
-        if (video.getType()==1) {
+        if (video.getType() == 1) {
             binding.buttonGetTicket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -54,14 +54,14 @@ public class VideoRVAdapter extends BaseQuickAdapter<VideoList.Video, BaseViewHo
                     Toast.makeText(v.getContext(), "无法购票", Toast.LENGTH_SHORT).show();
                 }
             });
-        }else {
+        } else {
             binding.buttonGetTicket.setVisibility(View.GONE);
         }
     }
 
-    private String getNumber(int num){
-        float n = (float)num/10000;
-        DecimalFormat decimalFormat= new DecimalFormat( ".00" );
+    private String getNumber(int num) {
+        float n = (float) num / 10000;
+        DecimalFormat decimalFormat = new DecimalFormat(".00");
         return decimalFormat.format(n) + "万";
     }
 }

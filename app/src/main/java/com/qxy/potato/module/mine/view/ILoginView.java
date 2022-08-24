@@ -14,6 +14,7 @@ public interface ILoginView extends BaseView {
 
     /**
      * 请求登录授权
+     *
      * @return 返回是否打开sdk调用成功
      */
     boolean sendAuth();

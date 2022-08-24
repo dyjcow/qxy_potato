@@ -162,41 +162,6 @@ public class DisplayUtil {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    /**
-     * 状态栏透明
-     */
-    protected void transparentStatusBar(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = activity.getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-    }
-
-    /**
-     * 用于获取状态栏的高度。
-     *
-     * @return 返回状态栏高度的像素值。
-     */
-    @Deprecated
-    public static int getStatusBarHeight(Context context) {
-        int statusBarHeight = 0;
-        if (statusBarHeight == 0) {
-            try {
-                Class<?> c = Class.forName("com.android.internal.R$dimen");
-                Object o = c.newInstance();
-                Field field = c.getField("status_bar_height");
-                int x = (Integer) field.get(o);
-                statusBarHeight = context.getApplicationContext().getResources().getDimensionPixelSize(x);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return statusBarHeight;
-    }
-
     public static int getStatusBarHeight2(Context context) {
         int result = 0;
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen",
@@ -222,7 +187,6 @@ public class DisplayUtil {
             return 0;
         }
     }
-
 
     /**
      * 获取当前屏幕截图，包含状态栏
@@ -256,7 +220,30 @@ public class DisplayUtil {
     }
 
     /**
+     * 用于获取状态栏的高度。
+     *
+     * @return 返回状态栏高度的像素值。
+     */
+    @Deprecated
+    public static int getStatusBarHeight(Context context) {
+        int statusBarHeight = 0;
+        if (statusBarHeight == 0) {
+            try {
+                Class<?> c = Class.forName("com.android.internal.R$dimen");
+                Object o = c.newInstance();
+                Field field = c.getField("status_bar_height");
+                int x = (Integer) field.get(o);
+                statusBarHeight = context.getApplicationContext().getResources().getDimensionPixelSize(x);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return statusBarHeight;
+    }
+
+    /**
      * 判断手机底部是否支持导航栏显示
+     *
      * @param context
      * @return
      */
@@ -286,7 +273,6 @@ public class DisplayUtil {
         return false;
     }
 
-
     private static boolean checkDeviceHasNavigationBar(Context context) {
         boolean hasNavigationBar = false;
         Resources rs = context.getResources();
@@ -314,18 +300,18 @@ public class DisplayUtil {
      *
      * @param activity 当前Activity
      */
-    public static void setCustomDensity( Activity activity ){
+    public static void setCustomDensity(Activity activity) {
         final Application application = MyUtil.getApplication();
 
         final DisplayMetrics appDisplayMetrics = application.getResources().getDisplayMetrics();
 
-        if (sNonCompatDensity == 0){
+        if (sNonCompatDensity == 0) {
             sNonCompatDensity = appDisplayMetrics.density;
             sNonCompatScaleDensity = appDisplayMetrics.scaledDensity;
             application.registerComponentCallbacks(new ComponentCallbacks() {
                 @Override
                 public void onConfigurationChanged(@NonNull Configuration newConfig) {
-                    if (newConfig.fontScale > 0){
+                    if (newConfig.fontScale > 0) {
                         sNonCompatScaleDensity = application.getResources().getDisplayMetrics().scaledDensity;
                     }
                 }
@@ -337,9 +323,9 @@ public class DisplayUtil {
             });
         }
 
-        final float targetDensity =  ((float) appDisplayMetrics.widthPixels) / 360;
-        final float targetScaleDensity = targetDensity * (sNonCompatScaleDensity/sNonCompatDensity);
-        final int targetDensityDpi = (int) (160*targetDensity);
+        final float targetDensity = ((float) appDisplayMetrics.widthPixels) / 360;
+        final float targetScaleDensity = targetDensity * (sNonCompatScaleDensity / sNonCompatDensity);
+        final int targetDensityDpi = (int) (160 * targetDensity);
 
         appDisplayMetrics.density = targetDensity;
         appDisplayMetrics.scaledDensity = targetScaleDensity;
@@ -349,5 +335,18 @@ public class DisplayUtil {
         activityDisplayMetrics.density = targetDensity;
         activityDisplayMetrics.scaledDensity = targetScaleDensity;
         activityDisplayMetrics.densityDpi = targetDensityDpi;
+    }
+
+    /**
+     * 状态栏透明
+     */
+    protected void transparentStatusBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 }

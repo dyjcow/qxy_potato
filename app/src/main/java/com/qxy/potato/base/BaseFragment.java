@@ -25,7 +25,7 @@ import org.greenrobot.eventbus.EventBus;
  * @version: 1.0
  */
 @SuppressWarnings("rawtypes")
-public abstract class BaseFragment<P extends BasePresenter,VB extends ViewBinding> extends Fragment implements BaseView {
+public abstract class BaseFragment<P extends BasePresenter, VB extends ViewBinding> extends Fragment implements BaseView {
 
     protected Context mContext;
 
@@ -58,13 +58,9 @@ public abstract class BaseFragment<P extends BasePresenter,VB extends ViewBindin
         MyUtil.dismissFailedLoading();
     }
 
-    /**
-     * 创建 presenter
-     *
-     * @return presenter
-     */
-    protected abstract P createPresenter();
-
+    @Override
+    public void onErrorCode(BaseBean bean) {
+    }
 
     /**
      * 在这里要返回view的根路径
@@ -75,21 +71,10 @@ public abstract class BaseFragment<P extends BasePresenter,VB extends ViewBindin
         return binding;
     }
 
-    /**
-     * 初始化布局
-     */
-    protected abstract void initView();
-
-    /**
-     * 初始化数据
-     */
-    protected abstract void initData();
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(this.getClass().isAnnotationPresent(BindEventBus.class)){
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
             EventBus.getDefault().register(this);
         }
         binding = ViewBindingUtil.inflateWithGeneric(this, inflater, container, false);
@@ -101,6 +86,23 @@ public abstract class BaseFragment<P extends BasePresenter,VB extends ViewBindin
         return binding.getRoot();
     }
 
+    /**
+     * 创建 presenter
+     *
+     * @return presenter
+     */
+    protected abstract P createPresenter();
+
+    /**
+     * 初始化布局
+     */
+    protected abstract void initView();
+
+    /**
+     * 初始化数据
+     */
+    protected abstract void initData();
+
     @Override
     public void onResume() {
         super.onResume();
@@ -110,7 +112,7 @@ public abstract class BaseFragment<P extends BasePresenter,VB extends ViewBindin
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(this.getClass().isAnnotationPresent(BindEventBus.class)){
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
             EventBus.getDefault().unregister(this);
         }
         //销毁时，解除绑定
@@ -121,10 +123,6 @@ public abstract class BaseFragment<P extends BasePresenter,VB extends ViewBindin
     }
 
     private void initListener() {
-    }
-
-    @Override
-    public void onErrorCode(BaseBean bean) {
     }
 
 

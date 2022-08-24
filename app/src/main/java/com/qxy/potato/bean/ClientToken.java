@@ -2,13 +2,13 @@ package com.qxy.potato.bean;
 
 /**
  * {
- *   "access_token": "clt.daf250061c2d6a58d86d25ff6dd6e1d08mnlK9W8Xnyo67mXZLbMnsDWSDSv",
- *   "captcha": "",
- *   "desc_url": "",
- *   "description": "",
- *   "error_code": 0,
- *   "expires_in": 7200,
- *   "log_id": "202208131047400102121572210F3F74E2"
+ * "access_token": "clt.daf250061c2d6a58d86d25ff6dd6e1d08mnlK9W8Xnyo67mXZLbMnsDWSDSv",
+ * "captcha": "",
+ * "desc_url": "",
+ * "description": "",
+ * "error_code": 0,
+ * "expires_in": 7200,
+ * "log_id": "202208131047400102121572210F3F74E2"
  * }
  */
 

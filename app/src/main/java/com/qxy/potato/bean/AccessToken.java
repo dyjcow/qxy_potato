@@ -2,17 +2,17 @@ package com.qxy.potato.bean;
 
 /**
  * {
- *   "access_token": "act.3ebde655cd0885cb5a45e527d525dd6bjii83fK01cjyVBM8HjxE1nk5V0Hl",
- *   "captcha": "",
- *   "desc_url": "",
- *   "description": "",
- *   "error_code": 0,
- *   "expires_in": 1296000,
- *   "log_id": "202208121333280102081020783A0AA57F",
- *   "open_id": "_00021vY0_Bf5MvEhbErNQmr8KOaNOrZs_kt",
- *   "refresh_expires_in": 2592000,
- *   "refresh_token": "rft.45aaa2fa07a1e6618e70b751e8e2bbbfdvZ44mScxwWZOFZkqL1dtOFRBUaJ",
- *   "scope": "user_info,trial.whitelist"
+ * "access_token": "act.3ebde655cd0885cb5a45e527d525dd6bjii83fK01cjyVBM8HjxE1nk5V0Hl",
+ * "captcha": "",
+ * "desc_url": "",
+ * "description": "",
+ * "error_code": 0,
+ * "expires_in": 1296000,
+ * "log_id": "202208121333280102081020783A0AA57F",
+ * "open_id": "_00021vY0_Bf5MvEhbErNQmr8KOaNOrZs_kt",
+ * "refresh_expires_in": 2592000,
+ * "refresh_token": "rft.45aaa2fa07a1e6618e70b751e8e2bbbfdvZ44mScxwWZOFZkqL1dtOFRBUaJ",
+ * "scope": "user_info,trial.whitelist"
  * }
  */
 

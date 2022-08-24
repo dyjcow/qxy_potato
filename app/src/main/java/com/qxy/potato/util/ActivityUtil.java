@@ -24,8 +24,8 @@ import java.util.Stack;
 
 @TargetApi(14)
 public class ActivityUtil {
-    private static Stack<Activity> activityStack = new Stack<>();
     private static final MyActivityLifecycleCallbacks instance = new MyActivityLifecycleCallbacks();
+    private static Stack<Activity> activityStack = new Stack<>();
 
     public ActivityUtil() {
     }
@@ -38,20 +38,6 @@ public class ActivityUtil {
     }
 
     /**
-     * 结结束当前Activity
-     *
-     * @param activity 当前Activity
-     */
-    public static void finishActivity(Activity activity) {
-        if (activity != null) {
-            activityStack.remove(activity);
-            activity.finish();
-        }
-
-    }
-
-
-    /**
      * 不用 finish 当前 Activity 时直接调用此方法
      *
      * @param classes
@@ -59,7 +45,6 @@ public class ActivityUtil {
     public static void startActivity(Class classes) {
         startActivity(classes, false);
     }
-
 
     /**
      * 需要 finish 当前 Activity 时调用此方法，布尔值参数传入 true
@@ -76,22 +61,6 @@ public class ActivityUtil {
         }
     }
 
-
-
-
-    /**
-     * 关闭所有 Activity
-     */
-    public static void closeAllActivity() {
-        while (true) {
-            Activity activity = getCurrentActivity();
-            if (null == activity) {
-                return;
-            }
-            finishActivity(activity);
-        }
-    }
-
     /**
      * 得到当前的 Activity
      *
@@ -105,6 +74,31 @@ public class ActivityUtil {
         return activity;
     }
 
+    /**
+     * 结结束当前Activity
+     *
+     * @param activity 当前Activity
+     */
+    public static void finishActivity(Activity activity) {
+        if (activity != null) {
+            activityStack.remove(activity);
+            activity.finish();
+        }
+
+    }
+
+    /**
+     * 关闭所有 Activity
+     */
+    public static void closeAllActivity() {
+        while (true) {
+            Activity activity = getCurrentActivity();
+            if (null == activity) {
+                return;
+            }
+            finishActivity(activity);
+        }
+    }
 
     /**
      * 启动 activity， 带上参数

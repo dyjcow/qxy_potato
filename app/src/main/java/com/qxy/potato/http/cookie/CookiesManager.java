@@ -21,16 +21,16 @@ public class CookiesManager implements CookieJar {
     }
 
     @Override
+    public List<Cookie> loadForRequest(HttpUrl url) {
+        return cookieStore.get(url);
+    }
+
+    @Override
     public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
         if (cookies.size() > 0) {
             for (Cookie item : cookies) {
                 cookieStore.add(url, item);
             }
         }
-    }
-
-    @Override
-    public List<Cookie> loadForRequest(HttpUrl url) {
-        return cookieStore.get(url);
     }
 }

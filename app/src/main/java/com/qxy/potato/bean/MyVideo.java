@@ -4,51 +4,51 @@ import java.util.List;
 
 /**
  * {
- *   "description": "",
- *   "cursor": 1660576280000,
- *   "has_more": false,
- *   "list": [
- *     {
- *       "media_type": 2,
- *       "share_url": "https://www.iesdouyin.com/share/video/7132138074468781353/?region=CN&mid=6952717870937671681&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title&schema_type=37",
- *       "video_id": "7132138074468781353",
- *       "create_time": 1660580311,
- *       "item_id": "@9Vxc36CWCM84L3O0ZoA4R8791GbrPPuKO5J1rQyuKFkSbfT/60zdRmYqig357zEBIAG/Pi1fAdC+lbvNEeUwGQ==",
- *       "is_top": false,
- *       "statistics": {
- *         "comment_count": 0,
- *         "digg_count": 1,
- *         "download_count": 0,
- *         "forward_count": 0,
- *         "play_count": 82,
- *         "share_count": 0
- *       },
- *       "title": "coding#一起学习 ",
- *       "video_status": 1,
- *       "cover": "https://p3-sign.douyinpic.com/tos-cn-i-0813/7cb09e9fbedf4aba8143b9e982678501~noop.jpeg?x-expires=1662037200&x-signature=p7Uy33zsbioX%2BLhuFCVMEqzOvhQ%3D&from=4257465056&se=false&biz_tag=images_video_cover&l=20220818214139010212044036381D5760",
- *       "is_reviewed": true
- *     },
- *     {
- *       "cover": "",
- *       "create_time": 0,
- *       "is_top": false,
- *       "share_url": "",
- *       "title": "",
- *       "video_id": "7132120785258302755",
- *       "is_reviewed": true,
- *       "item_id": "@9Vxc36CWCM84L3O0ZoA4R8791GbrPPqCPJ10qw+uLFERafT560zdRmYqig357zEBBNijGzIE7LI/TpdFeI2EDQ==",
- *       "statistics": {
- *         "comment_count": 0,
- *         "digg_count": 0,
- *         "download_count": 0,
- *         "forward_count": 0,
- *         "play_count": 0,
- *         "share_count": 0
- *       },
- *       "video_status": 2
- *     }
- *   ],
- *   "error_code": 0
+ * "description": "",
+ * "cursor": 1660576280000,
+ * "has_more": false,
+ * "list": [
+ * {
+ * "media_type": 2,
+ * "share_url": "https://www.iesdouyin.com/share/video/7132138074468781353/?region=CN&mid=6952717870937671681&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title&schema_type=37",
+ * "video_id": "7132138074468781353",
+ * "create_time": 1660580311,
+ * "item_id": "@9Vxc36CWCM84L3O0ZoA4R8791GbrPPuKO5J1rQyuKFkSbfT/60zdRmYqig357zEBIAG/Pi1fAdC+lbvNEeUwGQ==",
+ * "is_top": false,
+ * "statistics": {
+ * "comment_count": 0,
+ * "digg_count": 1,
+ * "download_count": 0,
+ * "forward_count": 0,
+ * "play_count": 82,
+ * "share_count": 0
+ * },
+ * "title": "coding#一起学习 ",
+ * "video_status": 1,
+ * "cover": "https://p3-sign.douyinpic.com/tos-cn-i-0813/7cb09e9fbedf4aba8143b9e982678501~noop.jpeg?x-expires=1662037200&x-signature=p7Uy33zsbioX%2BLhuFCVMEqzOvhQ%3D&from=4257465056&se=false&biz_tag=images_video_cover&l=20220818214139010212044036381D5760",
+ * "is_reviewed": true
+ * },
+ * {
+ * "cover": "",
+ * "create_time": 0,
+ * "is_top": false,
+ * "share_url": "",
+ * "title": "",
+ * "video_id": "7132120785258302755",
+ * "is_reviewed": true,
+ * "item_id": "@9Vxc36CWCM84L3O0ZoA4R8791GbrPPqCPJ10qw+uLFERafT560zdRmYqig357zEBBNijGzIE7LI/TpdFeI2EDQ==",
+ * "statistics": {
+ * "comment_count": 0,
+ * "digg_count": 0,
+ * "download_count": 0,
+ * "forward_count": 0,
+ * "play_count": 0,
+ * "share_count": 0
+ * },
+ * "video_status": 2
+ * }
+ * ],
+ * "error_code": 0
  * }
  */
 

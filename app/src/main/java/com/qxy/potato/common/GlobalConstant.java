@@ -24,9 +24,9 @@ public class GlobalConstant {
 
     public static final String MMKV_KEY = "potato_key";
 
-    public static final String FANS_TOTAL ="fans_total";
+    public static final String FANS_TOTAL = "fans_total";
 
-    public static final String FOLLOWINGS_TOTAL ="followings_total" ;
+    public static final String FOLLOWINGS_TOTAL = "followings_total";
 
     public static final String LIKE_TOTAL = "like_total";
 }

@@ -23,18 +23,18 @@ public class FansRecycleViewAdapter extends BaseQuickAdapter<Fans.Fan, BaseViewH
 
     @Override
     protected void convert(@NonNull BaseViewHolder baseViewHolder, Fans.Fan fan) {
-        baseViewHolder.setText(R.id.address,fan.getCountry()+fan.getProvince()+fan.getCity());
-        baseViewHolder.setText(R.id.nickname,fan.getNickname());
-        baseViewHolder.setText(R.id.is_connect,"关注了你");
-        ImageView avatar=baseViewHolder.getView(R.id.avatar);
+        baseViewHolder.setText(R.id.address, fan.getCountry() + fan.getProvince() + fan.getCity());
+        baseViewHolder.setText(R.id.nickname, fan.getNickname());
+        baseViewHolder.setText(R.id.is_connect, "关注了你");
+        ImageView avatar = baseViewHolder.getView(R.id.avatar);
         Glide.with(ActivityUtil.getCurrentActivity()).load(fan.getAvatar()).into(avatar);
-        ImageView gender=baseViewHolder.getView(R.id.gender);
-        switch (fan.getGender()){
-            case 0:{
+        ImageView gender = baseViewHolder.getView(R.id.gender);
+        switch (fan.getGender()) {
+            case 0: {
                 Glide.with(ActivityUtil.getCurrentActivity()).load(R.mipmap.home_man).into(gender);
                 break;
             }
-            case 1:{
+            case 1: {
                 Glide.with(ActivityUtil.getCurrentActivity()).load(R.mipmap.home_woman).into(gender);
                 break;
             }

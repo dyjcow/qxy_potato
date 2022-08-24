@@ -20,13 +20,12 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class BasePresenter<V extends BaseView> {
 
-    private CompositeDisposable compositeDisposable;
     public V baseView;
-
     /**
      * 这个后面可以直接用   Example：apiServer.login(username, password)；
      */
     protected API.SZApi apiServer = RetrofitService.getInstance().getApiService();
+    private CompositeDisposable compositeDisposable;
 
     public BasePresenter(V baseView) {
         this.baseView = baseView;
@@ -38,6 +37,12 @@ public class BasePresenter<V extends BaseView> {
     public void detachView() {
         baseView = null;
         removeDisposable();
+    }
+
+    private void removeDisposable() {
+        if (compositeDisposable != null) {
+            compositeDisposable.dispose();
+        }
     }
 
     /**
@@ -56,12 +61,6 @@ public class BasePresenter<V extends BaseView> {
                 .add(observable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(observer));
-    }
-
-    private void removeDisposable() {
-        if (compositeDisposable != null) {
-            compositeDisposable.dispose();
-        }
     }
 
 }

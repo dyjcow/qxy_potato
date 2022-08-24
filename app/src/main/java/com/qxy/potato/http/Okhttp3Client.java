@@ -28,32 +28,6 @@ public class Okhttp3Client {
     private volatile static Okhttp3Client okhttp3Client;
     private OkHttpClient okHttpClient;
 
-    /**
-     * 单例调用
-     *
-     * @return RetrofitService
-     */
-    public static Okhttp3Client getInstance() {
-        if (okhttp3Client == null) {
-            synchronized (Object.class) {
-                if (okhttp3Client == null) {
-                    okhttp3Client = new Okhttp3Client();
-                }
-            }
-        }
-        return okhttp3Client;
-    }
-
-    /**
-     * 获取OkHttpClient对象
-     *
-     * @return 获取OkHttpClient对象
-     */
-    public OkHttpClient getOkHttpClient() {
-        return okHttpClient;
-    }
-
-
     public Okhttp3Client() {
         //配置缓存 200m
         int cacheSize = 200 * 1024 * 1024;
@@ -89,6 +63,31 @@ public class Okhttp3Client {
                 .cookieJar(new CookiesManager(MyUtil.getApplication()))
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .build();
+    }
+
+    /**
+     * 单例调用
+     *
+     * @return RetrofitService
+     */
+    public static Okhttp3Client getInstance() {
+        if (okhttp3Client == null) {
+            synchronized (Object.class) {
+                if (okhttp3Client == null) {
+                    okhttp3Client = new Okhttp3Client();
+                }
+            }
+        }
+        return okhttp3Client;
+    }
+
+    /**
+     * 获取OkHttpClient对象
+     *
+     * @return 获取OkHttpClient对象
+     */
+    public OkHttpClient getOkHttpClient() {
+        return okHttpClient;
     }
 
 }

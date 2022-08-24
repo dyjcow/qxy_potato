@@ -50,13 +50,12 @@ public class API {
      *
      * @return 返回以Headers中的关键字为key，以url为value的map
      */
-    static HashMap<String,String> getKeyUrl(){
-        HashMap<String,String> keyUrl = new HashMap<>();
-        keyUrl.put("m",MyUtil.getString(R.string.mxzp));
-        keyUrl.put("mock",MyUtil.getString(R.string.mock));
+    static HashMap<String, String> getKeyUrl() {
+        HashMap<String, String> keyUrl = new HashMap<>();
+        keyUrl.put("m", MyUtil.getString(R.string.mxzp));
+        keyUrl.put("mock", MyUtil.getString(R.string.mock));
         return keyUrl;
     }
-
 
 
     /**
@@ -67,11 +66,12 @@ public class API {
 
         /**
          * 背景图片
+         *
          * @return 对应 observable
          */
         @Headers({"urlName:m"})
         @GET("api/image/girl/list/random")
-        Observable<BaseBean<List<PictureGirl>>> getPic(@HeaderMap HashMap<String,String> map);
+        Observable<BaseBean<List<PictureGirl>>> getPic(@HeaderMap HashMap<String, String> map);
 
 
         /**
@@ -83,18 +83,18 @@ public class API {
         @Headers({"Content-Type:application/x-www-form-urlencoded"})
         @FormUrlEncoded
         @POST("oauth/access_token/")
-        Observable<BaseBean<AccessToken>> PostAccessToken(@FieldMap HashMap<String,String> map);
+        Observable<BaseBean<AccessToken>> PostAccessToken(@FieldMap HashMap<String, String> map);
 
 
         @Headers({"Content-Type:application/x-www-form-urlencoded"})
         @FormUrlEncoded
         @POST("oauth/client_token/")
-        Observable<BaseBean<ClientToken>> PostClientToken(@FieldMap HashMap<String,String> map);
+        Observable<BaseBean<ClientToken>> PostClientToken(@FieldMap HashMap<String, String> map);
 
         /**
          * 获取本周榜单
          *
-         * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
+         * @param type  榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
          * @param token PostClientToken 中获取到的token
          * @return 对应的observable
          */
@@ -108,9 +108,9 @@ public class API {
         /**
          * 获取以往榜单
          *
-         * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
+         * @param type    榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
          * @param version 从其他地方获取到传入的的榜单版本
-         * @param token PostClientToken 中获取到的token
+         * @param token   PostClientToken 中获取到的token
          * @return 对应的observable
          */
         @Cache(time = 1, timeUnit = TimeUnit.DAYS)
@@ -123,7 +123,7 @@ public class API {
         /**
          * 获取榜单版本
          *
-         * @param type 榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
+         * @param type  榜单类型： * 1 - 电影 * 2 - 电视剧 * 3 - 综艺
          * @param count 每页数量
          * @param token PostClientToken 中获取到的token
          * @return 对应的observable
@@ -142,23 +142,23 @@ public class API {
         @Headers({"Content-Type:application/x-www-form-urlencoded"})
         @FormUrlEncoded
         @POST("oauth/userinfo/")
-        Observable<BaseBean<UserInfo>> GetMyInfo(@FieldMap HashMap<String,String> fieldMap);
+        Observable<BaseBean<UserInfo>> GetMyInfo(@FieldMap HashMap<String, String> fieldMap);
 
 
         /**
          * @param accessToken access_token
-         * @param queryMap 传入 open_id 、cursor 和 count
+         * @param queryMap    传入 open_id 、cursor 和 count
          * @return 对应的observable
          */
         @Headers({"Content-Type:application/json"})
         @GET("fans/list/")
         Observable<BaseBean<Fans>> GetMyFans(@Header("access-token") String accessToken,
                                              @Query("open_id") String open_id,
-                                             @QueryMap HashMap<String,Integer> queryMap);
+                                             @QueryMap HashMap<String, Integer> queryMap);
 
         /**
          * @param accessToken access_token
-         * @param queryMap 传入 open_id 、cursor 和 count
+         * @param queryMap    传入 open_id 、cursor 和 count
          * @return 对应的observable
          */
         @Cache(time = 1, timeUnit = TimeUnit.DAYS)
@@ -166,11 +166,11 @@ public class API {
         @GET("following/list/")
         Observable<BaseBean<Followings>> GetMyFollowings(@Header("access-token") String accessToken,
                                                          @Query("open_id") String open_id,
-                                                         @QueryMap HashMap<String,Integer> queryMap);
+                                                         @QueryMap HashMap<String, Integer> queryMap);
 
         /**
          * @param accessToken access_token
-         * @param queryMap 传入 open_id 、cursor 和 count
+         * @param queryMap    传入 open_id 、cursor 和 count
          * @return 对应的observable
          */
         @Cache(time = 1, timeUnit = TimeUnit.DAYS)
@@ -178,6 +178,6 @@ public class API {
         @GET("video/list/")
         Observable<BaseBean<MyVideo>> GetMyVideos(@Header("access-token") String accessToken,
                                                   @Query("open_id") String open_id,
-                                                  @QueryMap HashMap<String,Long> queryMap);
+                                                  @QueryMap HashMap<String, Long> queryMap);
     }
 }

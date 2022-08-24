@@ -25,7 +25,7 @@ public class FollowActivity extends AppCompatActivity {
                         replace(R.id.fragment, new FollowFragment(FollowFragment.FOLLOWINGS)).addToBackStack(null).commit();
                 break;
             }
-            case "Fans":{
+            case "Fans": {
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.fragment, new FollowFragment(FollowFragment.Fans)).addToBackStack(null).commit();
             }

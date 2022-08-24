@@ -30,31 +30,82 @@ import java.util.List;
 
 public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMineFollowBinding> implements BaseView {
 
+    public static final int FOLLOWINGS = 0;
+    public static final int Fans = 1;
     //返回
     private ImageButton back;
-
     //tabLayout
     private TabLayout tabLayout;
-
     //ViewPager
     private ViewPager2 viewPager;
-
     //绑定ViewPager和TabLayout
     private TabLayoutMediator mediator;
-
     private Activity activity = ActivityUtil.getCurrentActivity();
-
-    public static final int FOLLOWINGS=0;
-    public static final int Fans=1;
-
     private int mType;
+    private TabLayoutMediator.TabConfigurationStrategy strategy = (tab, position) -> {
+        TextView textView = new TextView(activity);
+        textView.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        textView.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        textView.setGravity(Gravity.CENTER_HORIZONTAL);
+        //设置文本内容
+        switch (position) {
+            case 0:
+                textView.setText(R.string.followings);
+                break;
+            case 1:
+                textView.setText(R.string.fans);
+            default:
+                break;
+        }
+        tab.setCustomView(textView);
+    };
+    //根据标签选中与否更改文本效果
+    private TabLayout.OnTabSelectedListener selectedListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            if (tab.getCustomView() != null) {
+                TextView textView = (TextView) tab.getCustomView();
+                textView.setTextAppearance(activity, R.style.selected_tab_text);
+            }
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+            if (tab.getCustomView() != null) {
+                TextView textView = (TextView) tab.getCustomView();
+                textView.setTextAppearance(activity, R.style.unselected_tab_text);
+            }
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+
+        }
+    };
+    //根据页面切换与否更改文本效果
+    private ViewPager2.OnPageChangeCallback changeCallback = new ViewPager2.OnPageChangeCallback() {
+        @Override
+        public void onPageSelected(int position) {
+            int tabCount = tabLayout.getTabCount();
+            for (int i = 0; i < tabCount; i++) {
+                TabLayout.Tab tab = tabLayout.getTabAt(i);
+                TextView textView = (TextView) tab.getCustomView();
+                if (textView != null) {
+                    if (tab.getPosition() == position) {
+                        textView.setTextAppearance(activity, R.style.selected_tab_text);
+                    } else {
+                        textView.setTextAppearance(activity, R.style.unselected_tab_text);
+                    }
+                }
+            }
+        }
+    };
 
     //获取默认启动标签页面
     public FollowFragment(int type) {
         super();
-        mType=type;
+        mType = type;
     }
-
 
     @Override
     protected BasePresenter createPresenter() {
@@ -85,70 +136,9 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         tabLayout.addOnTabSelectedListener(selectedListener);
 
         //设置默认启动页面
-        if(mType==Fans)
+        if (mType == Fans)
             tabLayout.getTabAt(Fans).select();
     }
-
-    private TabLayoutMediator.TabConfigurationStrategy strategy = (tab, position) -> {
-        TextView textView = new TextView(activity);
-        textView.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        textView.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        textView.setGravity(Gravity.CENTER_HORIZONTAL);
-        //设置文本内容
-        switch (position) {
-            case 0:
-                textView.setText(R.string.followings);
-                break;
-            case 1:
-                textView.setText(R.string.fans);
-            default:
-                break;
-        }
-        tab.setCustomView(textView);
-    };
-
-    //根据标签选中与否更改文本效果
-    private TabLayout.OnTabSelectedListener selectedListener = new TabLayout.OnTabSelectedListener() {
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            if (tab.getCustomView() != null) {
-                TextView textView = (TextView) tab.getCustomView();
-                textView.setTextAppearance(activity, R.style.selected_tab_text);
-            }
-        }
-
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-            if (tab.getCustomView() != null) {
-                TextView textView = (TextView) tab.getCustomView();
-                textView.setTextAppearance(activity, R.style.unselected_tab_text);
-            }
-        }
-
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-
-        }
-    };
-
-    //根据页面切换与否更改文本效果
-    private ViewPager2.OnPageChangeCallback changeCallback = new ViewPager2.OnPageChangeCallback() {
-        @Override
-        public void onPageSelected(int position) {
-            int tabCount = tabLayout.getTabCount();
-            for (int i = 0; i < tabCount; i++) {
-                TabLayout.Tab tab = tabLayout.getTabAt(i);
-                TextView textView = (TextView) tab.getCustomView();
-                if (textView != null) {
-                    if (tab.getPosition() == position) {
-                        textView.setTextAppearance(activity, R.style.selected_tab_text);
-                    } else {
-                        textView.setTextAppearance(activity, R.style.unselected_tab_text);
-                    }
-                }
-            }
-        }
-    };
 
     @Override
     protected void initData() {

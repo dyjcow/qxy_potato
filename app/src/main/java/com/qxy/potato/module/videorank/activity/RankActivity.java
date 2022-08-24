@@ -29,8 +29,8 @@ import com.zackratos.ultimatebarx.ultimatebarx.java.UltimateBarX;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RankActivity extends BaseActivity<RankPresenter,ActivityVideoRankBinding> implements IRankView {
-    private final String[] tabText = {"电影榜","电视剧榜","综艺榜"};
+public class RankActivity extends BaseActivity<RankPresenter, ActivityVideoRankBinding> implements IRankView {
+    private final String[] tabText = {"电影榜", "电视剧榜", "综艺榜"};
 
 
     /**
@@ -62,13 +62,13 @@ public class RankActivity extends BaseActivity<RankPresenter,ActivityVideoRankBi
 
     }
 
-    private void showView(){
+    private void showView() {
         List<VideoRankFragment> fragmentList = new ArrayList<>();
-        for (int i = 1 ; i <= 3; i++){
+        for (int i = 1; i <= 3; i++) {
             VideoRankFragment rankFragment = new VideoRankFragment(i);
             fragmentList.add(rankFragment);
         }
-        VRViewPageAdapter adapter = new VRViewPageAdapter(this,fragmentList);
+        VRViewPageAdapter adapter = new VRViewPageAdapter(this, fragmentList);
         getBinding().viewPager2.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);
         getBinding().viewPager2.setAdapter(adapter);
         new TabLayoutMediator(getBinding().tabLayout, getBinding().viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
