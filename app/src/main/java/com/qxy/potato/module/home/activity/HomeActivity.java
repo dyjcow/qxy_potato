@@ -121,7 +121,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             if (getSupportActionBar().getHeight() + DisplayUtil.dp2px(20) - appBarLayout1.getHeight() == verticalOffset) {
                 //折叠监听
 
-                collapsingToolbarLayout.setTitle(" 作品");
+                collapsingToolbarLayout.setTitle(getString(R.string.works));
                 getBinding().homeIconSmall.setVisibility(View.VISIBLE);
 
 
@@ -164,7 +164,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                     rxDialogSure.cancel();
                 }
             });
-            rxDialogSure.setContent("你一共获得" + like + "点赞");
+            rxDialogSure.setContent(getResources().getString(R.string.total_get)+like+getString(R.string.likes));
             rxDialogSure.show();
         });
         //通过DrawerLayout打开榜单页面 和登录页
@@ -212,8 +212,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
         //首次进入获取clientToken
         initClient();
-
-
     }
 
     private void eventLogin() {
@@ -221,7 +219,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             ActivityUtil.startActivity(LoginActivity.class, true);
         } else {
             RxDialogSureCancel sureCancel = new RxDialogSureCancel(this);
-            sureCancel.setContent("确认退出登录吗？");
+            sureCancel.setContent(getString(R.string.sure_to_login_out));
             sureCancel.setSureListener(v -> {
                 mmkv.encode(GlobalConstant.IS_LOGIN, false);
                 ActivityUtil.startActivity(HomeActivity.class, true);
@@ -249,7 +247,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     protected void initData() {
         presenter.getPersonInfo();
         presenter.getPersonalVideoList(cursor);
-        Glide.with(this).load("https://www.lxtlovely.top/getpic.php").into(new CustomTarget<Drawable>() {
+        Glide.with(this).load(getString(R.string.bg_url)).into(new CustomTarget<Drawable>() {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                 getBinding().homeBackground.setBackground(resource);
@@ -262,10 +260,10 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         });
         boolean isLogin = mmkv.decodeBool(GlobalConstant.IS_LOGIN);
         if (isLogin) {
-            getBinding().homeNavigationView.getMenu().getItem(2).setTitle("退出登录");
+            getBinding().homeNavigationView.getMenu().getItem(2).setTitle(getString(R.string.login_out));
             startHideService();
         } else {
-            getBinding().homeNavigationView.getMenu().getItem(2).setTitle("登录");
+            getBinding().homeNavigationView.getMenu().getItem(2).setTitle(getString(R.string.login_home));
         }
         LogUtil.d("initData");
     }
@@ -282,18 +280,20 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     @Override
     public void showPersonalInfo(UserInfo userInfo) {
-        getBinding().homeTextViewLike.setText(like + "获赞");
-        getBinding().homeTextViewFans.setText(mmkv.decodeInt(GlobalConstant.FANS_TOTAL, 0) + "粉丝");
-        getBinding().homeTextViewFollower.setText(mmkv.decodeInt(GlobalConstant.FOLLOWINGS_TOTAL, 0) + "关注");
-        getBinding().textViewIntroduce.setText("Hello");
-        getBinding().homeTextviewSchool.setText("广东工业大学");
+
+        getBinding().homeTextViewLike.setText(like + getString(R.string.likes));
+        getBinding().homeTextViewFans.setText(mmkv.decodeInt(GlobalConstant.FANS_TOTAL,0) + getString(R.string.fans));
+        getBinding().homeTextViewFollower.setText(mmkv.decodeInt(GlobalConstant.FOLLOWINGS_TOTAL,0) + getString(R.string.followings));
+        getBinding().textViewIntroduce.setText(getString(R.string.home_introduce));
+        getBinding().homeTextviewSchool.setText(getString(R.string.GDUT));
         getBinding().homeTextviewPlace.setText((userInfo.getCountry() + userInfo.getDistrict()).equals("")
-                ? "中国" : (userInfo.getCountry() + userInfo.getDistrict()));
+                ? getString(R.string.China) : (userInfo.getCountry() + userInfo.getDistrict()));
         String gender;
-        if (userInfo.getGender() == 0 || userInfo.getGender() == 1) {
-            gender = "男";
-        } else {
-            gender = "女";
+
+        if (userInfo.getGender() == 0 ||userInfo.getGender() == 1){
+            gender = getString(R.string.man);
+        }else {
+            gender = getString(R.string.woman);
         }
         getBinding().homeTextviewAge.setText(gender);
         Glide.with(this).load(userInfo.getAvatar()).into(getBinding().homeIconSmall);
@@ -337,7 +337,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 mmkv.encode(GlobalConstant.LIKE_TOTAL, getLiked);
                 like = getLiked;
             }
-            getBinding().homeTextViewLike.setText(like + "获赞");
+            getBinding().homeTextViewLike.setText(like+getString(R.string.likes));
 
         }
 
