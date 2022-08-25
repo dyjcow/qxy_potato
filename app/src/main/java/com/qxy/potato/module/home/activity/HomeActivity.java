@@ -216,7 +216,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
 
 //        //测试webview用
-        ActivityUtil.startActivity(WebViewActivity.class);
+//        ActivityUtil.startActivity(WebViewActivity.class);
 
 
     }

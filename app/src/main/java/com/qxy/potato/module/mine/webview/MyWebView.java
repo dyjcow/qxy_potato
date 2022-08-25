@@ -1,7 +1,9 @@
 package com.qxy.potato.module.mine.webview;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -20,6 +22,7 @@ import com.qxy.potato.app.App;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.LogUtil;
 import com.qxy.potato.util.ToastUtil;
+import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -84,31 +87,31 @@ public class MyWebView extends WebView {
         this.setWebChromeClient(new WebChromeClient() {
 
 
-            //
-            //			/**
-            //			 * js交互
-            //			 * @param webView
-            //			 * @param s
-            //			 * @param s1
-            //			 * @param jsResult
-            //			 * @return
-            //			 */
-            //			@Override public boolean onJsAlert(WebView webView, String s, String s1,
-            //					JsResult jsResult) {
-            //				AlertDialog.Builder b = new AlertDialog.Builder(getActivity());
-            //				b.setTitle("Alert");
-            //				b.setMessage(s1);
-            //				b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            //					@Override
-            //					public void onClick(DialogInterface dialog, int which) {
-            //						jsResult.confirm();
-            //					}
-            //				});
-            //				b.setCancelable(false);
-            //				b.create().show();
-            //				return true;
-            //
-            //			}
+
+//            			/**
+//            			 * js交互(不能打开，会有bug)
+//            			 * @param webView
+//            			 * @param s
+//            			 * @param s1
+//            			 * @param jsResult
+//            			 * @return
+//            			 */
+//            			@Override public boolean onJsAlert(WebView webView, String s, String s1,
+//            					JsResult jsResult) {
+//            				AlertDialog.Builder b = new AlertDialog.Builder(ActivityUtil.getCurrentActivity());
+//            				b.setTitle("Alert");
+//            				b.setMessage(s1);
+//            				b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//            					@Override
+//            					public void onClick(DialogInterface dialog, int which) {
+//            						jsResult.confirm();
+//            					}
+//            				});
+//            				b.setCancelable(false);
+//            				b.create().show();
+//            				return true;
+//
+//            			}
             //
             //			/**
             //			 * 显示自定义视图，无此方法视频不能播放
@@ -252,7 +255,8 @@ public class MyWebView extends WebView {
 
 
                 //消除最上方的打开看看
-                String js = "javascript: let header=document.getElementsByClassName('login-header'); header[0].style.display='none';";
+//                String js = "javascript: let header=document.getElementsByClassName('login-header'); alert(header[0]).style.display='none';";
+                String js = "javascript: let header=document.getElementsByClassName('login-header'); header[0].style.display='none';alert(header[0].style.display);";
                 view.loadUrl(js);
                 super.onPageFinished(view, url);
 
