@@ -37,9 +37,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<!--        为webview开进程防止崩溃-->
         <activity
             android:name=".module.mine.activity.WebViewActivity"
             android:exported="false"
+                android:process=":h5"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|screenSize|keyboardHidden"
                 android:theme="@style/BlackTheme"/>
         <activity
             android:name=".module.videorank.activity.RankActivity"

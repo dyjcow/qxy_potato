@@ -193,19 +193,21 @@ public class WebViewActivity extends AppCompatActivity {
 //        super.onStop();
 //    }
 //
-//    /**
-//     * 销毁时先销毁移除webview,避免内存泄漏
-//     */
-//    @Override
-//    public void onDestroy() {
+    /**
+     * 销毁时先销毁移除webview,避免内存泄漏
+     */
+    @Override
+    public void onDestroy() {
 //        if (mWebView != null) {
 //            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
 //            mWebView.destroy();
 //            mWebView = null;
 //        }
-//
-//        super.onDestroy();
-//
-//    }
+
+        System.exit(0);//这里杀掉了h5进程，不会杀掉我们app的进程
+
+        super.onDestroy();
+
+    }
 
 }
