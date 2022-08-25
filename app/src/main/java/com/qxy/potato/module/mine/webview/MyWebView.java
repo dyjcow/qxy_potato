@@ -154,6 +154,9 @@ public class MyWebView extends WebView {
 
                 view.loadUrl(videoJs);
 
+
+
+
             }
 
             /**
@@ -246,6 +249,11 @@ public class MyWebView extends WebView {
 //					//设置wenView加载图片资源
 //					getSettings().setLoadsImagesAutomatically(true);
 //				}
+
+
+                //消除最上方的打开看看
+                String js = "javascript: let header=document.getElementsByClassName('login-header'); header[0].style.display='none';";
+                view.loadUrl(js);
                 super.onPageFinished(view, url);
 
 

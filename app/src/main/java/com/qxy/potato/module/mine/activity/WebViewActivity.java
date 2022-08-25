@@ -47,15 +47,15 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         Intent intent = getIntent();
-        url = intent.getStringArrayListExtra("url");
+//        url = intent.getStringArrayListExtra("url");
         position = intent.getIntExtra("position",0);
 
-//        url = new ArrayList<>();
-//        url.add("https://www.iesdouyin.com/share/video/7133780420058975488/?region=CN&mid=6820411788354390024&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title");
-//        url.add("https://www.iesdouyin.com/share/video/7133782841233509632/?region=CN&mid=6705301107993840398&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title");
-//        url.add("https://www.iesdouyin.com/share/video/7133781562700647680/?region=CN&mid=7133781597588966151&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title");
-//        url.add("https://www.iesdouyin.com/share/video/7133779279103397160/?region=CN&mid=7133779299257469704&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title");
-//        url.add("https://www.iesdouyin.com/share/video/7133777683246222626/?region=CN&mid=7133777715114576677&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title");
+        url = new ArrayList<>();
+        url.add("https://www.iesdouyin.com/share/video/7133780420058975488/?region=CN&mid=6820411788354390024&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title");
+        url.add("https://www.iesdouyin.com/share/video/7133782841233509632/?region=CN&mid=6705301107993840398&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title");
+        url.add("https://www.iesdouyin.com/share/video/7133781562700647680/?region=CN&mid=7133781597588966151&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title");
+        url.add("https://www.iesdouyin.com/share/video/7133779279103397160/?region=CN&mid=7133779299257469704&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title");
+        url.add("https://www.iesdouyin.com/share/video/7133777683246222626/?region=CN&mid=7133777715114576677&u_code=9cd4gb1kc4&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&titleType=title");
 
 
 
@@ -193,19 +193,21 @@ public class WebViewActivity extends AppCompatActivity {
 //        super.onStop();
 //    }
 //
-//    /**
-//     * 销毁时先销毁移除webview,避免内存泄漏
-//     */
-//    @Override
-//    public void onDestroy() {
+    /**
+     * 销毁时先销毁移除webview,避免内存泄漏
+     */
+    @Override
+    public void onDestroy() {
 //        if (mWebView != null) {
 //            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
 //            mWebView.destroy();
 //            mWebView = null;
 //        }
-//
-//        super.onDestroy();
-//
-//    }
+
+        System.exit(0);//这里杀掉了h5进程，不会杀掉我们app的进程
+
+        super.onDestroy();
+
+    }
 
 }
