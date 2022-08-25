@@ -54,6 +54,7 @@ import com.qxy.potato.module.home.presenter.HomePresenter;
 import com.qxy.potato.module.home.view.IHomeView;
 import com.qxy.potato.module.mine.activity.LoginActivity;
 import com.qxy.potato.module.mine.activity.WebViewActivity;
+import com.qxy.potato.module.mine.service.PreLoadService;
 import com.qxy.potato.module.videorank.activity.RankActivity;
 import com.qxy.potato.util.ActivityUtil;
 import com.qxy.potato.util.DisplayUtil;
@@ -101,8 +102,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     @Override
     protected void initView() {
-
-
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.home_collapsing_toolbar);
         AppBarLayout appBarLayout = findViewById(R.id.appBar);
@@ -215,10 +214,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         initClient();
 
 
-//        //测试webview用
-//        ActivityUtil.startActivity(WebViewActivity.class);
-
-
     }
 
     private void eventLogin() {
@@ -268,6 +263,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         boolean isLogin = mmkv.decodeBool(GlobalConstant.IS_LOGIN);
         if (isLogin) {
             getBinding().homeNavigationView.getMenu().getItem(2).setTitle("退出登录");
+            startHideService();
         } else {
             getBinding().homeNavigationView.getMenu().getItem(2).setTitle("登录");
         }
@@ -280,6 +276,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        stopHideService();
         WorkManager.getInstance(this).cancelAllWorkByTag(GlobalConstant.CLIENT_TOKEN);
     }
 
@@ -345,6 +342,16 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         }
 
 
+    }
+
+    private void startHideService(){
+        Intent intent = new Intent(this, PreLoadService.class);
+        this.startService(intent);
+    }
+
+    private void stopHideService(){
+        Intent intent = new Intent(this, PreLoadService.class);
+        this.stopService(intent);
     }
 
     /**
