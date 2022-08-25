@@ -29,13 +29,10 @@ import java.util.List;
 
 public class WebViewActivity extends AppCompatActivity {
 
-    private static final int BACK_PRESSED_INTERVAL = 1500;//时间间隔
-    private long mBackPressed;//用来记录按下时间，连点两次返回键才返回
 //    private String url;
 //
 //    private LinearLayout mLinearLayout;
 //    private WebView mWebView;
-
     private ViewPager2 viewPager2;
 
     private List<String> url;
@@ -60,7 +57,6 @@ public class WebViewActivity extends AppCompatActivity {
 
 
         initUI();
-
 //
 //		String url = "https://www.iesdouyin.com/share/video/QDlWd0EzdWVMU2Q0aU5tKzVaOElvVU03ODBtRHFQUCtLUHBSMHFRT21MVkFYYi9UMDYwemRSbVlxaWczNTd6RUJRc3MrM2hvRGlqK2EwNnhBc1lGUkpRPT0=/?region=CN&mid=6753173704399670023&u_code=12h9je425&titleType=title";
 ////		String url = "https://haokan.baidu.com/v?pd=wisenatural&vid=5917029874381575350";
@@ -110,7 +106,6 @@ public class WebViewActivity extends AppCompatActivity {
         map.put(TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE, true);
         QbSdk.initTbsSettings(map);
 
-        mBackPressed = System.currentTimeMillis();
 
         //开启硬件加速
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
@@ -204,7 +199,7 @@ public class WebViewActivity extends AppCompatActivity {
 //            mWebView = null;
 //        }
 
-        System.exit(0);//这里杀掉了h5进程，不会杀掉我们app的进程
+//        System.exit(0);//这里杀掉了h5进程，不会杀掉我们app的进程
 
         super.onDestroy();
 

@@ -45,6 +45,18 @@
     <string name="read_and_click">Please read and agree it!</string>
     <string name="disconnected_network">Disconnected network</string>
     <string name="note_use">Note that streaming is being used</string>
+    <string name="works">works</string>
+    <string name="likes">likes</string>
+    <string name="total_get">Obtained altogether</string>
+    <string name="sure_to_login_out">Are you sure to login out?</string>
+    <string name="bg_url">https://www.lxtlovely.top/getpic.php</string>
+    <string name="login_home">login</string>
+    <string name="login_out">login out</string>
+    <string name="man">man</string>
+    <string name="woman">woman</string>
+    <string name="GDUT">GDUT</string>
+    <string name="China">China</string>
+    <string name="home_introduce">hello</string>
 
 
 </resources>

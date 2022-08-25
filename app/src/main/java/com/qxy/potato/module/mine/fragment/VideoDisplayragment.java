@@ -159,6 +159,7 @@ public class VideoDisplayragment extends Fragment {
 				ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		mWebView = new MyWebView(App.getContext());
 		mWebView.setLayoutParams(params);
+		mWebView.setBackgroundColor(getResources().getColor(R.color.black));
 		mLinearLayout.addView(mWebView);
 
 
