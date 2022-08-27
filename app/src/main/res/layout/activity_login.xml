@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32"
+        app:layout_constraintVertical_bias="0.26999998"
         app:roundPercent="0.7" />
 
     <Button
@@ -30,22 +30,24 @@
         android:paddingBottom="18dp"
         android:text="@string/login"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageFilterView"
-        app:layout_constraintVertical_bias="0.57" />
+        app:layout_constraintVertical_bias="0.65" />
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="50dp"
         android:layout_marginBottom="40dp"
         android:text="@string/has_read"
         android:textColor="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_user_agreement"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -68,8 +70,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:textColor="@color/black"
         android:text="@string/user_agreement"
+        android:textColor="@color/Gray30"
         app:layout_constraintBottom_toBottomOf="@+id/checkBox"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="@+id/checkBox" />

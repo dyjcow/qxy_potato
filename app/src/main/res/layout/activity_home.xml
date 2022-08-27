@@ -40,8 +40,6 @@
                     android:layout_width="@dimen/dp_80"
                     android:layout_height="@dimen/dp_80"
                     android:layout_marginStart="16dp"
-
-
                     android:layout_marginBottom="32dp"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/roundtest"
@@ -75,7 +73,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textViw_personal_name" />
 
-                <com.qxy.potato.module.home.myView.MyRoundView
+                <com.qxy.potatos.module.home.myView.MyRoundView
                     android:layout_width="413dp"
                     android:layout_height="17dp"
                     app:layout_constraintBottom_toBottomOf="parent"
