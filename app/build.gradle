@@ -149,7 +149,5 @@ dependencies {
     //选择框
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
-    //retrofit缓存
-    implementation 'ren.yale.android:retrofitcachelibrx2:1.1.1'
 
 }

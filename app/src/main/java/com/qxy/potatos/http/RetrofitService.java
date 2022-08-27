@@ -49,8 +49,6 @@ public class RetrofitService {
                 .cookieJar(new CookiesManager(MyUtil.getApplication()))
                 .build();
 
-        //加入缓存
-//        OkHttpClient okHttpClient3 = Okhttp3Client.getInstance().getOkHttpClient();
 
         //关联okHttp并加上rxJava和Gson的配置和baseUrl
         Retrofit retrofit = new Retrofit.Builder()

@@ -25,7 +25,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
 
 /**
  * @author ：Dyj
@@ -79,8 +78,6 @@ public class App extends Application {
             MyUtil.initialize(this);
             //设置UI工具
             RxTool.init(this);
-            //网络缓存
-            RetrofitCache.getInstance().init(this);
         }else {
             QbSdk.initX5Environment(getContext(), new QbSdk.PreInitCallback() {
                 @Override

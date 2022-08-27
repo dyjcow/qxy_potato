@@ -82,49 +82,6 @@ public class MyWebView extends WebView {
         //不使用系统浏览器
         this.setWebChromeClient(new WebChromeClient() {
 
-
-
-//            			/**
-//            			 * js交互(不能打开，会有bug)
-//            			 * @param webView
-//            			 * @param s
-//            			 * @param s1
-//            			 * @param jsResult
-//            			 * @return
-//            			 */
-//            			@Override public boolean onJsAlert(WebView webView, String s, String s1,
-//            					JsResult jsResult) {
-//            				AlertDialog.Builder b = new AlertDialog.Builder(ActivityUtil.getCurrentActivity());
-//            				b.setTitle("Alert");
-//            				b.setMessage(s1);
-//            				b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//            					@Override
-//            					public void onClick(DialogInterface dialog, int which) {
-//            						jsResult.confirm();
-//            					}
-//            				});
-//            				b.setCancelable(false);
-//            				b.create().show();
-//            				return true;
-//
-//            			}
-            //
-            //			/**
-            //			 * 显示自定义视图，无此方法视频不能播放
-            //			 */
-            //			@Override public void onShowCustomView(View view,
-            //					IX5WebChromeClient.CustomViewCallback callback) {
-            //				super.onShowCustomView(view, callback);
-            //			}
-            //
-            //			//			@Override public void onProgressChanged(WebView webView, int i) {
-            //			//
-            //			//				super.onProgressChanged(webView, i);
-            //			//				if (i == 100) {
-            //			////					centralClick(mWebView);
-            //			//				}
-            //			//
-            //			//			}
         });
 
         this.setWebViewClient(new WebViewClient() {
@@ -138,23 +95,9 @@ public class MyWebView extends WebView {
             public void onLoadResource(final WebView view, String url) {
                 super.onLoadResource(view, url);
                 LogUtil.i(url);
-                //				//视频自动播放js方法
-                //				String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].play();";
-                //				view.loadUrl(videoJs);
-                //				//js代码：资源加载完成回调
-                //				String videoJs = "javascript: window.onload = function(){ var v = document.getElementsByTagName('video'); v[0].SetAttribute('autoplay', 'true');v[0].load();}";
-                //				view.loadUrl(videoJs);
-                //				String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].SetAttribute('autoplay', 'true'); v[0].load()";
-                //
-                //				view.loadUrl(videoJs);
-
                 //借助js，onload()加载完成就回调，实现自动播放
                 String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].autoplay=true;  v[0].onload=function() {this.play()}";
-
                 view.loadUrl(videoJs);
-
-
-
 
             }
 
@@ -172,7 +115,6 @@ public class MyWebView extends WebView {
                 try {//跳转到APP
                     if (!url.startsWith("http://") && !url.startsWith("https://")) {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-
 
                         if (isInstall(intent)) {//已安装则打开
                             ActivityUtil.getCurrentActivity().startActivity(intent);
@@ -208,55 +150,11 @@ public class MyWebView extends WebView {
              */
             @Override
             public void onPageFinished(WebView view, String url) {
-//				super.onPageFinished(view, url);
-                //		view.loadUrl("javascript:try{autoplay();}catch(e){}");
-
-                //		view.loadUrl("javascript:myFunction()");
-
-                //				//音频自动播放js方法
-                //				String audioJs = "javascript: var v = document.getElementsByTagName('audio'); v[0].play();";
-                //				view.loadUrl(audioJs);
-                //视频自动播放js方法
-                //								String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].play();";
-                //								view.loadUrl(videoJs);
-
-                //要确定是否是首次
-                //				centralClick(view);
-                //js代码：资源加载完成回调
-                //				String videoJs = "javascript: window.onload = function(){ var v = document.getElementsByTagName('video'); v[0].SetAttribute('autoplay', 'true');v[0].play();}";
-
-                //				String videoJs = "javascript: var v = document.getElementsByTagName('video'); alert(v[0])";
-                //
-                //				view.loadUrl(videoJs);
-//				LogUtil.i("fuck");
-                //				String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].autoplay=true; alert(v[0]);  v[0].load();";
-                //
-                //				view.loadUrl(videoJs);
-                //				String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].autoplay=true;  v[0].play();";
-                //
-                //				view.loadUrl(videoJs);
-                //				String videoJs = "javascript: window.onload = function(){ var v = document.getElementsByTagName('video'); alert(v[0]);v[0].play();alert();}";
-                //				view.loadUrl(videoJs);
-                //				String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].autoplay=true;  v[0].onload=function() {this.play()}";
-                //
-                //				view.loadUrl(videoJs);
-
-//慢
-//				getSettings().setBlockNetworkImage(false);
-//				//判断webview是否加载了，图片资源
-//				if (!getSettings().getLoadsImagesAutomatically()) {
-//					//设置wenView加载图片资源
-//					getSettings().setLoadsImagesAutomatically(true);
-//				}
-
 
                 //消除最上方的打开看看
-//                String js = "javascript: let header=document.getElementsByClassName('login-header'); alert(header[0]).style.display='none';";
                 String js = "javascript: let header=document.getElementsByClassName('login-header'); header[0].style.display='none';alert(header[0].style.display);";
                 view.loadUrl(js);
                 super.onPageFinished(view, url);
-
-
             }
 
         });
@@ -264,8 +162,6 @@ public class MyWebView extends WebView {
 
         com.tencent.smtt.sdk.WebSettings webSetting = this.getSettings();
 
-//		//先阻塞加载图片(先加载页面再加载大资源)
-//		webSetting.setBlockNetworkImage(true);
 
         // 设置允许JS弹窗
         webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -311,9 +207,6 @@ public class MyWebView extends WebView {
         webSetting.setMediaPlaybackRequiresUserGesture(
                 false);// WebView是否需要用户的手势进行媒体播放，默认值为true。false则自动播放无效
 
-        //		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        //			webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW); // 当一个安全的来源（origin）试图从一个不安全的来源加载资源时配置WebView的行为 LOLLIPOP版本默认值MIXED_CONTENT_NEVER_ALLOW，WebView首选的最安全的操作模式为MIXED_CONTENT_NEVER_ALLOW ，不鼓励使用 MIXED_CONTENT_ALWAYS_ALLOW。
-        //		}
 
         webSetting.setNeedInitialFocus(
                 true); // 调用requestFocus(int, Android.graphics.Rect)时是否需要设置节点获取焦点，默认值为true。
@@ -328,14 +221,6 @@ public class MyWebView extends WebView {
                 "android"); // 设置WebView的用户代理字符串。如果字符串为null或者empty，将使用系统默认值。注意从KITKAT版本开始，加载网页时改变用户代理会让WebView 再次初始化加载。
 
 
-        //		mWebView.setOnTouchListener(new View.OnTouchListener() {
-        //			@Override public boolean onTouch(View view, MotionEvent motionEvent) {
-        //				LogUtil.i("点击了"+motionEvent.getX()+"  "+motionEvent.getY());
-        //				return false;
-        //			}
-        //		});
-
-
     }
 
 
@@ -347,14 +232,6 @@ public class MyWebView extends WebView {
      */
     private boolean isInstall(Intent intent) {
         return App.getContext().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
-    }
-
-    /**
-     * onResume播放视频
-     */
-    public void play(){
-        String videoJs = "javascript: var v = document.getElementsByTagName('video'); v[0].play()";
-        loadUrl(videoJs);
     }
 
 

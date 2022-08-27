@@ -79,9 +79,6 @@ public class VideoDisplayragment extends Fragment {
 		}
 
 
-
-
-
 		return view;
 	}
 
@@ -97,7 +94,6 @@ public class VideoDisplayragment extends Fragment {
 			mWebView.onResume();
 		}
 
-//		((MyWebView)mWebView).play();
 
 	}
 
@@ -144,8 +140,6 @@ public class VideoDisplayragment extends Fragment {
 	}
 
 
-
-
 	/**
 	 * 动态创建WebView同时设置他
 	 */
@@ -165,39 +159,4 @@ public class VideoDisplayragment extends Fragment {
 
 
 	}
-
-	//	/**
-	//	 * 模拟物理点击控件中心处
-	//	 *
-	//	 * @param view
-	//	 */
-	//	private void centralClick(View view) {
-	//		//左上角坐标    (left,top)
-	//		int top = view.getTop();
-	//		int left = view.getLeft();
-	//		//右下角坐标
-	//		int right = view.getRight();
-	//		int bottom = view.getBottom();
-	//		//中心
-	//		int y = (bottom - top) / 2;
-	//		int x = (right - left) / 2;
-	//
-	//		LogUtil.i("中心：" + x + " " + y);
-	//
-	//		long downTime = SystemClock.uptimeMillis();
-	//		final MotionEvent downEvent = MotionEvent.obtain(downTime, downTime,
-	//				MotionEvent.ACTION_DOWN, x, y, 0);
-	//		downTime += 1000;
-	//		final MotionEvent upEvent = MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_UP, x,
-	//				y, 0);
-	//		view.onTouchEvent(downEvent);
-	//		view.onTouchEvent(upEvent);
-	//		downEvent.recycle();
-	//		upEvent.recycle();
-
-//	}
-//
-//	public WebView getmWebViewWebView() {
-//		return mWebView;
-//	}
 }
