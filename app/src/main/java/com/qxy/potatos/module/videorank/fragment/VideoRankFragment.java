@@ -20,10 +20,12 @@ import com.qxy.potatos.databinding.FragmentRankBackgroundBinding;
 
 import com.qxy.potatos.module.videorank.Dialog.RankItemDialog;
 
+import com.qxy.potatos.module.videorank.activity.RankActivity;
 import com.qxy.potatos.module.videorank.adapter.MyItemDecoration;
 import com.qxy.potatos.module.videorank.adapter.VideoRVAdapter;
 import com.qxy.potatos.module.videorank.presenter.VideoRankPresenter;
 import com.qxy.potatos.module.videorank.view.IVideoRankView;
+import com.qxy.potatos.util.ActivityUtil;
 import com.qxy.potatos.util.ToastUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -63,9 +65,12 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter, Fragment
      */
     @Override
     protected void initView() {
-        getBinding().textviewRankTime.setOnClickListener(v -> presenter.getClientVersion(type));
-        getBinding().textviewRankRule.setOnClickListener(v -> {
-        });
+        RankActivity activity = (RankActivity) getActivity();
+        if (activity != null){
+            getBinding().textviewRankTime.setOnClickListener(v -> presenter.getClientVersion(type, activity.hand));
+            getBinding().textviewRankRule.setOnClickListener(v -> {
+            });
+        }
     }
 
     /**

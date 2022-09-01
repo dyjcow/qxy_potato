@@ -3,27 +3,21 @@ package com.qxy.potatos.util;
 
 import android.app.Application;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.contrarywind.view.WheelView;
 import com.qxy.potatos.R;
 import com.qxy.potatos.base.BaseEvent;
 import com.qxy.potatos.common.EventCode;
+import com.qxy.potatos.util.AI.tflite.OperatingHandClassifier;
 import com.tamsiree.rxui.view.dialog.RxDialogLoading;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author ：Dyj
@@ -40,6 +34,8 @@ public class MyUtil {
     private static Application mApplicationContext;
 
     private static RxDialogLoading rxDialogLoading;
+
+    private static OptionsPickerView pvOptions;
 
 
     /**
@@ -97,114 +93,38 @@ public class MyUtil {
         rxDialogLoading.cancel(RxDialogLoading.RxCancelType.error, getString(R.string.load_error));
     }
 
-    public static void showOneOptionPicker(List<?> list, String title) {
-        OptionsPickerView pvOptions = new OptionsPickerBuilder(ActivityUtil.getCurrentActivity(), new OnOptionsSelectListener() {
+    public static void showOneOptionPicker(List<?> list, int handLabel) {
 
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                BaseEvent<?> event = new BaseEvent<>(EventCode.SELECT_VERSION, list.get(options1));
-                EventBusUtil.sendEvent(event);
+        OptionsPickerBuilder builder = new OptionsPickerBuilder(ActivityUtil.getCurrentActivity(),
+                (options1, options2, options3, v) -> {
+                    //返回的分别是三个级别的选中位置
+                    BaseEvent<?> event = new BaseEvent<>(EventCode.SELECT_VERSION, list.get(options1));
+                    EventBusUtil.sendEvent(event);
 
-            }
-        })
-                .setTitleText(title)
+                });
+        pvOptions = builder
                 .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
-                .setContentTextSize(16)
-//                .setLayoutRes(R.layout.rank, new CustomListener() {
-//                    @Override
-//                    public void customLayout(View v) {
-//
-//                    }
-//                })
+                .setContentTextSize(19)
+                .setDividerColor(Color.GRAY)
+                .setDividerType(WheelView.DividerType.WRAP)
+                .isAlphaGradient(true)
+                .setLayoutRes(R.layout.layout_pickview_dialog, v -> {
+                    TextView textView;
+                    if (handLabel == OperatingHandClassifier.labelRight){
+                        textView = v.findViewById(R.id.btnSubmitRight);
+                    }else {
+                        textView = v.findViewById(R.id.btnSubmitLeft);
+                    }
+                    textView.setVisibility(View.VISIBLE);
+                    textView.setOnClickListener(v1 -> {
+                        pvOptions.returnData();
+                        pvOptions.dismiss();
+                    });
+                })
                 .build();
-
         pvOptions.setPicker(list);//一级选择器
         pvOptions.show();
-    }
-
-    /**
-     * Application 层面下调用颜色资源
-     *
-     * @param id 颜色的资源 id
-     * @return 对应的颜色值
-     */
-    public static int AppGetColor(int id) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return getApplication().getResources().getColor(id, getApplication().getTheme());
-        } else {
-            //noinspection deprecation
-            return getApplication().getResources().getColor(id);
-        }
-
-    }
-
-    /**
-     * View 层面下调用资源 id
-     *
-     * @param context View 的 context 值
-     * @param id      颜色的资源 id
-     * @return 对应的颜色值
-     */
-    public static int ViewGetColor(Context context, int id) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return context.getResources().getColor(id, context.getTheme());
-        } else {
-            //noinspection deprecation
-            return context.getResources().getColor(id);
-        }
-    }
-
-    /**
-     * 获取当前天气状况的图标
-     *
-     * @param context 对应的 context 值
-     * @param icon    传入的icon 字段
-     * @return 返回拼接后查询到的资源 id
-     */
-    public static int getWeatherIcon(Context context, String icon) {
-        return context.getResources().getIdentifier("icon_" + icon, "drawable", context.getPackageName());
-    }
-
-
-    /**
-     * 将图片压缩到指定大小
-     *
-     * @param w
-     * @param h
-     * @return
-     */
-    public static Bitmap compressBySize(Context context, int resourceId, float w, float h) {
-        BitmapDrawable bd = (BitmapDrawable) context.getResources().getDrawable(resourceId, context.getTheme());
-        Matrix matrix = new Matrix();
-        Bitmap src = bd.getBitmap();
-        matrix.postScale(w / src.getWidth(), h / src.getHeight());
-        return Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
-    }
-
-    public static String split(String time) {
-        return time.split("T|\\+")[1];
-    }
-
-    public static int getNowHour() {
-        return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-    }
-
-
-    /**
-     * HH:mm
-     */
-    public static String getNowTime() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.US);
-        // 获取当前时间
-        Date date = new Date(System.currentTimeMillis());
-        return simpleDateFormat.format(date);
-    }
-
-    public static String getNowLanguage() {
-        Locale locale = getApplication().getResources().getConfiguration().locale;
-        return locale.getLanguage();
     }
 
 }

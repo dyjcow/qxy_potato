@@ -7,7 +7,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.qxy.potatos.R;
+import com.qxy.potatos.annotation.InitAIHand;
 import com.qxy.potatos.base.BaseActivity;
 import com.qxy.potatos.databinding.ActivityVideoRankBinding;
 import com.qxy.potatos.module.videorank.adapter.VRViewPageAdapter;
@@ -18,6 +18,7 @@ import com.qxy.potatos.module.videorank.view.IRankView;
 import java.util.ArrayList;
 import java.util.List;
 
+@InitAIHand
 public class RankActivity extends BaseActivity<RankPresenter, ActivityVideoRankBinding> implements IRankView {
     private final String[] tabText = {"电影榜", "电视剧榜", "综艺榜"};
 

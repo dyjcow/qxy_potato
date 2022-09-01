@@ -32,6 +32,7 @@
     <string name="China">中国</string>
     <string name="home_introduce">Hello</string>
     <string name="empty_text">数据载入失败，请点击重试</string>
+    <string name="pick_submit">确认</string>
 
 
 </resources>

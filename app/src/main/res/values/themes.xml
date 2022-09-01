@@ -42,6 +42,11 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <!--实现BottomSheetDialog圆角效果-->
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+    </style>
+
     <!--ShapeableImageView 圆角-->
     <style name="RoundedStyle">
         <item name="cornerFamily">rounded</item>

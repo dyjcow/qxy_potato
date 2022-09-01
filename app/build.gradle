@@ -85,7 +85,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation files('libs\\tbs_sdk_thirdapp_v4.3.0.316_44216_sharewithdownloadwithfile_withoutGame_obfs_20220728_101601.jar')
+    implementation files('libs/tbs_sdk_thirdapp_v4.3.0.316_44216_sharewithdownloadwithfile_withoutGame_obfs_20220728_101601.jar')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -148,6 +148,14 @@ dependencies {
 
     //选择框
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
+
+    // Task API
+    implementation "com.google.android.gms:play-services-tasks:17.2.1"
+
+    // tensorflow lite 依赖
+    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
+
+    implementation("com.google.guava:guava:31.1-android")
 
 
 }
