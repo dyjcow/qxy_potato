@@ -5,7 +5,7 @@ import com.qxy.potatos.util.AI.tflite.OperatingHandClassifier;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class QueueUtil {
-	private static final ArrayBlockingQueue<Integer> handList = new ArrayBlockingQueue<>(10);
+	private static final ArrayBlockingQueue<Integer> handList = new ArrayBlockingQueue<>(3);
 	private static int handLeft = 0;
 	private static int handRight = 0;
 

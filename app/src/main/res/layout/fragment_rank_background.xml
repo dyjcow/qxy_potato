@@ -48,7 +48,7 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.qxy.potatos.module.videorank.myview.RecycleViewVp
                 android:id="@+id/recyclerview"
                 tools:listitem="@layout/recyclerview_item_rank"
                 android:layout_width="match_parent"
