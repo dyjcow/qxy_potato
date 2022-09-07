@@ -88,17 +88,22 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter, Fragment
      */
     @Override
     public void showRankSuccess(VideoList videoList, int version) {
-        rvAdapter = new VideoRVAdapter(R.layout.recyclerview_item_rank, videoList.getList());
-        rvAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (activity != null){
-                RankItemDialog itemDialog = new RankItemDialog(activity.hand,videoList.getList().get(position));
-                itemDialog.show(getActivity().getSupportFragmentManager(), "MyFullDialog");
-            }
-        });
+        //修复多次添加ItemDecoration导致的偏移问题
+        if(rvAdapter == null){
+            rvAdapter = new VideoRVAdapter(R.layout.recyclerview_item_rank, videoList.getList());
+            rvAdapter.setOnItemClickListener((adapter, view, position) -> {
+                if (activity != null){
+                    RankItemDialog itemDialog = new RankItemDialog(activity.hand,videoList.getList().get(position));
+                    itemDialog.show(getActivity().getSupportFragmentManager(), "MyFullDialog");
+                }
+            });
+            getBinding().recyclerview.setLayoutManager(new LinearLayoutManager(requireContext(),
+                    RecyclerView.VERTICAL, false));
+            getBinding().recyclerview.addItemDecoration(new MyItemDecoration(getContext()));
+        }else {
+            rvAdapter.setList(videoList.getList());
+        }
         getBinding().recyclerview.setAdapter(rvAdapter);
-        getBinding().recyclerview.setLayoutManager(new LinearLayoutManager(requireContext(),
-                RecyclerView.VERTICAL, false));
-        getBinding().recyclerview.addItemDecoration(new MyItemDecoration(getContext()));
         if (version == -1) {
             getBinding().textviewRankTime.setText(String.format("本周榜|更新于 %s", videoList.getActive_time()));
         } else {

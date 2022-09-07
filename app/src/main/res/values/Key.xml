@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="value_client_key" translatable="false">awwr0mg0tysdogq6</string>
-    <string name="value_client_secret" translatable="false">95ec7bfceb8f49f59fcbdb87c23447d6</string>
+    <string name="value_client_key" translatable="false">aw72owx7fdi4mhgp</string>
+    <string name="value_client_secret" translatable="false">db04c6989b2777b21a8bfd999e95aa4c</string>
     <string name="value_dokit_pid" translatable="false">8b4b6b21efed31323e2dc4bf07268d7f</string>
     <string name="value_app_id" translatable="false">kvq0nvszkwmqqqbh</string>
     <string name="value_app_secret" translatable="false">N0V3S20vM0lCd1dzZkZJWFpaalRkdz09</string>
