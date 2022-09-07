@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 
-
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.qxy.potatos.R;
@@ -32,7 +34,15 @@ public class HomeAdapter extends BaseQuickAdapter<MyVideo.Videos, BaseViewHolder
         holder.setVisible(R.id.home_textView_Top, myVideo.isIs_top());
         holder.setText(R.id.playCount, myVideo.getStatistics().getPlay_count() + "");
         holder.setText(R.id.likeCount, myVideo.getStatistics().getDigg_count() + "");
-        Glide.with(getContext()).load(myVideo.getCover()).into((ImageView) holder.getView(R.id.home_item_imageView));
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(getContext())
+                .load(myVideo.getCover())
+                .apply(options)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into((ImageView) holder.getView(R.id.home_item_imageView));
     }
 
     @Override

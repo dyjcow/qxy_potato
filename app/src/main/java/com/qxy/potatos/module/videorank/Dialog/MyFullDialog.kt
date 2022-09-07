@@ -82,8 +82,4 @@ abstract class MyFullDialog<VB : ViewBinding> : BottomSheetDialogFragment() {
         super.onCancel(dialog)
     }
 
-    override fun dismiss() {
-
-        super.dismiss()
-    }
 }

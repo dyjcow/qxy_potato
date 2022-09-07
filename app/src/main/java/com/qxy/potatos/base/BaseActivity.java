@@ -1,24 +1,31 @@
 package com.qxy.potatos.base;
 
-import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewbinding.ViewBinding;
 
 
 import com.dylanc.viewbinding.base.ViewBindingUtil;
-import com.qxy.potatos.R;
 import com.qxy.potatos.annotation.BindEventBus;
+import com.qxy.potatos.annotation.InitAIHand;
+import com.qxy.potatos.util.AI.tflite.OperatingHandClassifier;
+import com.qxy.potatos.util.AI.tracker.MotionEventTracker;
 import com.qxy.potatos.util.DisplayUtil;
+import com.qxy.potatos.util.LogUtil;
 import com.qxy.potatos.util.MyUtil;
+import com.qxy.potatos.util.QueueUtil;
 import com.qxy.potatos.util.ToastUtil;
 import com.zackratos.ultimatebarx.ultimatebarx.java.UltimateBarX;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
+
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * @author ：Dyj
@@ -27,13 +34,23 @@ import org.greenrobot.eventbus.EventBus;
  * @modified By：
  * @version: 1.0
  */
-public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>, VB extends ViewBinding> extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>, VB extends ViewBinding>
+        extends AppCompatActivity implements BaseView, MotionEventTracker.ITrackDataReadyListener {
 
     /**
      * presenter层的引用
      */
     protected P presenter;
+
     private VB binding;
+
+    private OperatingHandClassifier classifier;
+
+    private MotionEventTracker tracker;
+
+    public int hand = 1;
+
+
 
     /**
      * {@inheritDoc}
@@ -47,6 +64,12 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>, 
         super.onCreate(savedInstanceState);
         if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
             EventBus.getDefault().register(this);
+        }
+        if (this.getClass().isAnnotationPresent(InitAIHand.class)){
+            classifier = new OperatingHandClassifier(this);
+            classifier.checkAndInit();
+            tracker = new MotionEventTracker(this);
+            tracker.checkAndInit(this);
         }
         DisplayUtil.setCustomDensity(this);
         UltimateBarX.statusBarOnly(this)
@@ -91,6 +114,9 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>, 
         if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
             EventBus.getDefault().unregister(this);
         }
+        if (this.getClass().isAnnotationPresent(InitAIHand.class)){
+            classifier.close();
+        }
         if (presenter != null) {
             presenter.detachView();
         }
@@ -121,18 +147,33 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>, 
         ToastUtil.showToast(bean.msg);
     }
 
-    /**
-     * 查看当前是否为深色模式
-     *
-     * @param context 传入当前context
-     * @return 返回ture 偶然false
-     */
-    public Boolean getDarkModeStatus(Context context) {
-        int mode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        return mode == Configuration.UI_MODE_NIGHT_YES;
-    }
-
     public VB getBinding() {
         return binding;
     }
+
+    /**
+     * Called to process touch screen events.  You can override this to
+     * intercept all touch screen events before they are dispatched to the
+     * window.  Be sure to call this implementation for touch screen events
+     * that should be handled normally.
+     *
+     * @param ev The touch screen event.
+     * @return boolean Return true if this event was consumed.
+     */
+    @Override public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (tracker != null && ev != null){
+            tracker.recordMotionEvent(ev);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override public void onTrackDataReady(@NonNull JSONArray dataList) {
+        if (classifier != null){
+            classifier.classifyAsync(dataList).addOnSuccessListener(result -> {
+                hand = QueueUtil.getRecentHand(result.getLabelInt());
+                LogUtil.d(MotionEventTracker.TAG,result.getLabel());
+            }).addOnFailureListener(e -> LogUtil.e(MotionEventTracker.TAG,e.toString()));
+        }
+    }
+
 }

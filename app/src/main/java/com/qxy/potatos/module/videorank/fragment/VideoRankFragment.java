@@ -20,6 +20,7 @@ import com.qxy.potatos.databinding.FragmentRankBackgroundBinding;
 
 import com.qxy.potatos.module.videorank.Dialog.RankItemDialog;
 
+import com.qxy.potatos.module.videorank.activity.RankActivity;
 import com.qxy.potatos.module.videorank.adapter.MyItemDecoration;
 import com.qxy.potatos.module.videorank.adapter.VideoRVAdapter;
 import com.qxy.potatos.module.videorank.presenter.VideoRankPresenter;
@@ -43,6 +44,7 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter, Fragment
 
     private final int type;
     private VideoRVAdapter rvAdapter;
+    private RankActivity activity;
 
     public VideoRankFragment(int type) {
         this.type = type;
@@ -63,9 +65,12 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter, Fragment
      */
     @Override
     protected void initView() {
-        getBinding().textviewRankTime.setOnClickListener(v -> presenter.getClientVersion(type));
-        getBinding().textviewRankRule.setOnClickListener(v -> {
-        });
+        activity = (RankActivity) getActivity();
+        if (activity != null){
+            getBinding().textviewRankTime.setOnClickListener(v -> presenter.getClientVersion(type, activity.hand));
+            getBinding().textviewRankRule.setOnClickListener(v -> {
+            });
+        }
     }
 
     /**
@@ -84,10 +89,9 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter, Fragment
     @Override
     public void showRankSuccess(VideoList videoList, int version) {
         rvAdapter = new VideoRVAdapter(R.layout.recyclerview_item_rank, videoList.getList());
-        rvAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                RankItemDialog itemDialog = new RankItemDialog(videoList.getList().get(position));
+        rvAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (activity != null){
+                RankItemDialog itemDialog = new RankItemDialog(activity.hand,videoList.getList().get(position));
                 itemDialog.show(getActivity().getSupportFragmentManager(), "MyFullDialog");
             }
         });

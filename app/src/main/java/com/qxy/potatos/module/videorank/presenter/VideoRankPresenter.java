@@ -122,7 +122,7 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
         });
     }
 
-    public void getClientVersion(int type) {
+    public void getClientVersion(int type, int handLabel) {
         addDisposable(apiServer.GetVideoVersion(type, 20, mmkv.decodeString(GlobalConstant.CLIENT_TOKEN)),
                 new BaseObserver<BaseBean<VideoVersion>>(baseView, true) {
                     @Override
@@ -134,7 +134,7 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
                     public void onSuccess(BaseBean<VideoVersion> o) {
                         List<VideoVersion.Version> list = o.data.getList();
                         list.get(0).setTag(EventCode.IS_FIRST_LIST);
-                        MyUtil.showOneOptionPicker(list, "HistoryList");
+                        MyUtil.showOneOptionPicker(list,handLabel);
                     }
                 });
     }
