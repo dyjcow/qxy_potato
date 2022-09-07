@@ -22,7 +22,7 @@
             android:paddingStart="17dp"
             android:text="我的粉丝(2人)" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.qxy.potatos.module.videorank.myview.RecycleViewVp
             android:id="@+id/recyclerview_follow_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

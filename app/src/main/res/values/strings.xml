@@ -59,6 +59,8 @@
     <string name="home_introduce">hello</string>
     <string name="empty_text">Failed to load data, please click to try again</string>
     <string name="pick_submit">submit</string>
+    <string name="sure">Sure</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

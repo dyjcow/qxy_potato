@@ -49,9 +49,9 @@
         android:background="#E4E4E4" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager_mine"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/view_mine_line" />
+            android:id="@+id/viewpager_mine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/view_mine_line" />
 
 </RelativeLayout>

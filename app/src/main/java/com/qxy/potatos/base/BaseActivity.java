@@ -64,7 +64,8 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>, 
         super.onCreate(savedInstanceState);
         if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
             EventBus.getDefault().register(this);
-        }else if (this.getClass().isAnnotationPresent(InitAIHand.class)){
+        }
+        if (this.getClass().isAnnotationPresent(InitAIHand.class)){
             classifier = new OperatingHandClassifier(this);
             classifier.checkAndInit();
             tracker = new MotionEventTracker(this);
@@ -112,7 +113,8 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>, 
         super.onDestroy();
         if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
             EventBus.getDefault().unregister(this);
-        }else if (this.getClass().isAnnotationPresent(InitAIHand.class)){
+        }
+        if (this.getClass().isAnnotationPresent(InitAIHand.class)){
             classifier.close();
         }
         if (presenter != null) {

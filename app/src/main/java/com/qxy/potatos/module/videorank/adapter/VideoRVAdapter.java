@@ -7,9 +7,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.dylanc.viewbinding.brvah.BaseViewHolderUtilKt;
+import com.qxy.potatos.R;
 import com.qxy.potatos.bean.VideoList;
 import com.qxy.potatos.databinding.RecyclerviewItemRankBinding;
 import com.qxy.potatos.util.ActivityUtil;
@@ -38,8 +42,14 @@ public class VideoRVAdapter extends BaseQuickAdapter<VideoList.Video, BaseViewHo
     protected void convert(@NonNull BaseViewHolder baseViewHolder, VideoList.Video video) {
         RecyclerviewItemRankBinding binding = BaseViewHolderUtilKt
                 .getBinding(baseViewHolder, RecyclerviewItemRankBinding::bind);
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         Glide.with(ActivityUtil.getCurrentActivity())
                 .load(video.getPoster())
+                .apply(options)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.imageViewIcon);
         binding.textViewName.setText(video.getName());
         binding.textViewPopDegree.setText(getNumber(video.getHot()));
@@ -51,13 +61,8 @@ public class VideoRVAdapter extends BaseQuickAdapter<VideoList.Video, BaseViewHo
         }
         binding.textViewScore.setText("暂无评分");
         if (video.getType() == 1) {
-            binding.buttonGetTicket.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Toast.makeText(v.getContext(), "无法购票", Toast.LENGTH_SHORT).show();
-                }
-            });
+            binding.buttonGetTicket.setOnClickListener(
+                    v -> Toast.makeText(v.getContext(), "无法购票", Toast.LENGTH_SHORT).show());
         } else {
             binding.buttonGetTicket.setVisibility(View.GONE);
         }

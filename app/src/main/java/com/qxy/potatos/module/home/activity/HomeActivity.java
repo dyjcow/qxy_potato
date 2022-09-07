@@ -29,6 +29,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.qxy.potatos.R;
 import com.qxy.potatos.annotation.BindEventBus;
+import com.qxy.potatos.annotation.InitAIHand;
 import com.qxy.potatos.base.BaseActivity;
 import com.qxy.potatos.base.BaseEvent;
 import com.qxy.potatos.bean.MyVideo;
@@ -39,12 +40,14 @@ import com.qxy.potatos.databinding.ActivityHomeBinding;
 import com.qxy.potatos.module.Follow.activity.FollowActivity;
 import com.qxy.potatos.module.home.adapter.HomeAdapter;
 import com.qxy.potatos.module.home.adapter.HomeItemDecoration;
+import com.qxy.potatos.module.home.myView.DialogSureCancel;
 import com.qxy.potatos.module.home.presenter.HomePresenter;
 import com.qxy.potatos.module.home.view.IHomeView;
 import com.qxy.potatos.module.mine.activity.LoginActivity;
 import com.qxy.potatos.module.mine.activity.WebViewActivity;
 import com.qxy.potatos.module.mine.service.PreLoadService;
 import com.qxy.potatos.module.videorank.activity.RankActivity;
+import com.qxy.potatos.util.AI.tflite.OperatingHandClassifier;
 import com.qxy.potatos.util.ActivityUtil;
 import com.qxy.potatos.util.DisplayUtil;
 
@@ -56,7 +59,6 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
 import com.tamsiree.rxui.view.dialog.RxDialogSure;
-import com.tamsiree.rxui.view.dialog.RxDialogSureCancel;
 import com.tencent.mmkv.MMKV;
 
 
@@ -68,6 +70,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@InitAIHand
 @BindEventBus
 public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBinding> implements IHomeView {
 
@@ -158,9 +161,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         });
         //通过DrawerLayout打开榜单页面 和登录页
         getBinding().homeNavigationView.setNavigationItemSelectedListener(item -> {
+            getBinding().drawerLayout.closeDrawers();
             if (item.getItemId() == R.id.nav_rank) {
                 ActivityUtil.startActivity(RankActivity.class);
-                getBinding().drawerLayout.closeDrawers();
             } else if (item.getItemId() == R.id.nav_login) {
                 eventLogin();
             }
@@ -176,7 +179,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)) {
                 ActivityUtil.startActivity(LoginActivity.class, true);
             }
-
         });
 
         //下拉加载更多
@@ -194,7 +196,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                     refreshLayout.finishLoadMore(true);
                     refreshLayout.setEnableLoadMore(false);
                     getBinding().homeRecyclerviewFooter.setVisibility(View.VISIBLE);
-                    ;
                 }
             }
         });
@@ -207,8 +208,10 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)) {
             ActivityUtil.startActivity(LoginActivity.class, true);
         } else {
-            RxDialogSureCancel sureCancel = new RxDialogSureCancel(this);
+            DialogSureCancel sureCancel = new DialogSureCancel(this, hand);
             sureCancel.setContent(getString(R.string.sure_to_login_out));
+            sureCancel.setSure(getString(R.string.sure));
+            sureCancel.setCancel(getString(R.string.cancel));
             sureCancel.setSureListener(v -> {
                 mmkv.encode(GlobalConstant.IS_LOGIN, false);
                 ActivityUtil.startActivity(HomeActivity.class, true);

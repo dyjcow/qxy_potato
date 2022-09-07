@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".module.videorank.activity.RankActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <com.qxy.potatos.module.videorank.myview.NestedScrollViewVP
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -48,14 +48,14 @@
 
             </LinearLayout>
 
-            <com.qxy.potatos.module.videorank.myview.RecycleViewVp
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview"
                 tools:listitem="@layout/recyclerview_item_rank"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </com.qxy.potatos.module.videorank.myview.NestedScrollViewVP>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
