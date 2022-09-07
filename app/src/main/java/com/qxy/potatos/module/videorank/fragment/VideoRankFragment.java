@@ -1,13 +1,8 @@
 package com.qxy.potatos.module.videorank.fragment;
 
-import android.view.View;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.qxy.potatos.R;
 import com.qxy.potatos.annotation.BindEventBus;
 import com.qxy.potatos.base.BaseEvent;
@@ -15,14 +10,13 @@ import com.qxy.potatos.base.BaseFragment;
 import com.qxy.potatos.bean.VideoList;
 import com.qxy.potatos.bean.VideoVersion;
 import com.qxy.potatos.common.EventCode;
-import com.qxy.potatos.databinding.EmptyViewBinding;
 import com.qxy.potatos.databinding.FragmentRankBackgroundBinding;
 
 import com.qxy.potatos.module.videorank.Dialog.RankItemDialog;
 
 import com.qxy.potatos.module.videorank.activity.RankActivity;
 import com.qxy.potatos.module.videorank.adapter.MyItemDecoration;
-import com.qxy.potatos.module.videorank.adapter.VideoRVAdapter;
+import com.qxy.potatos.module.videorank.adapter.VideoRankAdapter;
 import com.qxy.potatos.module.videorank.presenter.VideoRankPresenter;
 import com.qxy.potatos.module.videorank.view.IVideoRankView;
 import com.qxy.potatos.util.ToastUtil;
@@ -43,7 +37,7 @@ import java.util.Locale;
 public class VideoRankFragment extends BaseFragment<VideoRankPresenter, FragmentRankBackgroundBinding> implements IVideoRankView {
 
     private final int type;
-    private VideoRVAdapter rvAdapter;
+    private VideoRankAdapter rvAdapter;
     private RankActivity activity;
 
     public VideoRankFragment(int type) {
@@ -90,7 +84,7 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter, Fragment
     public void showRankSuccess(VideoList videoList, int version) {
         //修复多次添加ItemDecoration导致的偏移问题
         if(rvAdapter == null){
-            rvAdapter = new VideoRVAdapter(R.layout.recyclerview_item_rank, videoList.getList());
+            rvAdapter = new VideoRankAdapter(R.layout.recyclerview_item_rank, videoList.getList());
             rvAdapter.setOnItemClickListener((adapter, view, position) -> {
                 if (activity != null){
                     RankItemDialog itemDialog = new RankItemDialog(activity.hand,videoList.getList().get(position));
@@ -127,7 +121,6 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter, Fragment
     public void onMainActivityEvent(BaseEvent<VideoVersion.Version> event) {
         if (event.getEventCode() == EventCode.SELECT_VERSION) {
             presenter.getLastVersionRank(type, event.getData().getVersion());
-            ToastUtil.showToast(String.valueOf(event.getData().getVersion()));
         }
     }
 }
