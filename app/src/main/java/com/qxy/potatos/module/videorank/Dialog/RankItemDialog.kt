@@ -46,22 +46,18 @@ class RankItemDialog(hand:Int,video: VideoList.Video) : MyFullDialog<LayoutDialo
             .into(binding.imageViewIcon)
         binding.textViewName.text = video.name
         binding.textViewPopDegree.text = getNumber(video.hot)
-        binding.textViewReleaseTime.text = video.release_date + " 上映"
-        if (video.tags == null) {
-            binding.textViewType.text = "[国语]"
-        } else {
-            binding.textViewType.text = video.tags.toString()
-        }
+        binding.textViewReleaseTime.text = (video.release_date?:"未定时间") + " 上映"
+        binding.textViewType.text = video.tags?.toString()?.let { getTag(it) } ?:"国语"
         binding.textViewScore.text = "暂无评分"
         binding.tvDiscussionHot.text = "讨论热度: " + getNumber(video.discussion_hot)
         binding.tvSearchHot.text = "搜索热度: " + getNumber(video.search_hot)
         if (video.type == 3) {
             binding.tvInfluenceHot.visibility = View.INVISIBLE
             binding.tvActors.text = "导演"
-            binding.tvActorsText.text = video.directors.toString()
+            binding.tvActorsText.text = video.directors?.toString()?:"无导演"
         } else {
             binding.tvInfluenceHot.text = "影响力: " + getNumber(video.influence_hot)
-            binding.tvActorsText.text = video.actors.toString()
+            binding.tvActorsText.text = video.actors?.toString()?:"无演员"
         }
 
     }
@@ -70,6 +66,11 @@ class RankItemDialog(hand:Int,video: VideoList.Video) : MyFullDialog<LayoutDialo
         val n = num.toFloat() / 10000
         val decimalFormat = DecimalFormat(".00")
         return decimalFormat.format(n.toDouble()) + "万"
+    }
+
+    private fun getTag(tag: String): String {
+        val mTag = tag.substring(1, tag.length-1)
+        return mTag.replace(",","/")
     }
 
 }
