@@ -74,7 +74,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
         HashMap<String, Long> map = new HashMap<>();
         map.put(MyUtil.getString(R.string.cursor), cursor);
         map.put(MyUtil.getString(R.string.count), (long) 12);
-        addDisposable(apiServer.GetMyVideos(access_token, openId, map), new BaseObserver<BaseBean<MyVideo>>(baseView, true) {
+        addDisposable(apiServer.GetMyVideos(access_token, openId, map), new BaseObserver<BaseBean<MyVideo>>(baseView, false) {
             @Override
             public void onError(String msg) {
 

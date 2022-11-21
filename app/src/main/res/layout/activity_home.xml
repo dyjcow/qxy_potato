@@ -107,6 +107,7 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollViewLayout"
         android:layout_width="match_parent"
@@ -119,11 +120,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
                 <TextView
                     android:textColor="@color/black"
                     android:layout_margin="@dimen/dp_10"
@@ -213,29 +214,25 @@
                 android:layout_height="1dp"/>
 
 
+<!--            https://github.com/scwang90/SmartRefreshLayout/issues/787-->
             <com.scwang.smart.refresh.layout.SmartRefreshLayout
-                android:id="@+id/home_refreshlayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView_home"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/home_refreshlayout"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                </androidx.recyclerview.widget.RecyclerView>
 
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                <com.scwang.smart.refresh.footer.ClassicsFooter
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
             </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-            <TextView
-                android:visibility="gone"
-                android:gravity="center_horizontal"
-                android:text="暂时没有更多了"
-                android:id="@+id/home_recyclerview_footer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,6 +3,7 @@ package com.qxy.potatos.module.videorank.fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qxy.potatos.R;
 import com.qxy.potatos.annotation.BindEventBus;
 import com.qxy.potatos.base.BaseEvent;
@@ -91,6 +92,9 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter, Fragment
                     itemDialog.show(getActivity().getSupportFragmentManager(), "MyFullDialog");
                 }
             });
+            //由于此处父布局是NSV,所以无法获得真正的高度，那么加载动画也只在第一次有效
+            rvAdapter.setAnimationFirstOnly(true);
+            rvAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.ScaleIn);
             getBinding().recyclerview.setLayoutManager(new LinearLayoutManager(requireContext(),
                     RecyclerView.VERTICAL, false));
             getBinding().recyclerview.addItemDecoration(new MyItemDecoration(getContext()));
@@ -119,7 +123,7 @@ public class VideoRankFragment extends BaseFragment<VideoRankPresenter, Fragment
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMainActivityEvent(BaseEvent<VideoVersion.Version> event) {
-        if (event.getEventCode() == EventCode.SELECT_VERSION) {
+        if (event.getEventCode() == EventCode.SELECT_VERSION && event.getData().getType() == type) {
             presenter.getLastVersionRank(type, event.getData().getVersion());
         }
     }

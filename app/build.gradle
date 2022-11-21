@@ -97,8 +97,8 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     //引入Rv管理
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
+//    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.8'
 
 
     /*retrofit raJava*/
@@ -140,8 +140,8 @@ dependencies {
     annotationProcessor "org.greenrobot:eventbus-annotation-processor:$eventbus_version"
 
     //抖音
-    implementation 'com.bytedance.ies.ugc.aweme:opensdk-china-external:0.1.9.0'
-    implementation 'com.bytedance.ies.ugc.aweme:opensdk-common:0.1.9.0'
+    implementation 'com.bytedance.ies.ugc.aweme:opensdk-china-external:0.1.9.4'
+    implementation 'com.bytedance.ies.ugc.aweme:opensdk-common:0.1.9.4'
 
     //WorkManager
     implementation 'androidx.work:work-runtime:2.5.0'

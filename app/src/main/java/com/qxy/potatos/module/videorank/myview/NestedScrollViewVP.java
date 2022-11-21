@@ -51,8 +51,8 @@ public class NestedScrollViewVP extends NestedScrollView {
 			int disY = endY - startY;
 			//角度正确，则让上层view别拦截我的事件
 			float r = (float)Math.abs(disY)/Math.abs(disX);
-			getParent().requestDisallowInterceptTouchEvent(r > 0.6f || isDisallowIntercept);
 			if (r > 0.6f) isDisallowIntercept = true;
+			getParent().requestDisallowInterceptTouchEvent(isDisallowIntercept);
 			break;
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_CANCEL:

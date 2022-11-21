@@ -12,6 +12,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.qxy.potatos.R;
 
 /**
  * @author yinxiaolong
@@ -37,12 +38,9 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
         textPaint.setColor(Color.parseColor("#a64936"));
 
         //paint.setColor(Color.parseColor("#ffff00"));
-        Shader shader = new LinearGradient(0, 0, 100, 1000, Color.parseColor("#fff9e6"), Color.parseColor("#fec002"), Shader.TileMode.CLAMP);
-        paint.setShader(shader);
-        paint.setAntiAlias(true);
+
         linePaint.setColor(Color.BLACK);
         linePaint.setAntiAlias(true);
-        paint.setAntiAlias(true);
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(50);
     }
@@ -79,7 +77,14 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
             final View child = parent.getChildAt(i);
             int position = parent.getChildAdapterPosition(child);
             parent.getDecoratedBoundsWithMargins(child, mBounds);
-            c.drawRoundRect(mBounds.left + 48, mBounds.top + 10, mBounds.left + 170, mBounds.top + 70, 10, 10, paint);
+            int left = mBounds.left + 48;
+            int top = mBounds.top + 10;
+            int right = mBounds.left + 170;
+            int bottom = mBounds.top + 70;
+            LinearGradient shader = new LinearGradient(left, top, right, bottom, Color.parseColor("#fff9e6"), Color.parseColor("#fec002"), Shader.TileMode.CLAMP);
+            paint.setShader(shader);
+            paint.setAntiAlias(true);
+            c.drawRoundRect(left, top, right, bottom, 10, 10, paint);
             if (position < 3) {
                 c.drawText("TOP" + (position + 1) + "", mBounds.left + 48, mBounds.top + 60, textPaint);
             } else {

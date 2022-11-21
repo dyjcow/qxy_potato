@@ -23,9 +23,9 @@ import java.util.HashMap;
  */
 public class FollowPresenter extends BasePresenter<IFollowView> {
 
-    private MMKV mmkv = MMKV.defaultMMKV();
-    private String token = mmkv.decodeString(GlobalConstant.ACCESS_TOKEN);
-    private String openId = mmkv.decodeString(GlobalConstant.OPEN_ID);
+    private final MMKV mmkv = MMKV.defaultMMKV();
+    private final String token = mmkv.decodeString(GlobalConstant.ACCESS_TOKEN);
+    private final String openId = mmkv.decodeString(GlobalConstant.OPEN_ID);
 
     public FollowPresenter(IFollowView baseView) {
         super(baseView);
@@ -41,6 +41,7 @@ public class FollowPresenter extends BasePresenter<IFollowView> {
                     @Override
                     public void onError(String msg) {
                         LogUtil.e("获取关注列表失败：", msg);
+                        baseView.setFailView();
                         baseView.loadFail(msg);
                     }
 
@@ -62,6 +63,7 @@ public class FollowPresenter extends BasePresenter<IFollowView> {
                     @Override
                     public void onError(String msg) {
                         LogUtil.e("获取粉丝列表失败：", msg);
+                        baseView.setFailView();
                         baseView.loadFail(msg);
                     }
 

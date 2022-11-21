@@ -77,6 +77,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     private final MMKV mmkv = MMKV.defaultMMKV();
     List<MyVideo.Videos> list = new ArrayList<>();
+    private HomeAdapter adapter;
     /**
      * 保存用户按返回键的时间
      */
@@ -184,18 +185,14 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         //下拉加载更多
         getBinding().homeRefreshlayout.setEnableRefresh(false);
         getBinding().homeRefreshlayout.setEnableLoadMore(true);
-        getBinding().homeRefreshlayout.setRefreshFooter(new ClassicsFooter(this));
         getBinding().homeRefreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
                 if (isHasMore && checkList.size() != 0) {
                     presenter.getPersonalVideoList(cursor);
-                    refreshLayout.finishLoadMore(true);
                 } else {
-                    refreshLayout.finishLoadMore(true);
-                    refreshLayout.setEnableLoadMore(false);
-                    getBinding().homeRecyclerviewFooter.setVisibility(View.VISIBLE);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
             }
         });
@@ -297,16 +294,20 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     public void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore, long cursor) {
         this.isHasMore = isHasMore;
         this.cursor = cursor;
-        HomeAdapter adapter = new HomeAdapter(R.layout.reycylerview_item_home, list);
-        adapter.addChildClickViewIds(R.id.home_item_imageView);
-        adapter.setAnimationEnable(true);
-        adapter.setAnimationFirstOnly(true);
-        adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom);
+        // TODO: 2022/11/21 改为不得重复创建
+        if (adapter == null){
+            adapter = new HomeAdapter(R.layout.reycylerview_item_home, list);
+            adapter.addChildClickViewIds(R.id.home_item_imageView);
+            adapter.setAnimationEnable(true);
+            adapter.setAnimationFirstOnly(true);
+            adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom);
 
-        //recyclerview初始化
-        getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120, 5, 5, 5));
-        getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this, 3));
-        getBinding().recyclerViewHome.setAdapter(adapter);
+            //recyclerview初始化
+            getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120, 5, 5, 5));
+            getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this, 3));
+            getBinding().recyclerViewHome.setAdapter(adapter);
+        }
+
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
@@ -316,6 +317,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 startActivity(intent);
             }
         });
+
         if (videos != null) {
             for (int i = 0; i < videos.size(); i++) {
                 checkList.clear();
@@ -332,7 +334,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             getBinding().homeTextViewLike.setText(like+getString(R.string.likes));
 
         }
-
+        getBinding().homeRefreshlayout.finishLoadMore(true);
 
     }
 
