@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.qxy.potatos.R;
 import com.qxy.potatos.base.BaseFragment;
 import com.qxy.potatos.bean.Fans;
 import com.qxy.potatos.bean.Followings;
@@ -17,6 +18,7 @@ import com.qxy.potatos.module.Follow.adapter.FollowingsRecycleViewAdapter;
 import com.qxy.potatos.module.Follow.presenter.FollowPresenter;
 import com.qxy.potatos.module.Follow.view.IFollowView;
 import com.qxy.potatos.util.ActivityUtil;
+import com.qxy.potatos.util.EmptyViewUtil;
 import com.qxy.potatos.util.ToastUtil;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.MaterialHeader;
@@ -180,5 +182,64 @@ public class FollowListFragment extends BaseFragment<FollowPresenter, Linearlayo
             refreshLayout.finishRefresh(false);
         }
         ToastUtil.showToast(msg);
+    }
+
+    @Override public void setFailView() {
+        FollowingsRecycleViewAdapter followAdapter;
+        FansRecycleViewAdapter fansAdapter;
+
+        View emptyView = EmptyViewUtil.getErrorView(recyclerView);
+        emptyView.setOnClickListener(v -> {
+            switch (mType) {
+                case FollowFragment.FOLLOWINGS: {
+                    //每次刷新重新加载
+                    recyclerView.setAdapter(null);
+                    followingCursor = 0;
+                    presenter.getFollowingsList(followingCursor, 12);
+                    break;
+                }
+                case FollowFragment.Fans: {
+                    recyclerView.setAdapter(null);
+                    fanCursor = 0;
+                    presenter.getFansList(fanCursor, 12);
+                    break;
+                }
+                default:
+                    break;
+            }
+        });
+
+        if (recyclerView.getAdapter() == null) {
+            switch (mType){
+                case FollowFragment.FOLLOWINGS:
+                    followAdapter = new FollowingsRecycleViewAdapter(null);
+                    recyclerView.setAdapter(followAdapter);
+                    followAdapter.setEmptyView(emptyView);
+                    break;
+                case FollowFragment.Fans:
+                    fansAdapter = new FansRecycleViewAdapter(null);
+                    recyclerView.setAdapter(fansAdapter);
+                    fansAdapter.setEmptyView(emptyView);
+                    break;
+                default:
+                    break;
+            }
+        }else {
+            switch (mType) {
+                case FollowFragment.FOLLOWINGS:
+                    followAdapter = (FollowingsRecycleViewAdapter) recyclerView.getAdapter();
+                    followAdapter.setList(null);
+                    followAdapter.setEmptyView(emptyView);
+                    break;
+                case FollowFragment.Fans:
+                    fansAdapter = (FansRecycleViewAdapter) recyclerView.getAdapter();
+                    fansAdapter.setList(null);
+                    fansAdapter.setEmptyView(emptyView);
+                    break;
+                default:
+                    break;
+
+            }
+        }
     }
 }

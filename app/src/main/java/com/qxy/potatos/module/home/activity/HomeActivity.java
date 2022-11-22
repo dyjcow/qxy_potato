@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.ListenableWorker;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -51,7 +52,7 @@ import com.qxy.potatos.util.AI.tflite.OperatingHandClassifier;
 import com.qxy.potatos.util.ActivityUtil;
 import com.qxy.potatos.util.DisplayUtil;
 
-
+import com.qxy.potatos.util.EmptyViewUtil;
 import com.qxy.potatos.util.LogUtil;
 import com.qxy.potatos.util.ToastUtil;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
@@ -77,6 +78,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
 
     private final MMKV mmkv = MMKV.defaultMMKV();
     List<MyVideo.Videos> list = new ArrayList<>();
+    private HomeAdapter adapter;
     /**
      * 保存用户按返回键的时间
      */
@@ -184,18 +186,14 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         //下拉加载更多
         getBinding().homeRefreshlayout.setEnableRefresh(false);
         getBinding().homeRefreshlayout.setEnableLoadMore(true);
-        getBinding().homeRefreshlayout.setRefreshFooter(new ClassicsFooter(this));
         getBinding().homeRefreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
                 if (isHasMore && checkList.size() != 0) {
                     presenter.getPersonalVideoList(cursor);
-                    refreshLayout.finishLoadMore(true);
                 } else {
-                    refreshLayout.finishLoadMore(true);
-                    refreshLayout.setEnableLoadMore(false);
-                    getBinding().homeRecyclerviewFooter.setVisibility(View.VISIBLE);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
             }
         });
@@ -297,16 +295,19 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     public void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore, long cursor) {
         this.isHasMore = isHasMore;
         this.cursor = cursor;
-        HomeAdapter adapter = new HomeAdapter(R.layout.reycylerview_item_home, list);
-        adapter.addChildClickViewIds(R.id.home_item_imageView);
-        adapter.setAnimationEnable(true);
-        adapter.setAnimationFirstOnly(true);
-        adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom);
+        if (adapter == null){
+            adapter = new HomeAdapter(R.layout.reycylerview_item_home, list);
+            adapter.addChildClickViewIds(R.id.home_item_imageView);
+            adapter.setAnimationEnable(true);
+            adapter.setAnimationFirstOnly(true);
+            adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom);
 
-        //recyclerview初始化
-        getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120, 5, 5, 5));
-        getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this, 3));
-        getBinding().recyclerViewHome.setAdapter(adapter);
+            //recyclerview初始化
+            getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120, 5, 5, 5));
+            getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this, 3));
+            getBinding().recyclerViewHome.setAdapter(adapter);
+        }
+
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
@@ -316,6 +317,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 startActivity(intent);
             }
         });
+
         if (videos != null) {
             for (int i = 0; i < videos.size(); i++) {
                 checkList.clear();
@@ -332,7 +334,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             getBinding().homeTextViewLike.setText(like+getString(R.string.likes));
 
         }
-
+        getBinding().homeRefreshlayout.finishLoadMore(true);
 
     }
 
@@ -374,6 +376,28 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 .addTag(tag)
                 .build();
         WorkManager.getInstance(this).enqueue(request);
+    }
+
+    @Override public void setErrorView() {
+        RecyclerView recyclerView = getBinding().recyclerViewHome;
+        if (recyclerView.getLayoutManager() == null){
+           recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        }
+        View emptyView = EmptyViewUtil.getErrorView(recyclerView);
+        if (mmkv.decodeBool(GlobalConstant.IS_LOGIN, false)){
+            emptyView.setOnClickListener(v -> {
+                presenter.getPersonInfo();
+                presenter.getPersonalVideoList(0);
+            });
+        }
+
+        if (adapter == null){
+            adapter = new HomeAdapter(R.layout.reycylerview_item_home, null);
+            recyclerView.setAdapter(adapter);
+        }else {
+            adapter.setList(null);
+        }
+        adapter.setEmptyView(emptyView);
     }
 
     /**

@@ -42,7 +42,7 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
         if (MMKV.defaultMMKV().decodeBool(GlobalConstant.IS_CLIENT, true)) {
             String token = MMKV.defaultMMKV().decodeString(GlobalConstant.CLIENT_TOKEN);
             LogUtil.i(token);
-            addDisposable(apiServer.GetVideoListNow(type, token), new BaseObserver<BaseBean<VideoList>>(baseView, true) {
+            addDisposable(apiServer.GetVideoListNow(type, token), new BaseObserver<BaseBean<VideoList>>(baseView, false) {
                 @Override
                 public void onError(String msg) {
                     LogUtil.d("获取最近榜单错误信息：" + msg);
