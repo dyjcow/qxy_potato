@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.ListenableWorker;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -51,7 +52,7 @@ import com.qxy.potatos.util.AI.tflite.OperatingHandClassifier;
 import com.qxy.potatos.util.ActivityUtil;
 import com.qxy.potatos.util.DisplayUtil;
 
-
+import com.qxy.potatos.util.EmptyViewUtil;
 import com.qxy.potatos.util.LogUtil;
 import com.qxy.potatos.util.ToastUtil;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
@@ -294,7 +295,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     public void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore, long cursor) {
         this.isHasMore = isHasMore;
         this.cursor = cursor;
-        // TODO: 2022/11/21 改为不得重复创建
         if (adapter == null){
             adapter = new HomeAdapter(R.layout.reycylerview_item_home, list);
             adapter.addChildClickViewIds(R.id.home_item_imageView);
@@ -376,6 +376,28 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 .addTag(tag)
                 .build();
         WorkManager.getInstance(this).enqueue(request);
+    }
+
+    @Override public void setErrorView() {
+        RecyclerView recyclerView = getBinding().recyclerViewHome;
+        if (recyclerView.getLayoutManager() == null){
+           recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        }
+        View emptyView = EmptyViewUtil.getErrorView(recyclerView);
+        if (mmkv.decodeBool(GlobalConstant.IS_LOGIN, false)){
+            emptyView.setOnClickListener(v -> {
+                presenter.getPersonInfo();
+                presenter.getPersonalVideoList(0);
+            });
+        }
+
+        if (adapter == null){
+            adapter = new HomeAdapter(R.layout.reycylerview_item_home, null);
+            recyclerView.setAdapter(adapter);
+        }else {
+            adapter.setList(null);
+        }
+        adapter.setEmptyView(emptyView);
     }
 
     /**
