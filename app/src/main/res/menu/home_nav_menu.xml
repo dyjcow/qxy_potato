@@ -7,6 +7,14 @@
         android:id="@+id/nav_rank"
         android:icon="@mipmap/home_drawer_rank"
         android:title="影视榜单"/>
+    <item
+            android:id="@+id/nav_search"
+            android:icon="@mipmap/home_drawer_rank"
+            android:title="物品搜索"/>
+    <item
+            android:id="@+id/nav_find"
+            android:icon="@mipmap/home_drawer_rank"
+            android:title="物品查找"/>
     <item android:id="@+id/nav_login"
         android:icon="@mipmap/home_login"
         android:title="登录"

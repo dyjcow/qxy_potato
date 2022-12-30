@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.qxy.potatos" >
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.qxy.potatos">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -15,29 +15,32 @@
     </queries>
 
     <application
-        android:name="com.qxy.potatos.app.App"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Potato"
-        tools:targetApi="30" >
+            android:name="com.qxy.potatos.app.App"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:networkSecurityConfig="@xml/network_security_config"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.Potato"
+            tools:targetApi="30">
+        <activity
+                android:name=".module.search.SearchActivity"
+                android:exported="false" />
+
         <service
-            android:name="com.qxy.potatos.module.mine.service.PreLoadService"
-            android:process=":h5"
-            android:enabled="true"
-            android:exported="false" >
-        </service>
+                android:name="com.qxy.potatos.module.mine.service.PreLoadService"
+                android:enabled="true"
+                android:exported="false"
+                android:process=":h5"></service>
 
         <activity
-            android:name="com.qxy.potatos.module.Follow.activity.FollowActivity"
-            android:exported="false" />
+                android:name="com.qxy.potatos.module.Follow.activity.FollowActivity"
+                android:exported="false" />
         <activity
-            android:name="com.qxy.potatos.module.mine.activity.SplashActivity"
-            android:exported="true"
-            android:theme="@style/SplashTheme" >
+                android:name="com.qxy.potatos.module.mine.activity.SplashActivity"
+                android:exported="true"
+                android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,37 +48,34 @@
             </intent-filter>
         </activity> <!-- 为webview开进程防止崩溃 -->
         <activity
-            android:name="com.qxy.potatos.module.mine.activity.WebViewActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false"
-            android:process=":h5"
-            android:screenOrientation="portrait"
-            android:theme="@style/BlackTheme" />
+                android:name="com.qxy.potatos.module.mine.activity.WebViewActivity"
+                android:configChanges="orientation|screenSize|keyboardHidden"
+                android:exported="false"
+                android:process=":h5"
+                android:screenOrientation="portrait"
+                android:theme="@style/BlackTheme" />
         <activity
-            android:name="com.qxy.potatos.module.videorank.activity.RankActivity"
-            android:exported="false" />
+                android:name="com.qxy.potatos.module.videorank.activity.RankActivity"
+                android:exported="false" />
         <activity
-            android:name="com.qxy.potatos.module.home.activity.HomeActivity"
-            android:exported="true" >
-        </activity>
+                android:name="com.qxy.potatos.module.home.activity.HomeActivity"
+                android:exported="true"></activity>
         <activity
-            android:name="com.qxy.potatos.module.mine.activity.LoginActivity"
-            android:exported="true" >
-        </activity>
+                android:name="com.qxy.potatos.module.mine.activity.LoginActivity"
+                android:exported="true"></activity>
 
         <receiver
-            android:name="com.qxy.potatos.module.douyinapi.StayInDyReceiver"
-            android:exported="true" >
+                android:name="com.qxy.potatos.module.douyinapi.StayInDyReceiver"
+                android:exported="true">
             <intent-filter>
                 <action android:name="com.aweme.opensdk.action.stay.in.dy" />
                 <action android:name="com.aweme.opensdk.action.stay.in.dy.im" />
             </intent-filter>
         </receiver> <!-- 该Service仅在TBS内核首次Dex加载时触发并执行dex2oat任务，任务完成后自动结束。 -->
         <service
-            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
-            android:label="dexopt"
-            android:process=":dexopt" >
-        </service>
+                android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+                android:label="dexopt"
+                android:process=":dexopt"></service>
     </application>
 
 </manifest>

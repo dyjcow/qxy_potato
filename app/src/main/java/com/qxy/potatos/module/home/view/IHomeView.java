@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.work.ListenableWorker;
 
 import com.qxy.potatos.base.BaseView;
+import com.qxy.potatos.bean.Good;
 import com.qxy.potatos.bean.MyVideo;
 import com.qxy.potatos.bean.UserInfo;
 
@@ -24,4 +25,7 @@ public interface IHomeView extends BaseView {
                    String tag, @NonNull Class<? extends ListenableWorker> workerClass);
 
     void setErrorView();
+
+
+    void showEmpty();
 }

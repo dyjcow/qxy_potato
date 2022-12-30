@@ -8,6 +8,7 @@ import com.qxy.potatos.base.BaseBean;
 import com.qxy.potatos.base.BaseObserver;
 import com.qxy.potatos.base.BasePresenter;
 import com.qxy.potatos.bean.ClientToken;
+import com.qxy.potatos.bean.Good;
 import com.qxy.potatos.bean.MyVideo;
 import com.qxy.potatos.bean.UserInfo;
 import com.qxy.potatos.common.GlobalConstant;
@@ -18,7 +19,9 @@ import com.qxy.potatos.util.MyUtil;
 import com.tamsiree.rxkit.view.RxToast;
 import com.tencent.mmkv.MMKV;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,6 +30,8 @@ import java.util.concurrent.TimeUnit;
  * @date :2022/8/16 21:20
  */
 public class HomePresenter extends BasePresenter<IHomeView> {
+
+    private final String uno = "hQwMh1xTpK";
     MMKV mmkv = MMKV.defaultMMKV();
     String access_token = mmkv.decodeString(GlobalConstant.ACCESS_TOKEN, null);
     String openId = mmkv.decodeString(GlobalConstant.OPEN_ID, null);
@@ -118,5 +123,29 @@ public class HomePresenter extends BasePresenter<IHomeView> {
             }
         });
 
+    }
+
+    public void getGoodInfo(int handLabel){
+        addDisposable(apiServer.getGoodInfo(uno,1,10),
+                new BaseObserver<BaseBean<List<Good>>>(baseView, true) {
+                    @Override public void onError(String msg) {
+
+                    }
+
+                    @Override public void onSuccess(BaseBean<List<Good>> o) {
+                        List<String> list = new ArrayList<>();
+                        for (Good good:
+                             o.content) {
+                            list.add(good.getGname());
+                        }
+                        if (o.empty){
+                            baseView.showEmpty();
+                        }else {
+                            MyUtil.showOneOptionPicker(list,handLabel);
+                        }
+
+
+                    }
+                });
     }
 }

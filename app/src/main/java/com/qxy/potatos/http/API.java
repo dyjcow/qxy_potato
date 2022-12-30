@@ -6,6 +6,8 @@ import com.qxy.potatos.bean.AccessToken;
 import com.qxy.potatos.bean.ClientToken;
 import com.qxy.potatos.bean.Fans;
 import com.qxy.potatos.bean.Followings;
+import com.qxy.potatos.bean.Good;
+import com.qxy.potatos.bean.Location;
 import com.qxy.potatos.bean.MyVideo;
 import com.qxy.potatos.bean.PictureGirl;
 import com.qxy.potatos.bean.UserInfo;
@@ -47,6 +49,7 @@ public class API {
         HashMap<String, String> keyUrl = new HashMap<>();
         keyUrl.put("m", MyUtil.getString(R.string.mxzp));
         keyUrl.put("mock", MyUtil.getString(R.string.mock));
+        keyUrl.put("item","http://good.lxtlovely.top/");
         return keyUrl;
     }
 
@@ -167,5 +170,24 @@ public class API {
         Observable<BaseBean<MyVideo>> GetMyVideos(@Header("access-token") String accessToken,
                                                   @Query("open_id") String open_id,
                                                   @QueryMap HashMap<String, Long> queryMap);
+
+        @Headers({"urlName:item"})
+        @GET("location/infoget")
+        Observable<BaseBean<List<Location>>> getLocationInfo(@Query("uno") String uno,
+                @Query("page") int page,
+                @Query("size") int size);
+
+        @Headers({"urlName:item"})
+        @GET("good/infoget")
+        Observable<BaseBean<List<Good>>> getGoodInfo(@Query("uno") String uno,
+                @Query("page") int page,
+                @Query("size") int size);
+
+        @Headers({"urlName:item"})
+        @GET("good/infosearch")
+        Observable<BaseBean<List<Good>>> searchGoodInfo(@Query("uno") String uno,
+                @Query("info") String info,
+                @Query("page") int page,
+                @Query("size") int size);
     }
 }

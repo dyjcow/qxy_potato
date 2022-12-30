@@ -49,6 +49,11 @@ public class BaseResponseBodyConverter<T> implements Converter<ResponseBody, T> 
             ex.printStackTrace();
             try {
                 JSONObject object = new JSONObject(jsonString);
+                if (!object.getBoolean("empty")){
+                    //正确返回整个json
+                    return adapter.fromJson(jsonString);
+                }
+
                 int error_code = object.getJSONObject("data").getInt(MyUtil.getString(R.string.error_code));
                 if (0 != error_code) {
                     if (error_code == access_Token_out ||

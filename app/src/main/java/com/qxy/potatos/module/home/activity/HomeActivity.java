@@ -33,6 +33,7 @@ import com.qxy.potatos.annotation.BindEventBus;
 import com.qxy.potatos.annotation.InitAIHand;
 import com.qxy.potatos.base.BaseActivity;
 import com.qxy.potatos.base.BaseEvent;
+import com.qxy.potatos.bean.Good;
 import com.qxy.potatos.bean.MyVideo;
 import com.qxy.potatos.bean.UserInfo;
 import com.qxy.potatos.common.EventCode;
@@ -47,6 +48,7 @@ import com.qxy.potatos.module.home.view.IHomeView;
 import com.qxy.potatos.module.mine.activity.LoginActivity;
 import com.qxy.potatos.module.mine.activity.WebViewActivity;
 import com.qxy.potatos.module.mine.service.PreLoadService;
+import com.qxy.potatos.module.search.SearchActivity;
 import com.qxy.potatos.module.videorank.activity.RankActivity;
 import com.qxy.potatos.util.AI.tflite.OperatingHandClassifier;
 import com.qxy.potatos.util.ActivityUtil;
@@ -59,6 +61,7 @@ import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
+import com.tamsiree.rxkit.view.RxToast;
 import com.tamsiree.rxui.view.dialog.RxDialogSure;
 import com.tencent.mmkv.MMKV;
 
@@ -168,6 +171,10 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 ActivityUtil.startActivity(RankActivity.class);
             } else if (item.getItemId() == R.id.nav_login) {
                 eventLogin();
+            }else if (item.getItemId() == R.id.nav_search){
+                ActivityUtil.startActivity(SearchActivity.class);
+            }else if (item.getItemId() == R.id.nav_find){
+                presenter.getGoodInfo(hand);
             }
             return true;
         });
@@ -250,10 +257,10 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         });
         boolean isLogin = mmkv.decodeBool(GlobalConstant.IS_LOGIN);
         if (isLogin) {
-            getBinding().homeNavigationView.getMenu().getItem(2).setTitle(getString(R.string.login_out));
+            getBinding().homeNavigationView.getMenu().getItem(4).setTitle(getString(R.string.login_out));
             startHideService();
         } else {
-            getBinding().homeNavigationView.getMenu().getItem(2).setTitle(getString(R.string.login_home));
+            getBinding().homeNavigationView.getMenu().getItem(4).setTitle(getString(R.string.login_home));
         }
         LogUtil.d("initData");
     }
@@ -398,6 +405,11 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             adapter.setList(null);
         }
         adapter.setEmptyView(emptyView);
+    }
+
+
+    @Override public void showEmpty() {
+        RxToast.warning("no data");
     }
 
     /**

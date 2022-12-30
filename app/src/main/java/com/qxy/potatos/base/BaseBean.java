@@ -19,7 +19,13 @@ public class BaseBean<T> implements Serializable {
 
     public String message;
 
+    public T content;
+
     public T data;
+
+
+
+    public Boolean empty;
 
 
     public BaseBean(int code, String msg) {
