@@ -139,11 +139,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
 
     @Override
     public void onReq(BaseReq baseReq) {
-
+        LogUtil.d("onReq");
     }
 
     @Override
     public void onResp(BaseResp baseResp) {
+        LogUtil.d("onResp");
         if (baseResp.getType() == CommonConstants.ModeType.SEND_AUTH_RESPONSE) {
             Authorization.Response response = (Authorization.Response) baseResp;
             if (baseResp.isSuccess()) {
@@ -157,6 +158,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
 
     @Override
     public void onErrorIntent(Intent intent) {
-
+        LogUtil.d("onErrorIntent");
     }
 }

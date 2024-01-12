@@ -18,4 +18,6 @@ public interface IFollowView extends BaseView {
     void showFansList(Fans followers);
 
     void loadFail(String msg);
+
+    void setFailView();
 }

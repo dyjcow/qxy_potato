@@ -60,6 +60,7 @@ public class FollowFragment extends BaseFragment<BasePresenter, RelativelayoutMi
         }
         tab.setCustomView(textView);
     };
+
     //根据标签选中与否更改文本效果
     private TabLayout.OnTabSelectedListener selectedListener = new TabLayout.OnTabSelectedListener() {
         @Override

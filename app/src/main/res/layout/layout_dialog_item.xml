@@ -7,12 +7,25 @@
     android:background="@drawable/shape_sheet_dialog_bg">
 
     <ImageView
-        android:id="@+id/iv_close"
+            android:id="@+id/iv_close_left"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:padding="5dp"
+            android:visibility="invisible"
+            android:src="@drawable/ic_close_x"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_close_right"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:padding="5dp"
+        android:visibility="invisible"
         android:src="@drawable/ic_close_x"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,15 +36,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_close">
+        app:layout_constraintTop_toBottomOf="@id/iv_close_right">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageView_icon"
-            android:layout_width="wrap_content"
+            android:layout_width="140dp"
             android:layout_height="200dp"
             android:layout_marginStart="16dp"
             android:scaleType="fitXY"
-            android:src="@drawable/potato"
+            android:src="@drawable/ic_launcher_foreground"
             app:shapeAppearance="@style/RoundedStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,21 +53,31 @@
 
         <TextView
             android:id="@+id/textView_name"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
+            android:paddingEnd="20dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
             android:text="独行月球"
             android:textColor="@color/black"
+                android:gravity = "center"
+                android:ellipsize = "marquee"
+                android:freezesText = "true"
+                android:marqueeRepeatLimit = "marquee_forever"
+                android:scrollHorizontally = "true"
+                android:singleLine = "true"
             app:layout_constraintStart_toEndOf="@+id/imageView_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/textView_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="豆瓣评分 6.8"
-            android:textSize="10dp"
+            android:textSize="11sp"
             app:layout_constraintBottom_toTopOf="@+id/textView_type"
             app:layout_constraintStart_toStartOf="@+id/textView_name"
             app:layout_constraintTop_toBottomOf="@+id/textView_name"
@@ -65,8 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
-            android:text="戏剧/科幻"
-            android:textSize="10dp"
+            android:text="国语"
+            android:textSize="11sp"
             app:layout_constraintBottom_toTopOf="@+id/textView_ReleaseTime"
             app:layout_constraintStart_toStartOf="@+id/textView_ReleaseTime" />
 
@@ -76,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
             android:text="2022-08-05 上映"
-            android:textSize="10dp"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/imageView3" />
 
@@ -95,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:text="1163.2万"
-            android:textSize="10dp"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@id/imageView3"
             app:layout_constraintStart_toEndOf="@id/imageView3"
             app:layout_constraintTop_toTopOf="@id/imageView3" />

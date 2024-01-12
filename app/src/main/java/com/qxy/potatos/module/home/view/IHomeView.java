@@ -22,4 +22,6 @@ public interface IHomeView extends BaseView {
 
     void startWork(long duration, @NonNull TimeUnit timeUnit,
                    String tag, @NonNull Class<? extends ListenableWorker> workerClass);
+
+    void setErrorView();
 }

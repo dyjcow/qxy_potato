@@ -67,7 +67,7 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
         if (MMKV.defaultMMKV().decodeBool(GlobalConstant.IS_CLIENT, true)) {
             String token = MMKV.defaultMMKV().decodeString(GlobalConstant.CLIENT_TOKEN);
             LogUtil.i(token);
-            addDisposable(apiServer.GetVideoListLast(type, version, token), new BaseObserver<BaseBean<VideoList>>(baseView, false) {
+            addDisposable(apiServer.GetVideoListLast(type, version, token), new BaseObserver<BaseBean<VideoList>>(baseView, true) {
                 @Override
                 public void onError(String msg) {
                     LogUtil.d("获取最近榜单错误信息：" + msg);
@@ -122,9 +122,9 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
         });
     }
 
-    public void getClientVersion(int type) {
+    public void getClientVersion(int type, int handLabel) {
         addDisposable(apiServer.GetVideoVersion(type, 20, mmkv.decodeString(GlobalConstant.CLIENT_TOKEN)),
-                new BaseObserver<BaseBean<VideoVersion>>(baseView, true) {
+                new BaseObserver<BaseBean<VideoVersion>>(baseView, false) {
                     @Override
                     public void onError(String msg) {
 
@@ -134,7 +134,7 @@ public class VideoRankPresenter extends BasePresenter<IVideoRankView> {
                     public void onSuccess(BaseBean<VideoVersion> o) {
                         List<VideoVersion.Version> list = o.data.getList();
                         list.get(0).setTag(EventCode.IS_FIRST_LIST);
-                        MyUtil.showOneOptionPicker(list, "HistoryList");
+                        MyUtil.showOneOptionPicker(list,handLabel);
                     }
                 });
     }

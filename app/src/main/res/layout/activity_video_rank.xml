@@ -47,6 +47,8 @@
             app:tabGravity="fill"
             app:tabIndicatorFullWidth="false"
             app:tabMode="fixed"
+            app:tabRippleColor="@android:color/transparent"
+            app:tabTextAppearance="@style/unselected_tab_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

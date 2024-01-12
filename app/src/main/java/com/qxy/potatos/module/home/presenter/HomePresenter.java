@@ -42,6 +42,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
         isLogin = mmkv.decodeBool(GlobalConstant.IS_LOGIN, false);
         if (!isLogin) {
             RxToast.error("请先登录");
+            baseView.setErrorView();
             return;
         }
         HashMap<String, String> map = new HashMap<>();
@@ -74,10 +75,10 @@ public class HomePresenter extends BasePresenter<IHomeView> {
         HashMap<String, Long> map = new HashMap<>();
         map.put(MyUtil.getString(R.string.cursor), cursor);
         map.put(MyUtil.getString(R.string.count), (long) 12);
-        addDisposable(apiServer.GetMyVideos(access_token, openId, map), new BaseObserver<BaseBean<MyVideo>>(baseView, true) {
+        addDisposable(apiServer.GetMyVideos(access_token, openId, map), new BaseObserver<BaseBean<MyVideo>>(baseView, false) {
             @Override
             public void onError(String msg) {
-
+                baseView.setErrorView();
                 Toast.makeText((Context) baseView, msg, Toast.LENGTH_SHORT).show();
             }
 

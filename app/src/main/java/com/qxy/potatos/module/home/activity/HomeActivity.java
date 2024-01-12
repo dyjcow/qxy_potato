@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.ListenableWorker;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -29,6 +30,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.qxy.potatos.R;
 import com.qxy.potatos.annotation.BindEventBus;
+import com.qxy.potatos.annotation.InitAIHand;
 import com.qxy.potatos.base.BaseActivity;
 import com.qxy.potatos.base.BaseEvent;
 import com.qxy.potatos.bean.MyVideo;
@@ -39,16 +41,18 @@ import com.qxy.potatos.databinding.ActivityHomeBinding;
 import com.qxy.potatos.module.Follow.activity.FollowActivity;
 import com.qxy.potatos.module.home.adapter.HomeAdapter;
 import com.qxy.potatos.module.home.adapter.HomeItemDecoration;
+import com.qxy.potatos.module.home.myView.DialogSureCancel;
 import com.qxy.potatos.module.home.presenter.HomePresenter;
 import com.qxy.potatos.module.home.view.IHomeView;
 import com.qxy.potatos.module.mine.activity.LoginActivity;
 import com.qxy.potatos.module.mine.activity.WebViewActivity;
 import com.qxy.potatos.module.mine.service.PreLoadService;
 import com.qxy.potatos.module.videorank.activity.RankActivity;
+import com.qxy.potatos.util.AI.tflite.OperatingHandClassifier;
 import com.qxy.potatos.util.ActivityUtil;
 import com.qxy.potatos.util.DisplayUtil;
 
-
+import com.qxy.potatos.util.EmptyViewUtil;
 import com.qxy.potatos.util.LogUtil;
 import com.qxy.potatos.util.ToastUtil;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
@@ -56,7 +60,6 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
 import com.tamsiree.rxui.view.dialog.RxDialogSure;
-import com.tamsiree.rxui.view.dialog.RxDialogSureCancel;
 import com.tencent.mmkv.MMKV;
 
 
@@ -68,12 +71,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@InitAIHand
 @BindEventBus
 public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBinding> implements IHomeView {
 
 
     private final MMKV mmkv = MMKV.defaultMMKV();
     List<MyVideo.Videos> list = new ArrayList<>();
+    private HomeAdapter adapter;
     /**
      * 保存用户按返回键的时间
      */
@@ -158,9 +163,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         });
         //通过DrawerLayout打开榜单页面 和登录页
         getBinding().homeNavigationView.setNavigationItemSelectedListener(item -> {
+            getBinding().drawerLayout.closeDrawers();
             if (item.getItemId() == R.id.nav_rank) {
                 ActivityUtil.startActivity(RankActivity.class);
-                getBinding().drawerLayout.closeDrawers();
             } else if (item.getItemId() == R.id.nav_login) {
                 eventLogin();
             }
@@ -176,25 +181,19 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)) {
                 ActivityUtil.startActivity(LoginActivity.class, true);
             }
-
         });
 
         //下拉加载更多
         getBinding().homeRefreshlayout.setEnableRefresh(false);
         getBinding().homeRefreshlayout.setEnableLoadMore(true);
-        getBinding().homeRefreshlayout.setRefreshFooter(new ClassicsFooter(this));
         getBinding().homeRefreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
                 if (isHasMore && checkList.size() != 0) {
                     presenter.getPersonalVideoList(cursor);
-                    refreshLayout.finishLoadMore(true);
                 } else {
-                    refreshLayout.finishLoadMore(true);
-                    refreshLayout.setEnableLoadMore(false);
-                    getBinding().homeRecyclerviewFooter.setVisibility(View.VISIBLE);
-                    ;
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
             }
         });
@@ -207,8 +206,10 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
         if (!mmkv.decodeBool(GlobalConstant.IS_LOGIN)) {
             ActivityUtil.startActivity(LoginActivity.class, true);
         } else {
-            RxDialogSureCancel sureCancel = new RxDialogSureCancel(this);
+            DialogSureCancel sureCancel = new DialogSureCancel(this, hand);
             sureCancel.setContent(getString(R.string.sure_to_login_out));
+            sureCancel.setSure(getString(R.string.sure));
+            sureCancel.setCancel(getString(R.string.cancel));
             sureCancel.setSureListener(v -> {
                 mmkv.encode(GlobalConstant.IS_LOGIN, false);
                 ActivityUtil.startActivity(HomeActivity.class, true);
@@ -294,16 +295,19 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
     public void showPersonalVideo(List<MyVideo.Videos> videos, boolean isHasMore, long cursor) {
         this.isHasMore = isHasMore;
         this.cursor = cursor;
-        HomeAdapter adapter = new HomeAdapter(R.layout.reycylerview_item_home, list);
-        adapter.addChildClickViewIds(R.id.home_item_imageView);
-        adapter.setAnimationEnable(true);
-        adapter.setAnimationFirstOnly(true);
-        adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom);
+        if (adapter == null){
+            adapter = new HomeAdapter(R.layout.reycylerview_item_home, list);
+            adapter.addChildClickViewIds(R.id.home_item_imageView);
+            adapter.setAnimationEnable(true);
+            adapter.setAnimationFirstOnly(true);
+            adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom);
 
-        //recyclerview初始化
-        getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120, 5, 5, 5));
-        getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this, 3));
-        getBinding().recyclerViewHome.setAdapter(adapter);
+            //recyclerview初始化
+            getBinding().recyclerViewHome.addItemDecoration(new HomeItemDecoration(120, 5, 5, 5));
+            getBinding().recyclerViewHome.setLayoutManager(new GridLayoutManager(this, 3));
+            getBinding().recyclerViewHome.setAdapter(adapter);
+        }
+
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
@@ -313,6 +317,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 startActivity(intent);
             }
         });
+
         if (videos != null) {
             for (int i = 0; i < videos.size(); i++) {
                 checkList.clear();
@@ -329,7 +334,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
             getBinding().homeTextViewLike.setText(like+getString(R.string.likes));
 
         }
-
+        getBinding().homeRefreshlayout.finishLoadMore(true);
 
     }
 
@@ -371,6 +376,28 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityHomeBindin
                 .addTag(tag)
                 .build();
         WorkManager.getInstance(this).enqueue(request);
+    }
+
+    @Override public void setErrorView() {
+        RecyclerView recyclerView = getBinding().recyclerViewHome;
+        if (recyclerView.getLayoutManager() == null){
+           recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        }
+        View emptyView = EmptyViewUtil.getErrorView(recyclerView);
+        if (mmkv.decodeBool(GlobalConstant.IS_LOGIN, false)){
+            emptyView.setOnClickListener(v -> {
+                presenter.getPersonInfo();
+                presenter.getPersonalVideoList(0);
+            });
+        }
+
+        if (adapter == null){
+            adapter = new HomeAdapter(R.layout.reycylerview_item_home, null);
+            recyclerView.setAdapter(adapter);
+        }else {
+            adapter.setList(null);
+        }
+        adapter.setEmptyView(emptyView);
     }
 
     /**
