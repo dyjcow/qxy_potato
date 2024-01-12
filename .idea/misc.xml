@@ -7,15 +7,28 @@
         <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/layout_basepickerview.xml" value="0.19067028985507245" />
         <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/pickerview_options.xml" value="0.19067028985507245" />
         <entry key="..\:/AndroidData/.gradle/caches/transforms-3/292171c108012c98c0d5dda21fdc2dac/transformed/Android-PickerView-4.1.9/res/layout/pickerview_time.xml" value="0.19067028985507245" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/56301bec45491d03ae7401c6d1e1b5d4/transformed/jetified-RxUI-2.6.3/res/drawable/shape_round_white.xml" value="0.1415" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/56301bec45491d03ae7401c6d1e1b5d4/transformed/jetified-RxUI-2.6.3/res/layout/dialog_picker_pictrue.xml" value="0.35" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/56301bec45491d03ae7401c6d1e1b5d4/transformed/jetified-RxUI-2.6.3/res/layout/dialog_sure.xml" value="0.35" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/56301bec45491d03ae7401c6d1e1b5d4/transformed/jetified-RxUI-2.6.3/res/layout/dialog_sure_false.xml" value="0.35" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/56301bec45491d03ae7401c6d1e1b5d4/transformed/jetified-RxUI-2.6.3/res/layout/dialog_year_month_day.xml" value="0.35" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/7a4b33b373e47f938b06c850f5fccc69/transformed/jetified-Android-PickerView-4.1.9/res/drawable/selector_pickerview_btn.xml" value="0.15" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/7a4b33b373e47f938b06c850f5fccc69/transformed/jetified-Android-PickerView-4.1.9/res/layout/include_pickerview_topbar.xml" value="0.35" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/7a4b33b373e47f938b06c850f5fccc69/transformed/jetified-Android-PickerView-4.1.9/res/layout/layout_basepickerview.xml" value="0.35" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/7a4b33b373e47f938b06c850f5fccc69/transformed/jetified-Android-PickerView-4.1.9/res/layout/pickerview_options.xml" value="0.35" />
+        <entry key="..\:/AndroidData/.gradle/caches/transforms-3/7a4b33b373e47f938b06c850f5fccc69/transformed/jetified-Android-PickerView-4.1.9/res/layout/pickerview_time.xml" value="0.35" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable-v23/splash_bg.xml" value="0.2915" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.181" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/ge_ticket_button_bg.xml" value="0.181" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/shape_login_gradient.xml" value="0.1" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/shape_sheet_dialog_bg.xml" value="0.181" />
+        <entry key="..\:/Work/potato/app/src/main/res/drawable/shape_sheet_dialog_bg_white.xml" value="0.15" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/splash_bg.xml" value="0.181" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/tab_indicator.xml" value="0.1735" />
+        <entry key="..\:/Work/potato/app/src/main/res/drawable/tablayout_follow_indicator.xml" value="0.1415" />
         <entry key="..\:/Work/potato/app/src/main/res/drawable/tablayout_rank_indicator.xml" value="0.181" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/Fragment_rank_background.xml" value="0.20606884057971014" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/activity_follow.xml" value="0.35" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_home.xml" value="0.20606884057971014" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_main.xml" value="0.13072916666666667" />
@@ -25,11 +38,15 @@
         <entry key="..\:/Work/potato/app/src/main/res/layout/activity_web_view.xml" value="0.19972826086956522" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/coordinator_rank_background.xml" value="0.18840579710144928" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/dialog_my_full.xml" value="0.20606884057971014" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/dialog_sure_cancel.xml" value="0.35" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/dialog_sure_false.xml" value="0.35" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/empty_view.xml" value="0.2246376811594203" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/error_view.xml" value="0.2246376811594203" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/fragment_rank_background.xml" value="0.1" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/fragment_videodisplay.xml" value="0.19972826086956522" />
-        <entry key="..\:/Work/potato/app/src/main/res/layout/layout_dialog_item.xml" value="0.5" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/layout_dialog_item.xml" value="0.46653543307086615" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/layout_pickView_dialog.xml" value="0.35" />
+        <entry key="..\:/Work/potato/app/src/main/res/layout/layout_pickview_dialog.xml" value="0.25" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/linearlayout_mine_follow_list.xml" value="0.20606884057971014" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/recyclerview_item_follow.xml" value="0.3333333333333333" />
         <entry key="..\:/Work/potato/app/src/main/res/layout/recyclerview_item_rank.xml" value="0.22" />
@@ -38,7 +55,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
