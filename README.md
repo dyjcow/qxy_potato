@@ -1,6 +1,6 @@
 # qxy_potato
 
-<div style="text-align:center">
+<p align="center">
     <a href="https://lxtlovely.top/">
         <img src="https://img.shields.io/badge/author-DYJ-green" alt="author: DYJ (shields.io)" />
     </a>
@@ -10,7 +10,8 @@
     <a href="https://o8a5zpir4t.feishu.cn/docx/doxcnchwkawOQxN12cFZYvH3QKb">
     	<img src="https://img.shields.io/badge/%E5%8D%8F%E4%BD%9C%E6%96%87%E6%A1%A3-potato-blue" alt="Static Badge" />
     </a>
- </div>
+ </p>
+
 
 
 
@@ -64,7 +65,7 @@ Github地址：
 | :----------------------------------------------------------: | ------------------------------------------------------------ |
 | [![](https://avatars.githubusercontent.com/u/72329384?s=64&v=4)](https://github.com/dyjcow) | 1. 搭建整体极简抖音使用环境，搭建网络框架以及一个易用MVP架构 <br> 2. 重构榜单页面 <br/> 3. 编写登录页面以及做登录状态自识别 <br/> 4. 整合修改合并的代码 |
 | [![](https://avatars.githubusercontent.com/u/81318618?s=64&v=4)](https://github.com/SoulMate-520) | 1. 开发viewPager展示三个榜单，使用MVP开发整合三个Fragment <br/> 2. 开发视频详情模块，解决视频自动播放问题 |
-| [<img src="https://avatars.githubusercontent.com/u/81426359?s=64&v=4" style="zoom:15%;" />](https://github.com/1227010555) | 1. 开发榜单整体页面背景 <br/> 2. 开发粉丝列表以及关注者列表模块 |
+| [![81426359 (1)](https://pic.lxtlovely.top/blog/202401122223193.png)](https://github.com/1227010555) | 1. 开发榜单整体页面背景 <br/> 2. 开发粉丝列表以及关注者列表模块 |
 | [![](https://avatars.githubusercontent.com/u/96895440?s=64&v=4)](https://github.com/2631140624) | 1. 开发榜单影视数据 RecyclerView 及 Item <br/> 2. 开发个人主页模块 |
 | [![](https://avatars.githubusercontent.com/u/102741041?s=64&v=4)](https://github.com/QminCode) | 1. 开发工具类 <br/> 2. 编写网络状态识别类                    |
 
@@ -113,7 +114,7 @@ Github地址：
 
 #### 3.2.1 软件架构选择：MVP模式。
 
-![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=YTEyMmMwOTA4ODc3ZTI3MTdjNDNkYzhhOGZmOTdlZWRfeUt6aVVyb1Q2c01MNWwwbEJqdThsQlA4U3VhS0tycEpfVG9rZW46Ym94Y240enIxOWQzWGtQY1IyWHU1djJBUDdiXzE3MDUwNTg2OTQ6MTcwNTA2MjI5NF9WNA)
+![](https://pic.lxtlovely.top/blog/202401122158909.jpeg)
 
 MVP模式将应用分为三层，并且各个对应的层的职责如下：
 
@@ -205,7 +206,7 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 #### 3.3.1 package目录介绍（架构说明）
 
-![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=NzZkMTJlMmNiZTIxOTc5NTRlMTU2ZjY3ZDI3ZTQ1OTlfbG5TUWpIcjdnblJ0bzYwQTZxSlc1ZVVpZzdzT25LTFFfVG9rZW46Ym94Y25qWm9vMzFOaVM3ZFI3aDlObnBkZGpwXzE3MDUwNTkxMzI6MTcwNTA2MjczMl9WNA)
+![img](https://pic.lxtlovely.top/blog/202401122200596.png)
 
 - annotation：注解类，项目的注解存放于此
 - app：继承 Application，完成各种初始化操作
@@ -216,7 +217,7 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 - util：工具类模块，这个模块封装了多种工具类，包括 **图片**、**网络**、**颜色**、**时间**、**Log**(可统一设置开关)等等。一个健全的工具类是开发者的高效武器
 - moudule：功能模块，我们在图片中可以看到。图中分了多个包，这些包就是不同的模块，开发对应模块的成员就可以在此建立自己的包来进行开发。如下图，这我们在自己模块的模块里面的分包情况。
 
-![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=MzE4NDk4ZWY0ZmViMjZkOGUwNGNlN2YzOGIzNWRlNWZfaDlBcWpUc3ZncVFVdUtSc05BSGV4NUtsdlZvRklIR2lfVG9rZW46Ym94Y24wSnhjbWN6d280b2N1VHBqdDhhVFZ2XzE3MDUwNTkxMzI6MTcwNTA2MjczMl9WNA)
+![img](https://pic.lxtlovely.top/blog/202401122200282.png)
 
 ### 3.3.2 功能难点和解决思路
 
@@ -274,7 +275,7 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 
 
-[<img src="https://avatars.githubusercontent.com/u/81426359?s=64&v=4" style="zoom:15%;" />](https://github.com/1227010555)
+[![](https://pic.lxtlovely.top/blog/202401122223193.png)](https://github.com/1227010555)
 
 **功能：电影等榜单背景**
 
@@ -327,8 +328,8 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 #### 4.2.1 帧率
 
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=ZGYyNDJmNDg2MTI3YmRjOWE1MDY4YmRhMDFkMmZkM2Jfcks3VFdPbWo2bGNTNlpGU1o4Rm13cDlESVd2Ykp5RDNfVG9rZW46Ym94Y25qTG8wd09hbHh6bW1rTkJwMDZxTjRnXzE3MDUwNTk3NDU6MTcwNTA2MzM0NV9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=MGNmMmMxOTRhMWQxNzZiMWRmMjQxNjI5NjE1NTlmYTNfSGVQdXduOVFFcG56YXlmRlBQVkd4RDl4ZDRPNXZhM2pfVG9rZW46Ym94Y25DVWc0RklFMk1LRDJzUEN4dFZvMDBnXzE3MDUwNTk3NDU6MTcwNTA2MzM0NV9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=ZjVjYjUwMjhkM2FlZWU0OWVlZDlmZTY3MGU0MjI1NGVfNE5OSmtWbnJZNTV5bEIzT0hPR2h3WmIxUENaQXlYNEpfVG9rZW46Ym94Y25IMngzVmtNWWVQeWk0aXdUMDBETThjXzE3MDUwNTk3NDY6MTcwNTA2MzM0Nl9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=NzJmMjlkNjFlOTNjNjg2MjJjODE3NTQ0ZWVlY2YyYjdfeDQ2Y0diZzUzZVVPM2g4cFJEUDR1Wk1LZVE0VDhzSzhfVG9rZW46Ym94Y25KQUdIZ1ZGRGl5eU9zM3ljMTA0UVZwXzE3MDUwNTk3NDY6MTcwNTA2MzM0Nl9WNA) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![img](https://pic.lxtlovely.top/blog/202401122200837.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122201052.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122201681.jpeg) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=Y2ViMTExMzNkNjI3N2FmYmE3YjM4MzZhMjdhNWRjMGJfOEd6SEZ2cHZiSmtjOEIyYkRxYWg4c3ZVaEJHc291emVfVG9rZW46Ym94Y25KQUdIZ1ZGRGl5eU9zM3ljMTA0UVZwXzE3MDUwNjgwODY6MTcwNTA3MTY4Nl9WNA) |
+| ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------ |
 
 在新创建Activity的时刻会少量丢帧，最低为打开WebView的时候变为55。后面帧率会平稳在60帧。出现丢帧的原因，一是由于Activity的创建需要开启建立多项任务，本身就会较为消耗资源；二是页面层级过多，双重缓冲的渲染时间会过长导致页面丢帧。
 
@@ -336,15 +337,15 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 #### 4.2.2 CPU
 
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=YmU0ZGQ2MTQ2MGFjZmQ4M2EzMDc5MzIxZTIzOTQ0YjZfMWNzTzE2eVdUOEhsNFlFNFJyUnNjc1pJUnBBWldYTTFfVG9rZW46Ym94Y25ZMXpCVTlYNDJkc21UbkJ4SmNLdDFkXzE3MDUwNTk5MDE6MTcwNTA2MzUwMV9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=OWZhNWZkY2RiYWIyOTQ0YzU3MjcxZjg0OGE3ZTkxMTBfU3RWR2FuUWdaNTJYT2FVZ3BVbjlHcWRRR2hHNmVMc3hfVG9rZW46Ym94Y25hQm9ONnJKTTZBR1JDZWtWS2czODRlXzE3MDUwNTk5MDE6MTcwNTA2MzUwMV9WNA) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![img](https://pic.lxtlovely.top/blog/202401122201967.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122201862.jpeg) |
+| ----------------------------------------------------------- | ----------------------------------------------------------- |
 
 普通页面的CPU消耗占比为 0%~14%，WebView页面最高则会接近20%。处于正常区间，当占用并不算低。
 
 #### 4.2.3 内存占用
 
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=M2ZmZjBhMDA4NTU4YmNlNmIwM2MyNjk2OWYwMmU4YzZfYWl6TG8weFhCM201WmpEV3VpVmdZTXhZYnpHalZIdmtfVG9rZW46Ym94Y24wSGdsRXlBd25qWWYxc3E4N0RHVThiXzE3MDUwNTk5MDE6MTcwNTA2MzUwMV9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=YmEyOTlkODE3YTk3MTQxNmE0YWEzZjE4NmIyMzcyN2VfRXZlNW53MnR3aHd2RXNHTXJieFd4cXJPQ1dadXdnWUxfVG9rZW46Ym94Y25IQ2dycWtvQnRvcDlNaHliMzJjcHBjXzE3MDUwNTk5MDE6MTcwNTA2MzUwMV9WNA) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![img](https://pic.lxtlovely.top/blog/202401122202094.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122205849.jpeg) |
+| ----------------------------------------------------------- | ----------------------------------------------------------- |
 
 内存占用为150~200M，内存占用较大，已出现内存泄露。
 
@@ -352,27 +353,27 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 #### 4.2.4 流量监控
 
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=OGE0NTY3NDRmNDM0ODNjM2EwNzViOWE1NjFhNDM3MmNfSnZzeEduVGhMRE5nWmtOSWZ6NGd0Mm03VHBqcm5UNTdfVG9rZW46Ym94Y25GcUd6UTlybEVRR2xZdjZXcVZWMXhiXzE3MDUwNTk5MDE6MTcwNTA2MzUwMV9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=YTY3NmFhMmU0OTVlYjNmYTdlOTliZGY2MGUwZjBlYzJfaDhTSGdoOGt0MEtxUlFWS3JxdVVYd1d1OVF5VEhmNTVfVG9rZW46Ym94Y25BVVFXbU9xWm1OWGVSUzNqc2NhUzJnXzE3MDUwNTk5MDE6MTcwNTA2MzUwMV9WNA) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![img](https://pic.lxtlovely.top/blog/202401122203979.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122204502.jpeg) |
+| ----------------------------------------------------------- | ----------------------------------------------------------- |
 
 对所有页面进行抓包，流量的消耗较少45min内不超50k；以及页面的响应速度较快，正常状态下，基本都低于1ms
 
 #### 4.2.5 Crash
 
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=NWRiYzRiMTFmOGY3Nzg1ZWM3MzBhODJjNTVjZjFiMDJfcTZLaDNUaVRKVkNkWGxKaFlJTW9aTEI0emQwTkJRRERfVG9rZW46Ym94Y25GQ1hCUXF0emd0dk9LR2pNY1pSa0hkXzE3MDUwNTk5MDE6MTcwNTA2MzUwMV9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=YzIzNDUzZTMyZGZlMTA4MjFlMGIxMGFhMTc5NDU2MTJfSDFadzByTkRVU2hPTmZmbEhpeXVFdFowTzdaRjFzRFlfVG9rZW46Ym94Y243ak1NTGNWV2drMGx4bFh5YXIzazFnXzE3MDUwNTk5MDE6MTcwNTA2MzUwMV9WNA) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![img](https://pic.lxtlovely.top/blog/202401122206362.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122206307.jpeg) |
+| ----------------------------------------------------------- | ----------------------------------------------------------- |
 
 无Crash情况
 
 #### 4.2.6 卡顿检测
 
-<img src="https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=ZmJhNTE3ZTViMzk0NGNlZWNjMTc0YTE3YzNkYzc1YzJfckgzOGtwdVp0SlloZEl2UFk1eDRveWRGNzlPa3dxTVFfVG9rZW46Ym94Y25IUHhHNmNaV3d5TFVnTEptNDdBRGZ0XzE3MDUwNjAzNDk6MTcwNTA2Mzk0OV9WNA" alt="img" style="zoom: 33%;" />
+<img src="https://pic.lxtlovely.top/blog/202401122207467.jpeg" alt="img" style="zoom:33%;" />
 
 无超过500ms的卡顿情况
 
 #### 4.2.7 大图检测
 
-<img src="https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=NDE5MGU1NDg5Y2M5MWI1ODQ4MGU3NDdmYTgzOTUzNWNfNU4weGx3VmNMUEN0MVN6aFRxbWc4aXhPZlM2cnN6MllfVG9rZW46Ym94Y25QU0VxZXRLNTY2ZG9qQWV6NGZiNGpmXzE3MDUwNjAzNDk6MTcwNTA2Mzk0OV9WNA" alt="img" style="zoom:33%;" />
+<img src="https://pic.lxtlovely.top/blog/202401122207822.jpeg" alt="img" style="zoom:33%;" />
 
 页面存在文件大小超过150k，内存大小超过1MB的图片。
 
@@ -380,15 +381,15 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 #### 4.2.8 页面启动耗时
 
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=YWNhYzAyMTJmZWRkMDM0ZjZkYzFiMGI2OTc3MzAwZDBfT2o0YklnWU5JQnlXZXlvTVJPbkdmMXF5YlRHUlg1aWNfVG9rZW46Ym94Y25ySFlrbFZGWFhzeDYzR2hXUTZIUU5iXzE3MDUwNjAzNDk6MTcwNTA2Mzk0OV9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=MjM1YmM0NTkxYjhiZTZjN2RiN2YzN2YxZGI2NGI5YzdfeHpIUFZUODY1dXN5MHk4ZlhCcWVrcUx2NGM5b1BESlhfVG9rZW46Ym94Y240bjdVemhLUWp4dUw4Sk9hcFNCV2FoXzE3MDUwNjAzNDk6MTcwNTA2Mzk0OV9WNA) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![img](https://pic.lxtlovely.top/blog/202401122208032.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122208814.jpeg) |
+| ----------------------------------------------------------- | ----------------------------------------------------------- |
 
 对Activity的跳转进行耗时检测，新开的Activity平均在100ms左右，WebView会达到150ms，页面耗时不算过高
 
 #### 4.2.9 弱网测试
 
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=NDk4ZmYxYTgxMzFhODUxMDg2MTZiODRiMjNhZTQwYTVfWFcwNVAxQWd0WlF4ZVJrdThTM3A0dTNMbkM4Y3ZPczZfVG9rZW46Ym94Y25OWWxTTVNGdUNhS1ZyQzN6bEt5ZHdoXzE3MDUwNjA0NzQ6MTcwNTA2NDA3NF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=NjM4NDYzZTZmMGQzNWJhZGRiMGEzNzA1NmU3MmI1ZTJfdXZBTHIwWWhWNmhDcndjSVYzNDBxTjl4RzhQdmhxTHJfVG9rZW46Ym94Y25ScnFiM04wQmFEbTl6RjF5QnZNVWtiXzE3MDUwNjA0NzQ6MTcwNTA2NDA3NF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=MTI3OGI4MTNlZGFkZjQ0NzE2ZTUwZmFjNmZjOTRmNDFfSE5uZUhXZXkxVlVFU2hVSWM5WGlQcmtyUHBDMFdyNjRfVG9rZW46Ym94Y24zMERyQjFrWjI0Z2p6U1BoNDdRN2FnXzE3MDUwNjA0NzQ6MTcwNTA2NDA3NF9WNA) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![img](https://pic.lxtlovely.top/blog/202401122208464.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122208584.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122208931.jpeg) |
+| ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- |
 
 网络超时或是断网情况下，会有网络异常提示和请求时候会对相关异常做出判定。但会显示白屏
 
@@ -404,12 +405,12 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 ### 5.2 截图
 
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=YTdlNTlhZjdlYjg1NmRlZjA4NzI2OGNlYjUzYmIyNmRfWFBSdXlZbWVDeTQwSFdQU0hWTTNENEFMbWhWV0pUaXhfVG9rZW46Ym94Y25WUFNsNWxDMjFyaVFxMTltNjBBbUhnXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=MjczMmU2ZGU1MzQzYzcyMmViOTViYTk1MDI3ODRmNmJfem9ISE9Gbzl2QjY2UXBNeGtCQlBZV2FOcktuVVdnSGtfVG9rZW46Ym94Y25yYjZwRWtGcFZhRXNIcGMxQVJnN0NQXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=NWU4NGM3Yzk5OGQ1NTlkNjM3NGQxNjljMTU0NWQwMzhfR1RzZTMwbDRSYU9DTGlZOG5ZeGVUV1lXMG9VRHVaamRfVG9rZW46Ym94Y25kaDdzZzZLRmVibjl2V250RmtYWThnXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=ZjBlNTVhY2U4YjVmOGUyOWM3ZTE5NmU5NWE5YWJjNzhfYXpSTkhmZlBwTU1iQWIyeXY5RlJUNUlJNlQ4Z1N4NTdfVG9rZW46Ym94Y25kdmpXM1E3YU9WZ3hGZU91Q2JHQjZiXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=Zjc2NmUwN2M3YmUxMTNlNzkzYzIyYjA4YmE2NDk3N2RfZnozV21XaHdXdEp1Zk9NMERaMG5pTkFZUXp0TW9rTWFfVG9rZW46Ym94Y25jdERZTDZyTXVTUlp5UkEzRkVicjJmXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=ZWM3YjU4MTA2OTA1MmY4N2QyMThjMzA1Mzg2NWEwYmJfUjB5VDBiazkxWTBGMkZwWkFzUHZhYkNRZlI5WDhkSGlfVG9rZW46Ym94Y25FaXhiWXV2eDlyZnJzN0lXQW5odHljXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) |
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=NWYxMDE4Y2Y1OTlhZTc4ODcyZWRkNGM4YTk2NDI0NzBfZWNwbU9qWnFtdXpUeWR1a0hjUlVWRDNFeDlXS0ZzUnJfVG9rZW46Ym94Y250WWxCNHZ6OFFyMFVMYzhSblo5RWhiXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=NTcyZWVhZTQ1ZThlOWI2MTM5MTBjZDBlNTk2NDIwOGJfdUFNclR0RGxLTTNMZ1NMck1XODNUdzE2UDRaNW16dGRfVG9rZW46Ym94Y25PTFdxeVl2SGpTQkpQSjVxQW1OTXBiXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=NTc1YjY2NmZkMzc1NTYxMTA2MGJkNjI1ZDExYTNiODlfWjU5aExUdFhhZnhpY1NkVVlScjNabUtOcTd0TURMblVfVG9rZW46Ym94Y25OaXoxdTEwVkNLakdlSXVON0pHT25oXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) |
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=MWJiY2YyMDFhMzE2MGRiZDFlMTMyNzkzMTMwODdhZDdfaW43N2c1VGFDaXVzeWFFbk1OeHAxeUVhMnVYOUphWVZfVG9rZW46Ym94Y25OSnFIUWVScUdleWxvQThwbnhwVEliXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=MDI0MjEzZDEzMDg2Yzc2ZTVlYWZmZjM1MDU0NGUyMjRfT2RyN016WDg0VzJYYUdYdHhNSEU3QUFrVjNyVkFCS0NfVG9rZW46Ym94Y25jamkwaFRaSFc4OGY3b1c3V2x2aHJmXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=YWEzZmEwMzZhNzFhODRiMDJhMzMyM2U5OGYxZmNkNjJfMjVXOFZpM1N4WFhmcmhCZmluNlhKZ2NMT3RoOTFBemVfVG9rZW46Ym94Y25lN085VE9YT3pLVERIY2N4SXpVVlJnXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) |
-| ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=Njc5YjBkOGQ1MTBhODVmM2Y3NmFhM2FmMzU3NzE0MjlfVDBwbjc2dmp6MGM3SldLdEJZV1V5akl3VUFOa1ExWXJfVG9rZW46Ym94Y25ib2dKdlZ0S0xkSzN3cUZDQXBmMzdlXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) | ![img](https://o8a5zpir4t.feishu.cn/space/api/box/stream/download/asynccode/?code=ZTRjNzczMzYxNTVlZTRlYWQwYTczNTNmNDEzM2MxMzlfclg4b1ZHUHpTWGJtQWxGeXk3MHhvMnF2ZlQxSzZ4SU5fVG9rZW46Ym94Y255SEdibXV0T0N4ZUc5WXNZaXlOa2lLXzE3MDUwNjA4MDA6MTcwNTA2NDQwMF9WNA) |                                                              |
+| ![img](https://pic.lxtlovely.top/blog/202401122209543.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122209792.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122210906.jpeg) |
+| ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- |
+| ![img](https://pic.lxtlovely.top/blog/202401122210268.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122210440.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122210386.jpeg) |
+| ![img](https://pic.lxtlovely.top/blog/202401122211530.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122212986.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122212881.jpeg) |
+| ![img](https://pic.lxtlovely.top/blog/202401122213045.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122213729.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122213164.jpeg) |
+| ![img](https://pic.lxtlovely.top/blog/202401122213732.jpeg) | ![img](https://pic.lxtlovely.top/blog/202401122214863.jpeg) |                                                             |
 
 ## 六、项目总结与反思
 
