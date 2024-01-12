@@ -1,4 +1,4 @@
-# qxy_potato
+# <p align=:center>qxy_potato</p>
 
 <p align="center">
     <a href="https://lxtlovely.top/">
@@ -18,8 +18,10 @@
 
 
 
+<p align="center">
+    <img src="https://pic.lxtlovely.top/blog/202401121750490.png" alt="ic_launcher_round" />
+</p>
 
-![ic_launcher_round](https://pic.lxtlovely.top/blog/202401121750490.png)
 
 该项目为 2022 年[第四届字节跳动青训营](https://juejin.cn/post/7111205528293867533) Android 营结营项目，项目在最终评比中获得首屈一指奖(第一名)。答辩文档原文链接：[‌⁢‬﻿﻿﻿⁢⁣⁡‌⁢⁡‍⁣‌‍‍‬‍⁤⁡‬‌‍⁢⁣﻿⁤⁢﻿⁤‌⁤⁤⁢⁡⁢青训营结业项目答辩汇报文档 -- 破忒头 组 - 飞书云文档 (feishu.cn)](https://o8a5zpir4t.feishu.cn/docx/doxcnmUbNUaIaZMsPGoGhdzPHLd)
 
@@ -206,7 +208,9 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 #### 3.3.1 package目录介绍（架构说明）
 
-![img](https://pic.lxtlovely.top/blog/202401122200596.png)
+<p align="center">
+    <img src="https://pic.lxtlovely.top/blog/202401122200596.png" alt="img" />
+</p>
 
 - annotation：注解类，项目的注解存放于此
 - app：继承 Application，完成各种初始化操作
@@ -217,7 +221,11 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 - util：工具类模块，这个模块封装了多种工具类，包括 **图片**、**网络**、**颜色**、**时间**、**Log**(可统一设置开关)等等。一个健全的工具类是开发者的高效武器
 - moudule：功能模块，我们在图片中可以看到。图中分了多个包，这些包就是不同的模块，开发对应模块的成员就可以在此建立自己的包来进行开发。如下图，这我们在自己模块的模块里面的分包情况。
 
-![img](https://pic.lxtlovely.top/blog/202401122200282.png)
+<p align="center">
+    <img src="https://pic.lxtlovely.top/blog/202401122200282.png" alt="img" />
+</p>
+
+
 
 ### 3.3.2 功能难点和解决思路
 
@@ -243,7 +251,7 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 为减少网络的请求，我把ClientToken的请求尽量做到少。我设置了一个WorkManager的后台任务，让APP在开启状态才每隔2h刷新一次，当APP退出的话就会取消该任务
 
-
+</br>
 
 [![](https://avatars.githubusercontent.com/u/102741041?s=64&v=4)](https://github.com/QminCode)
 
@@ -259,7 +267,7 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 开发者先从url中获取inputstream，在工具类中实现inputstream到bitmap的转化。工具类提供不同格式图片间的转换方法，开发者可将其他格式的文件转为bitmap。工具类提供各种对bitmap进行常见图片操作的方法，这些方法主要通过bitmap类的自带方法以及canvas实现
 
-
+</br>
 
 [![](https://avatars.githubusercontent.com/u/96895440?s=64&v=4)](https://github.com/2631140624)
 
@@ -273,7 +281,7 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 解决方法：实现ItemDecoration类，重写 getItemOffsets方法，根据不同的recyclerview的LayoutManger判断，进行对item进行不同的分割。
 
-
+</br>
 
 [![](https://pic.lxtlovely.top/blog/202401122223193.png)](https://github.com/1227010555)
 
@@ -289,7 +297,7 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 解决方法：使用TabLayoutMediator绑定Tablayout和Viewpager，在TabLayoutMediator中设置文本内容。分别使用Tablayout和Viewpager的切换监听器，更改选中与未选中的文本效果。通过传入不同type，发起相应的网络请求及设置对应的adapter，从而达到复用fragment的效果。使用SmartRefreshLayout的滑动监听器，判断用户操作从而发起网络请求并更新adapter。
 
-
+</br>
 
 [![](https://avatars.githubusercontent.com/u/81318618?s=64&v=4)](https://github.com/SoulMate-520)
 
@@ -367,13 +375,17 @@ Retrofit是基于OKHttp的RESTFUL Api请求工具。App应用程序通过Retrofi
 
 #### 4.2.6 卡顿检测
 
-<img src="https://pic.lxtlovely.top/blog/202401122207467.jpeg" alt="img" style="zoom:33%;" />
+<p align="center">
+    <img src="https://pic.lxtlovely.top/blog/202401122207467.jpeg" alt="img" style="zoom:33%;" />
+</p>
 
 无超过500ms的卡顿情况
 
 #### 4.2.7 大图检测
 
-<img src="https://pic.lxtlovely.top/blog/202401122207822.jpeg" alt="img" style="zoom:33%;" />
+<p align="center">
+    <img src="https://pic.lxtlovely.top/blog/202401122207822.jpeg" alt="img" style="zoom:33%;" />
+</p>
 
 页面存在文件大小超过150k，内存大小超过1MB的图片。
 
